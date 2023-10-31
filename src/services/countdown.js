@@ -1,35 +1,36 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { KVW_GET, PUT } from "../APIData";
+import { COUNTDOWN_GET, PUT } from "../APIData";
 const tokenPrefix = process.env.REACT_APP_TOKEN_PREFIX + " ";
 const token = localStorage.getItem("userToken");
 
-export const kvwApi = createApi({
-  reducerPath: "kvwApi",
+export const countdownApi = createApi({
+  reducerPath: "countdownApi",
   baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_URL }),
   endpoints: (builder) => ({
-    getKvwData: builder.query({
+    getCountdownData: builder.query({
       query: () => ({
-        url: KVW_GET,
+        url: COUNTDOWN_GET,
         method: "GET",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,
         },
       }),
-      providesTags: ["Kvw"],
+      providesTags: ["Countdown"],
     }),
-    setKvwData: builder.mutation({
-      query: (updatedKvwData) => ({
-        url: `${PUT}${updatedKvwData.id}`,
+    setCountdownData: builder.mutation({
+      query: (updatedCountdownData) => ({
+        url: `${PUT}${updatedCountdownData.id}`,
         method: "PUT",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,
         },
-        body: updatedKvwData,
+        body: updatedCountdownData,
       }),
-      invalidatesTags: ["Kvw"],
+      invalidatesTags: ["Countdown"],
     }),
   }),
 });
-export const { useGetKvwDataQuery, useSetKvwDataMutation } = kvwApi;
+export const { useGetCountdownDataQuery, useSetCountdownDataMutation } =
+  countdownApi;
