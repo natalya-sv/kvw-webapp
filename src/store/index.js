@@ -1,7 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import countdownSlice from "./countdown/countdown-slice";
 import scheduleSlice from "./schedule/schedule-slice";
-import kvwSlice from "./kvw/kvw-slice";
 import newsSlice from "./news/news-slice";
 import photosSlice from "./photos/photos-slice";
 import sponsorsSlice from "./sponsors/sponsors-slice";
@@ -10,10 +9,12 @@ import moreSlice from "./more/more-slice";
 import socialMediaSlice from "./social-media/social-media-slice";
 import newslettersSlice from "./newsletters/newsletters-slice";
 import notificationSlice from "./notification/notification-slice";
+import { kvwApi } from "../services/kvw";
+import { setupListeners } from "@reduxjs/toolkit/dist/query";
 
 const store = configureStore({
   reducer: {
-    kvwData: kvwSlice.reducer,
+    [kvwApi.reducerPath]: kvwApi.reducer,
     news: newsSlice.reducer,
     sponsors: sponsorsSlice.reducer,
     schedule: scheduleSlice.reducer,
@@ -25,5 +26,9 @@ const store = configureStore({
     newsletters: newslettersSlice.reducer,
     notification: notificationSlice.reducer,
   },
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware().concat(kvwApi.middleware),
 });
+setupListeners(store.dispatch);
 export default store;
