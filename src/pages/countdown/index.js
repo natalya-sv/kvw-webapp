@@ -1,10 +1,5 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import AlertNotification from "../../components/UI/AlertNotification";
-import {
-  fetchCountDownData,
-  updateCountDownData,
-} from "../../store/countdown/countdown-actions";
 import SpinnerView from "../../components/UI/SpinnerView";
 import Title from "../../components/UI//Title";
 import { COUNTDOWN, COUNTDOWN_DESC } from "./constants";
@@ -18,24 +13,31 @@ import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
 import "dayjs/locale/nl";
 import CustomDatePicker from "../../components/UI/pickers/CustomDatePicker";
+import {
+  useGetCountdownDataQuery,
+  useSetCountdownDataMutation,
+} from "../../services/countdown";
 
 const CountDownPage = () => {
-  const dispatch = useDispatch();
-  const { isLoading, countdown } = useSelector((state) => state.countdown);
-  const { notification } = useSelector((state) => state.notification);
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [title, setTitle] = useState("");
+  const {
+    isLoading,
+    data: countdown,
+    isError: errorFetching,
+    error: fetchingErrorRes,
+  } = useGetCountdownDataQuery();
+  const [
+    setCountdownData,
+    { isSuccess: successUpdating, isError: errorUpdating },
+  ] = useSetCountdownDataMutation();
 
   useEffect(() => {
-    dispatch(fetchCountDownData());
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (countdown) {
-      setTitle(countdown.eventTitle);
-      setStartDate(countdown.startDate);
-      setEndDate(countdown.endDate);
+    if (countdown && countdown[0]) {
+      setTitle(countdown[0].event_title);
+      setStartDate(countdown[0].start_date);
+      setEndDate(countdown[0].end_date);
     }
   }, [countdown]);
 
@@ -46,13 +48,14 @@ const CountDownPage = () => {
         : startDate.format("YYYY-MM-DD");
     const endDateUpd =
       typeof endDate === "string" ? endDate : endDate.format("YYYY-MM-DD");
+
     const countdownData = {
-      id: countdown.id,
+      id: countdown[0].id,
       event_title: title,
       start_date: startDateUpd,
       end_date: endDateUpd,
     };
-    dispatch(updateCountDownData(countdownData));
+    setCountdownData(countdownData);
   };
 
   if (isLoading) {
@@ -66,9 +69,12 @@ const CountDownPage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      {notification?.isActive && (
-        <AlertNotification notification={notification} />
-      )}
+      <AlertNotification
+        errorFetching={errorFetching}
+        errorUpdating={errorUpdating}
+        successUpdating={successUpdating}
+        subMessage={fetchingErrorRes?.message ?? ""}
+      />
 
       <Title title={COUNTDOWN} />
       <PageDescription text={COUNTDOWN_DESC} />

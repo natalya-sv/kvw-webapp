@@ -1,35 +1,37 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { KVW_GET, PUT } from "../APIData";
+import { MORE_DATA_GET, PUT } from "../APIData";
+
 const tokenPrefix = process.env.REACT_APP_TOKEN_PREFIX + " ";
 const token = localStorage.getItem("userToken");
 
-export const kvwApi = createApi({
-  reducerPath: "kvwApi",
+export const moreDataApi = createApi({
+  reducerPath: "moreDataApi",
   baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_URL }),
   endpoints: (builder) => ({
-    getKvwData: builder.query({
+    getMoreData: builder.query({
       query: () => ({
-        url: KVW_GET,
+        url: MORE_DATA_GET,
         method: "GET",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,
         },
       }),
-      providesTags: ["Kvw"],
+      providesTags: ["MoreData"],
     }),
-    setKvwData: builder.mutation({
-      query: (updatedKvwData) => ({
-        url: `${PUT}${updatedKvwData.id}`,
+    setMoreData: builder.mutation({
+      query: (updatedMoreData) => ({
+        url: `${PUT}${updatedMoreData.id}`,
         method: "PUT",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,
         },
-        body: updatedKvwData,
+        body: updatedMoreData,
       }),
-      invalidatesTags: ["Kvw"],
+      invalidatesTags: ["MoreData"],
     }),
   }),
 });
-export const { useGetKvwDataQuery, useSetKvwDataMutation } = kvwApi;
+
+export const { useGetMoreDataQuery, useSetMoreDataMutation } = moreDataApi;

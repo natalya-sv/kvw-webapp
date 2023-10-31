@@ -19,10 +19,8 @@ import {
 import { SAVE } from "../../helpers/constants";
 import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
-import { useDispatch } from "react-redux";
-import { updateMorePageData } from "../../store/more/more-actions";
 
-const MoreForm = ({ moreData }) => {
+const MoreForm = ({ moreData, setMoreData }) => {
   const [aboutUsTitle, setAboutUsTitle] = useState("");
   const [aboutUsContent, setAboutUsContent] = useState("");
   const [mailNotificationContent, setMailNotificationContent] = useState("");
@@ -32,25 +30,25 @@ const MoreForm = ({ moreData }) => {
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhoneNumber, setContactPhoneNumber] = useState("");
   const [contactContent, setContactContent] = useState("");
-  const dispatch = useDispatch();
+
   useEffect(() => {
-    if (moreData) {
-      setAboutUsTitle(moreData.aboutUsTitle);
-      setAboutUsContent(moreData.aboutUsContent);
-      setMailNotificationContent(moreData.mailNotificationContent);
-      setMailNotificationLink(moreData.mailNotificationLink);
-      setPrivacyStatementContent(moreData.privacyStatementContent);
-      setPrivacyStatementLink(moreData.privacyStatementLink);
-      setContactEmail(moreData.contactEmail);
-      setContactPhoneNumber(moreData.contactPhoneNumber);
-      setContactContent(moreData.contactContent);
+    if (moreData && moreData[0]) {
+      setAboutUsTitle(moreData[0].about_us_title);
+      setAboutUsContent(moreData[0].about_us_content);
+      setMailNotificationContent(moreData[0].mail_notification_content);
+      setMailNotificationLink(moreData[0].mail_notification_link);
+      setPrivacyStatementContent(moreData[0].privacy_statement_content);
+      setPrivacyStatementLink(moreData[0].privacy_statement_link);
+      setContactEmail(moreData[0].contact_email);
+      setContactPhoneNumber(moreData[0].contact_phone_number);
+      setContactContent(moreData[0].contact_content);
     }
   }, [moreData]);
 
   const onSubmitHandler = (event) => {
     event.preventDefault();
     const updatedMoreData = {
-      id: moreData.id,
+      id: moreData[0].id,
       about_us_title: aboutUsTitle,
       about_us_content: aboutUsContent,
       mail_notification_content: mailNotificationContent,
@@ -61,8 +59,7 @@ const MoreForm = ({ moreData }) => {
       contact_phone_number: contactPhoneNumber,
       contact_content: contactContent,
     };
-
-    dispatch(updateMorePageData(updatedMoreData));
+    setMoreData(updatedMoreData);
   };
 
   return (
