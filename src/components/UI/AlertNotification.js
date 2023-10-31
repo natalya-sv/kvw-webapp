@@ -1,33 +1,44 @@
 import { Alert, Snackbar, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import { notificationActions } from "../../store/notification/notification-slice";
-import { useDispatch } from "react-redux";
+import {
+  ERROR_FETCHING,
+  ERROR_UPDATING,
+  SUCCESS_UPDATE_API,
+} from "../../store/constants";
 
-const AlertNotification = (props) => {
+const AlertNotification = ({
+  successUpdating,
+  errorFetching,
+  subMessage,
+  errorUpdating,
+}) => {
   const [open, setOpen] = useState(false);
-  const { severity, title, message, subMessage, isActive } =
-    props?.notification;
-  const dispatch = useDispatch();
-
+  const [message, setMessage] = useState();
   const handleCloseSnackBar = (_event, reason) => {
     if (reason === "clickaway") {
       return;
     }
-    dispatch(notificationActions.hideNotification());
     setOpen(false);
   };
 
   useEffect(() => {
-    if (title && message && isActive) {
-      console.log("alert");
+    if (successUpdating) {
+      setMessage(SUCCESS_UPDATE_API);
+      setOpen(true);
+    }
+    if (errorFetching) {
+      setMessage(ERROR_FETCHING);
+      setOpen(true);
+    }
+    if (errorUpdating) {
+      setMessage(ERROR_UPDATING);
       setOpen(true);
     }
     return () => {
-      console.log("cleaning");
-      dispatch(notificationActions.hideNotification());
+      setOpen(false);
     };
-  }, [title, message, isActive, dispatch]);
+  }, [successUpdating, errorFetching, errorUpdating]);
 
   return (
     <Box sx={{ width: "50%" }}>
@@ -40,10 +51,10 @@ const AlertNotification = (props) => {
         >
           <Alert
             onClose={handleCloseSnackBar}
-            severity={severity}
+            severity={message?.severity}
             sx={{ width: "100%" }}
           >
-            {`${title} ${message} ${subMessage ?? ""}`}
+            {`${message?.title} ${message?.message} ${subMessage ?? ""}`}
           </Alert>
         </Snackbar>
       </Grid>
