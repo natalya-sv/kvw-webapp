@@ -9,36 +9,48 @@ import {
   SPONSORS,
   sponsorsTableDefinitions,
 } from "./constants";
-import { useDispatch, useSelector } from "react-redux";
 import CheckIcon from "@mui/icons-material/Check";
 import ClearIcon from "@mui/icons-material/Clear";
-import {
-  removeSponsorItem,
-  removeSponsors,
-  updateActiveSponsorsData,
-} from "../../store/sponsors/sponsors-actions";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import DoNotDisturbAltIcon from "@mui/icons-material/DoDisturbAlt";
 import { Typography } from "@mui/material";
-const SponsorsTable = (props) => {
-  const { sponsors } = useSelector((state) => state.sponsors);
-  const dispatch = useDispatch();
+import {
+  useDeleteAllSponsorsMutation,
+  useDeleteSponsorByIdMutation,
+  useDeleteSponsorsByIdsMutation,
+  useUpdateSponsorsStatusMutation,
+} from "../../services/sponsors";
+
+const SponsorsTable = ({
+  sponsors,
+  openSponsorsModal,
+  closeSponsorsModal,
+  setEditedSponsor,
+}) => {
+  const [deleteSponsorById] = useDeleteSponsorByIdMutation();
+  const [deleteAllSponsors] = useDeleteAllSponsorsMutation();
+  const [deleteSponsorsByIds] = useDeleteSponsorsByIdsMutation();
+  const [updateSponsorsStatus] = useUpdateSponsorsStatusMutation();
 
   const updatedSponsors = useMemo(() => {
-    if (sponsors && sponsors.length > 0) {
+    if (sponsors && sponsors?.length > 0) {
       return [...sponsors]
-        .sort((a, b) => a.sponsorName.localeCompare(b.sponsorName))
+        .sort((a, b) => a.sponsor_name.localeCompare(b.sponsor_name))
         .map((sp) => {
-          const sponsor = { ...sp };
-          if (sp.active) {
-            sponsor.active = <CheckIcon color="success" />;
-          } else {
-            sponsor.active = <ClearIcon color="default" />;
-          }
-          sponsor.sponsorType =
-            sp.sponsorType === "main" ? MAIN_SPONSOR : SPONSOR;
-
-          return sponsor;
+          return {
+            id: sp.id,
+            websiteUrl: sp.website_url ?? "",
+            sponsorName: sp.sponsor_name,
+            imageUrl: sp.image_url ?? "",
+            active: sp.active,
+            status: sp.active ? (
+              <CheckIcon color="success" />
+            ) : (
+              <ClearIcon color="default" />
+            ),
+            type: sp.sponsor_type === "main" ? MAIN_SPONSOR : SPONSOR,
+            sponsorType: sp.sponsor_type,
+          };
         });
     } else {
       return [];
@@ -47,47 +59,34 @@ const SponsorsTable = (props) => {
 
   const handleRemoveSponsor = (idsToRemove) => {
     if (idsToRemove.length === 1) {
-      dispatch(removeSponsorItem(idsToRemove[0]));
+      deleteSponsorById(idsToRemove[0]);
     } else {
-      const deleteAllItems = sponsors.length === idsToRemove.length;
-      dispatch(removeSponsors(idsToRemove, deleteAllItems));
+      const deleteAllItems = updatedSponsors.length === idsToRemove.length;
+      if (deleteAllItems) {
+        deleteAllSponsors();
+      } else {
+        deleteSponsorsByIds(idsToRemove);
+      }
     }
-    props.closeSponsorsModal();
+    closeSponsorsModal();
   };
 
   const handleEditSponsor = (id) => {
-    const sponsorToEdit = sponsors.find((sp) => sp.id === id);
+    const sponsorToEdit = updatedSponsors.find((sp) => sp.id === id);
     if (sponsorToEdit) {
-      props.setEditedSponsor(sponsorToEdit);
-      props.openSponsorsModal();
+      setEditedSponsor(sponsorToEdit);
+      openSponsorsModal();
     }
   };
 
   const setSponsorStatus = useCallback(
     (selectedSponsors, isActive) => {
-      const allSponsors = [...sponsors]
-        .map((sponsor) => {
-          if (selectedSponsors.includes(sponsor.id)) {
-            return {
-              ...sponsor,
-              active: isActive === "active" ? true : false,
-            };
-          }
-          return sponsor;
-        })
-        .map((sponsor) => {
-          return {
-            id: sponsor.id,
-            sponsor_name: sponsor.sponsorName,
-            sponsor_type: sponsor.sponsorType,
-            image_url: sponsor.imageUrl,
-            website_url: sponsor.websiteUrl,
-            active: sponsor.active,
-          };
-        });
-      dispatch(updateActiveSponsorsData(allSponsors));
+      updateSponsorsStatus({
+        ids: selectedSponsors,
+        status: isActive,
+      });
     },
-    [dispatch, sponsors]
+    [updateSponsorsStatus]
   );
 
   const extraButtons = useMemo(() => {
@@ -109,7 +108,7 @@ const SponsorsTable = (props) => {
     ];
   }, [setSponsorStatus]);
 
-  return sponsors.length > 0 ? (
+  return updatedSponsors && updatedSponsors.length > 0 ? (
     <SimpleTable
       items={updatedSponsors}
       headCells={sponsorsTableDefinitions}
