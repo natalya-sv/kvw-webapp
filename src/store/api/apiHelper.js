@@ -57,7 +57,6 @@ export const removeSingleItem = async (
       "Content-type": "application/json",
       Authorization: tokenPrefix + token,
     },
-    body: JSON.stringify(id),
   });
 
   if (!response.ok) {
@@ -123,7 +122,6 @@ export const removeSeveralItems = async (
         "Content-type": "application/json",
         Authorization: tokenPrefix + token,
       },
-      body: JSON.stringify(id),
     });
 
     if (response.ok) {

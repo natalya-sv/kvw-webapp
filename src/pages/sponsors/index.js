@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import AddEditSponsorForm from "./AddEditSponsorForm";
 import Title from "../../components/UI/Title";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchSponsorsData } from "../../store/sponsors/sponsors-actions";
 import AlertNotification from "../../components/UI/AlertNotification";
 import SpinnerView from "../../components/UI/SpinnerView";
 import { ALL_SPONSORS_DESC, SPONSORS } from "./constants";
@@ -10,13 +8,37 @@ import PageDescription from "../../components/UI/PageDescription";
 import { Box } from "@mui/material";
 import SponsorsTable from "./SponsorsTable";
 import CustomModal from "../../components/CustomModal";
+import {
+  useGetSponsorsQuery,
+  useUpdateSponsorMutation,
+  useCreateSponsorMutation,
+} from "../../services/sponsors";
 
 const SponsorsPage = () => {
-  const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.sponsors);
   const [open, setOpen] = useState(false);
   const [editedSponsor, setEditedSponsor] = useState(null);
-  const { notification } = useSelector((state) => state.notification);
+  const [
+    updateSponsor,
+    {
+      isSuccess: successUpdating,
+      isError: errorUpdating,
+      error: updatingErrorRes,
+    },
+  ] = useUpdateSponsorMutation();
+  const [
+    createSponsor,
+    {
+      isSuccess: successCreating,
+      isError: errorCreating,
+      error: creatingErrorRes,
+    },
+  ] = useCreateSponsorMutation();
+  const {
+    data: sponsors,
+    isLoading,
+    isError: errorFetching,
+    error: fetchingErrorRes,
+  } = useGetSponsorsQuery();
 
   const openSponsorsModal = () => {
     setOpen(true);
@@ -27,14 +49,9 @@ const SponsorsPage = () => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    dispatch(fetchSponsorsData());
-  }, [dispatch]);
-
   if (isLoading) {
     return <SpinnerView />;
   }
-
   return (
     <Box
       display={"flex"}
@@ -42,14 +59,26 @@ const SponsorsPage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      {notification?.isActive && (
-        <AlertNotification notification={notification} />
-      )}
+      <AlertNotification
+        errorFetching={errorFetching}
+        errorUpdating={errorUpdating || errorCreating}
+        successUpdating={successUpdating || successCreating}
+        subMessage={
+          fetchingErrorRes?.message ??
+          updatingErrorRes?.message ??
+          creatingErrorRes?.message ??
+          ""
+        }
+      />
+
       <Title title={SPONSORS} />
       <PageDescription text={ALL_SPONSORS_DESC} />
 
       <Box style={{ width: "90%" }}>
-        <AddEditSponsorForm closeSponsorsModal={closeSponsorsModal} />
+        <AddEditSponsorForm
+          closeSponsorsModal={closeSponsorsModal}
+          createSponsor={createSponsor}
+        />
       </Box>
 
       <CustomModal
@@ -59,6 +88,7 @@ const SponsorsPage = () => {
           <AddEditSponsorForm
             editedSponsor={editedSponsor}
             closeSponsorsModal={closeSponsorsModal}
+            updateSponsor={updateSponsor}
           />
         }
       />
@@ -67,6 +97,7 @@ const SponsorsPage = () => {
         setEditedSponsor={setEditedSponsor}
         closeSponsorsModal={closeSponsorsModal}
         openSponsorsModal={openSponsorsModal}
+        sponsors={sponsors}
       />
     </Box>
   );

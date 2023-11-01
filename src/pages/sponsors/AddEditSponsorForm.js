@@ -18,17 +18,17 @@ import {
 } from "./constants";
 import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
-import { useDispatch } from "react-redux";
-import {
-  addNewSponsor,
-  editSponsor,
-} from "../../store/sponsors/sponsors-actions";
-const AddEditSponsorForm = ({ editedSponsor, closeSponsorsModal }) => {
+
+const AddEditSponsorForm = ({
+  editedSponsor,
+  closeSponsorsModal,
+  createSponsor,
+  updateSponsor,
+}) => {
   const [sponsorName, setSponsorName] = useState("");
   const [sponsorWebsiteUrl, setSponsorWebsiteUrl] = useState("");
   const [sponsorImageUrl, setSponsorImageUrl] = useState("");
   const [sponsorType, setSponsorType] = useState("main");
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (editedSponsor) {
@@ -56,9 +56,9 @@ const AddEditSponsorForm = ({ editedSponsor, closeSponsorsModal }) => {
         ...newSponsor,
         id: editedSponsor?.id,
       };
-      dispatch(editSponsor(updatedSponsor));
+      updateSponsor(updatedSponsor);
     } else {
-      dispatch(addNewSponsor(newSponsor));
+      createSponsor(newSponsor);
     }
     closeSponsorsModal();
   };

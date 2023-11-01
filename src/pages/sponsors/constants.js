@@ -23,7 +23,7 @@ export const sponsorsTableDefinitions = [
     type: "text",
   },
   {
-    id: "sponsorType",
+    id: "type",
     label: SPONSOR_TYPE,
     type: "text",
   },
@@ -33,7 +33,7 @@ export const sponsorsTableDefinitions = [
     type: "image",
   },
   {
-    id: "active",
+    id: "status",
     label: STATUS,
     type: "icon",
   },

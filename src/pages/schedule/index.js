@@ -7,7 +7,6 @@ import { Box } from "@mui/material";
 import { fetchGroupsData } from "../../store/schedule/schedule-actions";
 import AlertNotification from "../../components/UI/AlertNotification";
 import SpinnerView from "../../components/UI/SpinnerView";
-import { fetchSponsorsData } from "../../store/sponsors/sponsors-actions";
 import GroupsTable from "./GroupsTable";
 import {
   ADD_DAY,
@@ -52,8 +51,8 @@ const SchedulePage = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchGroupsData());
-    dispatch(fetchSponsorsData());
+    // dispatch(fetchGroupsData());
+    // dispatch(fetchSponsorsData());
   }, [dispatch]);
 
   if (isLoading) {
