@@ -4,7 +4,6 @@ import AddIcon from "@mui/icons-material/Add";
 import PageDescription from "../../components/UI/PageDescription";
 import Title from "../../components/UI/Title";
 import { Box } from "@mui/material";
-import { fetchGroupsData } from "../../store/schedule/schedule-actions";
 import AlertNotification from "../../components/UI/AlertNotification";
 import SpinnerView from "../../components/UI/SpinnerView";
 import GroupsTable from "./GroupsTable";
@@ -20,17 +19,23 @@ import AddEditDayForm from "./AddEditDayForm";
 import CustomModal from "../../components/CustomModal";
 import CustomDialog from "../../components/CustomDialog";
 import CustomButton from "../../components/CustomButton";
+import { useGetDaysQuery, useGetGroupsQuery } from "../../services/schedule";
+import { useGetSponsorsQuery } from "../../services/sponsors";
 
 const SchedulePage = () => {
-  const { isLoading } = useSelector((state) => state.schedule);
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [openAddEditDayDialog, setOpenAddEditDayDialog] = useState(false);
   const [selectedGroupName, setSelectedGroupName] = useState(null);
   const [selectedGroupId, setSelectedGroupId] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
-  const { notification } = useSelector((state) => state.notification);
-
+  const {
+    data: groups,
+    isError: errorFetching,
+    error: fetchingErrorRes,
+    isLoading,
+  } = useGetGroupsQuery();
+  const { data: days } = useGetDaysQuery();
+  const { data: sponsors } = useGetSponsorsQuery();
   const handleOpenGroupNameModal = () => {
     setOpen(true);
   };
@@ -50,11 +55,6 @@ const SchedulePage = () => {
     setOpenAddEditDayDialog(false);
   };
 
-  useEffect(() => {
-    // dispatch(fetchGroupsData());
-    // dispatch(fetchSponsorsData());
-  }, [dispatch]);
-
   if (isLoading) {
     return <SpinnerView />;
   }
@@ -66,9 +66,8 @@ const SchedulePage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      {notification?.isActive && (
-        <AlertNotification notification={notification} />
-      )}
+      {/* <AlertNotification /> */}
+
       <Title title={GROUPS} />
       <PageDescription text={GROUPS_DESC} />
 
@@ -107,6 +106,9 @@ const SchedulePage = () => {
         setSelectedGroupId={setSelectedGroupId}
         handleOpenAddEditDayDialog={handleOpenAddEditDayDialog}
         setSelectedDay={setSelectedDay}
+        groups={groups}
+        days={days}
+        sponsors={sponsors}
       />
     </Box>
   );

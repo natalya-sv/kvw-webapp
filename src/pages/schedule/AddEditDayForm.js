@@ -15,8 +15,7 @@ import {
 } from "./constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
-import { useDispatch } from "react-redux";
-import { addNewDay, editDay } from "../../store/schedule/schedule-actions";
+
 import "dayjs/locale/nl";
 import CustomDatePicker from "../../components/UI/pickers/CustomDatePicker";
 import CustomTimePicker from "../../components/UI/pickers/CustomTimePicker";
@@ -34,7 +33,6 @@ const AddEditDayForm = ({
   const [startTime, setStartTime] = useState(dayjs());
   const [endTime, setEndTime] = useState(dayjs());
   const [selectedDaySponsors, setSelectedDaySponsors] = useState([]);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (selectedDay) {
@@ -78,9 +76,9 @@ const AddEditDayForm = ({
         id: selectedDay.id,
       };
 
-      dispatch(editDay(updatedDay));
+      // editDay(updatedDay)
     } else {
-      dispatch(addNewDay(day));
+      // addNewDay(day)
     }
 
     handleCloseAddEditDayDialog();
