@@ -1,34 +1,39 @@
 import React, { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import CollapsableTable from "../../components/table/CollapsableTable";
 import {
   ALBUMS_TITLE,
   albumsTableDefinition,
   subRowAlbumsDefinition,
 } from "./constants";
-import {
-  removeAlbum,
-  removeAlbums,
-  removeFolders,
-} from "../../store/photos/photos-actions";
 import { truncateString } from "../../helpers/utils";
-const PhotosTable = (props) => {
-  const { folders, albums } = useSelector((state) => state.photos);
-  const dispatch = useDispatch();
-
+const PhotosTable = ({
+  folders,
+  albums,
+  setSelectedFolder,
+  handleOpenFolderModal,
+  setSelectedFolderId,
+  handleOpenAddEditAlbumDialog,
+  setSelectedAlbum,
+}) => {
   const updatedFolders = useMemo(() => {
     if (folders && albums) {
       const photos = folders.map((folder) => {
         const folderAlbums = albums
-          .filter((album) => album.folderId === folder.id)
-          .map((alb) => {
+          .filter((alb) => alb.folder_id === folder.id)
+          .map((album) => {
             return {
-              ...alb,
-              truncatedText: truncateString(alb.albumLink, 70),
+              id: album.id,
+              title: album.title,
+              albumCoverPhoto: album.album_cover_photo,
+              albumLink: album.album_link,
+              folderId: album.folder_id,
+              truncatedText: truncateString(album.album_link, 70),
             };
           });
         return {
-          ...folder,
+          id: folder.id,
+          year: folder.year,
+          folderCoverPhoto: folder.folder_cover_photo,
           albums: [...folderAlbums],
           nrOfAlbums: folderAlbums.length,
         };
@@ -42,43 +47,43 @@ const PhotosTable = (props) => {
   const handleRemoveFolders = (idsToRemove) => {
     const deleteAllFolders = updatedFolders.length === idsToRemove.length;
     if (deleteAllFolders) {
-      dispatch(removeFolders(idsToRemove, true));
+      // removeFolders(idsToRemove, true)
       const albumsToRemove = albums.map((album) => album.id);
-      dispatch(removeAlbums(albumsToRemove, true));
+      // removeAlbums(albumsToRemove, true)
     } else {
       const albumsToDelete = albums
         .filter((al) => idsToRemove.includes(al.folderId))
         .map((a) => a.id);
-      removeFolders(idsToRemove, false);
-      removeAlbums(albumsToDelete, false);
+      // removeFolders(idsToRemove, false);
+      // removeAlbums(albumsToDelete, false);
     }
   };
 
   const handleEditFolder = (folderId) => {
     const folder = folders.find((f) => f.id === folderId);
     if (folder) {
-      props.setSelectedFolder(folder);
-      props.handleOpenFolderModal();
+      setSelectedFolder(folder);
+      handleOpenFolderModal();
     }
   };
 
   const handleAddNewAlbum = (folderId) => {
-    props.setSelectedFolderId(folderId);
-    props.handleOpenAddEditAlbumDialog();
+    setSelectedFolderId(folderId);
+    handleOpenAddEditAlbumDialog();
   };
 
   const handleEditAlbum = (albumId, folderId) => {
-    props.setSelectedFolderId(folderId);
+    setSelectedFolderId(folderId);
 
     const album = albums.find((a) => a.id === albumId);
     if (album) {
-      props.setSelectedAlbum(album);
-      props.handleOpenAddEditAlbumDialog();
+      setSelectedAlbum(album);
+      handleOpenAddEditAlbumDialog();
     }
   };
 
   const handleRemoveAlbum = (albumId) => {
-    dispatch(removeAlbum(albumId));
+    // removeAlbum(albumId);
   };
 
   return (

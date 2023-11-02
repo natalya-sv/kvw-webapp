@@ -4,15 +4,10 @@ import React, { useEffect, useState } from "react";
 import { FOLDER_COVER_PHOTO_TITLE, FOLDER_TITLE } from "./constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
-import { useDispatch } from "react-redux";
-import {
-  addNewFolderItem,
-  editFolder,
-} from "../../store/photos/photos-actions";
+
 const AddEditFolder = ({ selectedFolder, handleClose }) => {
   const [folderYear, setFolderYear] = useState("");
   const [folderCoverPhoto, setFolderCoverPhoto] = useState("");
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (selectedFolder) {
@@ -30,14 +25,12 @@ const AddEditFolder = ({ selectedFolder, handleClose }) => {
         year: folderYear,
         folder_cover_photo: folderCoverPhoto,
       };
-      dispatch(editFolder(updatedFolder));
+      // editFolder(updatedFolder);
     } else {
-      dispatch(
-        addNewFolderItem({
-          year: folderYear,
-          folder_cover_photo: folderCoverPhoto,
-        })
-      );
+      // addNewFolderItem({
+      //   year: folderYear,
+      //   folder_cover_photo: folderCoverPhoto,
+      // });
     }
     handleClose();
   };
