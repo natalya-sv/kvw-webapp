@@ -59,7 +59,6 @@ const SponsorsPage = () => {
           fetchingErrorRes?.message ?? updatingErrorRes?.message ?? ""
         }
       />
-
       <Title title={SPONSORS} />
       <PageDescription text={ALL_SPONSORS_DESC} />
 

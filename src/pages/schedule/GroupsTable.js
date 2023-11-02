@@ -1,5 +1,4 @@
 import { Typography } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
 import {
   DAY_SCHEDULE,
   NO_GROUPS_YET,
@@ -7,33 +6,46 @@ import {
   subRowItemsDefinition,
 } from "./constants";
 import { useMemo } from "react";
-import {
-  removeDays,
-  removeDayItem,
-  removeGroups,
-} from "../../store/schedule/schedule-actions";
-import CollapsableTable from "../../components/table/CollapsableTable";
-const GroupsTable = (props) => {
-  const { groups, days } = useSelector((state) => state.schedule);
-  const dispatch = useDispatch();
-  const { sponsors } = useSelector((state) => state.sponsors);
 
+import CollapsableTable from "../../components/table/CollapsableTable";
+const GroupsTable = ({
+  groups,
+  days,
+  sponsors,
+  setSelectedGroupName,
+  handleOpenGroupNameModal,
+  setSelectedGroupId,
+  setSelectedDay,
+  handleOpenAddEditDayDialog,
+}) => {
   const mergedDaysAndGroups = useMemo(() => {
     if (groups && sponsors && days) {
       const updGroups = groups.map((group) => {
         const groupSchedule = days
-          .filter((day) => day.groupId === group.id)
-          .map((d) => {
+          .filter((d) => d.group_id === group.id)
+          .map((day) => {
             const sponsorsNames = sponsors
-              .filter((sp) => d.sponsors.includes(sp.id))
+              .filter((sp) => day.day_sponsors.includes(sp.id))
               .map((sp) => sp.sponsorName);
             return {
-              ...d,
+              id: day.id,
+              date: day.date,
+              startTime: day.start_time,
+              endTime: day.end_time,
+              programma: day.programma,
+              extraInfo: day.extra_info,
+              startLocation: day.start_location,
+              endLocation: day.end_location,
+              videoTitle: day.video_title,
+              videoUrl: day.video_url,
+              groupId: day.group_id,
+              sponsors: day.day_sponsors,
               namedSponsors: sponsorsNames,
             };
           });
         return {
-          ...group,
+          id: group.id,
+          groupName: group.group_name,
           weekSchedule: [...groupSchedule],
           days: groupSchedule.length,
         };
@@ -46,8 +58,8 @@ const GroupsTable = (props) => {
   const handleEditGroupName = (groupId) => {
     const groupToEdit = groups.find((gr) => gr.id === groupId);
     if (groupToEdit?.id) {
-      props.setSelectedGroupName(groupToEdit);
-      props.handleOpenGroupNameModal();
+      setSelectedGroupName(groupToEdit);
+      handleOpenGroupNameModal();
     }
   };
 
@@ -56,35 +68,35 @@ const GroupsTable = (props) => {
     const deleteAllGroups = groups.length === idsToRemove.length;
 
     if (deleteAllGroups) {
-      dispatch(removeGroups(idsToRemove, true));
+      // removeGroups(idsToRemove, true)
       const daysToRemove = days.map((day) => day.id);
-      dispatch(removeDays(daysToRemove, true));
+      // removeDays(daysToRemove, true)
     } else {
       const dayIds = days
         .filter((day) => idsToRemove.includes(day.groupId))
         .map((d) => d.id);
 
-      dispatch(removeGroups(idsToRemove, false));
-      dispatch(removeDays(dayIds, false));
+      // removeGroups(idsToRemove, false))
+      // removeDays(dayIds, false);
     }
   };
 
   const handleEditDay = (dayId, groupId) => {
-    props.setSelectedGroupId(groupId);
+    setSelectedGroupId(groupId);
     const day = days.find((day) => day.id === dayId);
     if (day) {
-      props.setSelectedDay(day);
-      props.handleOpenAddEditDayDialog();
+      setSelectedDay(day);
+      handleOpenAddEditDayDialog();
     }
   };
 
   const handleAddNewDay = (groupId) => {
-    props.setSelectedGroupId(groupId);
-    props.handleOpenAddEditDayDialog();
+    setSelectedGroupId(groupId);
+    handleOpenAddEditDayDialog();
   };
 
   const handleRemoveDay = (dayToDelete) => {
-    dispatch(removeDayItem(dayToDelete));
+    // removeDayItem(dayToDelete);
   };
 
   return groups.length > 0 ? (

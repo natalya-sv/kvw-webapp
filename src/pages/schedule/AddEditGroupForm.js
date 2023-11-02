@@ -4,15 +4,9 @@ import { SAVE } from "../../helpers/constants";
 import { GROUP_NAME } from "./constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
-import {
-  addNewGroupItem,
-  updateGroupName,
-} from "../../store/schedule/schedule-actions";
-import { useDispatch } from "react-redux";
 
 const AddEditGroupForm = ({ selectedGroupName, handleClose }) => {
   const [groupName, setGroupName] = useState("");
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (selectedGroupName) {
@@ -30,9 +24,9 @@ const AddEditGroupForm = ({ selectedGroupName, handleClose }) => {
         ...group,
         id: selectedGroupName.id,
       };
-      dispatch(updateGroupName(updatedGroup));
+      // updateGroupName(updatedGroup)
     } else {
-      dispatch(addNewGroupItem(group));
+      // addNewGroupItem(group)
     }
     handleClose();
   };
