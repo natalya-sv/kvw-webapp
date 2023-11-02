@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import PageDescription from "../../components/UI/PageDescription";
 import Title from "../../components/UI/Title";
@@ -67,7 +66,6 @@ const SchedulePage = () => {
       width={"100%"}
     >
       {/* <AlertNotification /> */}
-
       <Title title={GROUPS} />
       <PageDescription text={GROUPS_DESC} />
 
@@ -76,7 +74,6 @@ const SchedulePage = () => {
         onClick={handleOpenGroupNameModal}
         startIcon={<AddIcon />}
       />
-
       <CustomModal
         open={open}
         handleClose={handleCloseGroupNameModal}
@@ -99,7 +96,6 @@ const SchedulePage = () => {
           />
         }
       />
-
       <GroupsTable
         handleOpenGroupNameModal={handleOpenGroupNameModal}
         setSelectedGroupName={setSelectedGroupName}

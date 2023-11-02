@@ -1,6 +1,5 @@
 export const getEmbeddedUrl = (url) => {
   let editedUrl = "";
-
   if (url) {
     const newUrl = url.replace(
       "https://youtu.be/",

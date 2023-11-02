@@ -68,7 +68,6 @@ const SponsorsPage = () => {
           updateSponsorsData={updateSponsorsData}
         />
       </Box>
-
       <CustomModal
         open={open}
         handleClose={closeSponsorsModal}
@@ -80,7 +79,6 @@ const SponsorsPage = () => {
           />
         }
       />
-
       <SponsorsTable
         setEditedSponsor={setEditedSponsor}
         closeSponsorsModal={closeSponsorsModal}

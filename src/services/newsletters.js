@@ -1,10 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import {
-  NEWSLETTERS_GET,
-  NEWSLETTERS_PUBLISH,
-  SPONSORS_GET,
-  SPONSORS_PUBLISH,
-} from "../APIData";
+import { NEWSLETTERS_GET, NEWSLETTERS_PUBLISH } from "../APIData";
 const tokenPrefix = process.env.REACT_APP_TOKEN_PREFIX + " ";
 const token = localStorage.getItem("userToken");
 

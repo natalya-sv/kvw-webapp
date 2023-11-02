@@ -5,6 +5,7 @@ import { VIDEO_DESCRIPTION, VIDEO_TITLE, YOUTUBE_LINK } from "./constants";
 import { getEmbeddedUrl } from "./utils";
 import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
+import { useCreateVideoItemMutation } from "../../services/videos";
 
 const AddEditVideoForm = ({
   editedVideo,
@@ -14,6 +15,7 @@ const AddEditVideoForm = ({
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [youtubeLink, setYoutubeLink] = useState("");
+  const [createVideoItem] = useCreateVideoItemMutation();
 
   useEffect(() => {
     if (editedVideo) {
@@ -23,8 +25,7 @@ const AddEditVideoForm = ({
     }
   }, [editedVideo]);
 
-  const submitHandler = (event) => {
-    event.preventDefault();
+  const submitHandler = () => {
     const embeddedLinkForApp = getEmbeddedUrl(youtubeLink);
     const videoItem = {
       title: title,
@@ -40,7 +41,7 @@ const AddEditVideoForm = ({
       };
       updateVideosData(updatedVideo);
     } else {
-      updateVideosData(videoItem);
+      createVideoItem(videoItem);
     }
     closeVideosModal();
   };

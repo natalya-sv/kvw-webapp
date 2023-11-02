@@ -21,8 +21,9 @@ const AddEditNewslettersItem = ({
 
   useEffect(() => {
     if (editedNewsletterItem) {
-      const d = editedNewsletterItem.date;
-      const dateFormatted = dayjs(d).format("YYYY-MM-DD");
+      const dateFormatted = dayjs(editedNewsletterItem.date).format(
+        "YYYY-MM-DD"
+      );
       setNewsletterLink(editedNewsletterItem.newsletterLink);
       setNewsletterTitle(editedNewsletterItem.title);
       setDateSent(dateFormatted);

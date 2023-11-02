@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { COUNTDOWN_GET, COUNTDOWN_PUBLISH, PUT } from "../APIData";
+import { COUNTDOWN_GET, COUNTDOWN_PUBLISH } from "../APIData";
 const tokenPrefix = process.env.REACT_APP_TOKEN_PREFIX + " ";
 const token = localStorage.getItem("userToken");
 

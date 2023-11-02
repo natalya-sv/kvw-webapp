@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { SAVE } from "../../helpers/constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
+
 const AddEditAlbum = ({
   selectedAlbum,
   handleCloseAddEditAlbumDialog,
@@ -11,6 +12,7 @@ const AddEditAlbum = ({
   const [title, setTitle] = useState("");
   const [albumCoverPhoto, setAlbumCoverPhoto] = useState("");
   const [albumLink, setAlbumLink] = useState("");
+
   useEffect(() => {
     if (selectedAlbum) {
       setTitle(selectedAlbum.title);
@@ -20,14 +22,13 @@ const AddEditAlbum = ({
   }, [selectedAlbum]);
 
   const onSubmitHandler = () => {
-    const isEditing = selectedAlbum;
     const album = {
       title: title,
       album_link: albumLink,
       album_cover_photo: albumCoverPhoto,
       folder_id: selectedFolderId,
     };
-    if (isEditing) {
+    if (selectedAlbum) {
       const updAlbum = {
         ...album,
         id: selectedAlbum.id,

@@ -18,6 +18,7 @@ const MorePage = () => {
     isError: errorFetching,
     error: fetchingErrorRes,
   } = useGetMoreDataQuery();
+
   const [setMoreData, { isSuccess: successUpdating, isError: errorUpdating }] =
     useSetMoreDataMutation();
 
@@ -38,15 +39,9 @@ const MorePage = () => {
         successUpdating={successUpdating}
         subMessage={fetchingErrorRes?.message ?? ""}
       />
-
       <Title title={MORE_PAGE_TITLE} />
       <PageDescription text={MORE_PAGE_DESCRIPTION} />
-
-      <Box
-        style={{
-          width: "90%",
-        }}
-      >
+      <Box width={"90%"}>
         <MoreForm moreData={moreData} setMoreData={setMoreData} />
       </Box>
     </Box>

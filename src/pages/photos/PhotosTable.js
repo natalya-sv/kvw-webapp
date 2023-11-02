@@ -6,6 +6,7 @@ import {
   subRowAlbumsDefinition,
 } from "./constants";
 import { truncateString } from "../../helpers/utils";
+
 const PhotosTable = ({
   folders,
   albums,
@@ -43,7 +44,7 @@ const PhotosTable = ({
     return [];
   }, [folders, albums]);
 
-  //delete folders and albums that belong to these folders
+  //To Do: change way of deleting at the backend
   const handleRemoveFolders = (idsToRemove) => {
     const deleteAllFolders = updatedFolders.length === idsToRemove.length;
     if (deleteAllFolders) {
