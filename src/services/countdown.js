@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { COUNTDOWN_GET, PUT } from "../APIData";
+import { COUNTDOWN_GET, COUNTDOWN_PUBLISH, PUT } from "../APIData";
 const tokenPrefix = process.env.REACT_APP_TOKEN_PREFIX + " ";
 const token = localStorage.getItem("userToken");
 
@@ -20,8 +20,8 @@ export const countdownApi = createApi({
     }),
     setCountdownData: builder.mutation({
       query: (updatedCountdownData) => ({
-        url: `${PUT}${updatedCountdownData.id}`,
-        method: "PUT",
+        url: COUNTDOWN_PUBLISH,
+        method: "POST",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,

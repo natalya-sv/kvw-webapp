@@ -23,7 +23,7 @@ const AddEditSponsorForm = ({
   editedSponsor,
   closeSponsorsModal,
   createSponsor,
-  updateSponsor,
+  updateSponsorsData,
 }) => {
   const [sponsorName, setSponsorName] = useState("");
   const [sponsorWebsiteUrl, setSponsorWebsiteUrl] = useState("");
@@ -56,7 +56,7 @@ const AddEditSponsorForm = ({
         ...newSponsor,
         id: editedSponsor?.id,
       };
-      updateSponsor(updatedSponsor);
+      updateSponsorsData(updatedSponsor);
     } else {
       createSponsor(newSponsor);
     }

@@ -62,6 +62,7 @@ const KVWPage = () => {
       thema_title: themaYearTitle,
       thema_image: image,
     };
+
     setKvwData(updatedKVWData);
   };
 
