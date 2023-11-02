@@ -18,13 +18,7 @@ import {
   removeSingleItem,
   updateSingleItem,
 } from "../api/apiHelper";
-import {
-  ERROR_MESSAGE,
-  ERROR_FETCHING,
-  SUCCESS_UPDATE_API,
-  ERROR_UPDATING,
-} from "../constants";
-import { notificationActions } from "../notification/notification-slice";
+import { ERROR_MESSAGE } from "../constants";
 
 export const addNewFolderItem = (newFolder) => {
   return async (dispatch) => {
@@ -39,21 +33,10 @@ export const addNewFolderItem = (newFolder) => {
 
       if (response) {
         dispatch(photosActions.addNewFolder({ newFolder: response.newItem }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(photosActions.setIsLoading({ isLoading: false }));
     }
@@ -77,12 +60,6 @@ export const fetchPhotoFolders = () => {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_FETCHING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(photosActions.setIsLoading({ isLoading: false }));
     }
@@ -103,21 +80,10 @@ export const editFolder = (editedFolderData) => {
         dispatch(
           photosActions.updateFolder({ editedFolderData: response.updatedData })
         );
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(photosActions.setIsLoading({ isLoading: false }));
     }
@@ -135,21 +101,10 @@ export const removeFolders = (ids, deleteAll) => {
       }
       if (response) {
         dispatch(photosActions.removeFolders({ ids, deleteAll }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(photosActions.setIsLoading({ isLoading: false }));
     }
@@ -162,21 +117,10 @@ export const addNewAlbum = (album) => {
       const response = await addNewItem(album, ALBUMS_POST, FOLDERS_PUBLISH);
       if (response.isUpdateSuccessful) {
         dispatch(photosActions.addNewAlbum({ newAlbum: response.newItem }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(photosActions.setIsLoading({ isLoading: false }));
     }
@@ -190,21 +134,10 @@ export const removeAlbum = (id) => {
 
       if (response) {
         dispatch(photosActions.removeAlbum({ id: id }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(photosActions.setIsLoading({ isLoading: false }));
     }
@@ -223,21 +156,10 @@ export const editAlbum = (album) => {
       );
       if (response.isUpdateSuccessful) {
         dispatch(photosActions.editAlbum({ editedAlbum: album }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(photosActions.setIsLoading({ isLoading: false }));
     }
@@ -259,21 +181,10 @@ export const removeAlbums = (albumsIds, deleteAll) => {
       }
       if (response) {
         removeAlbums({ ids: albumsIds, deleteAll });
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(photosActions.setIsLoading({ isLoading: false }));
     }

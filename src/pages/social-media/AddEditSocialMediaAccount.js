@@ -3,16 +3,14 @@ import React, { useEffect, useState } from "react";
 import { SAVE } from "../../helpers/constants";
 import { PLATFORM_TITEL, SOCIAL_MEDIA_URL } from "./constants";
 import CustomButton from "../../components/CustomButton";
-import {
-  addNewAccount,
-  editSocialMediaAccount,
-} from "../../store/social-media/social-media-actions";
-import { useDispatch } from "react-redux";
 import TextInput from "../../components/TextInput";
-const AddEditSocialMediaAccount = ({ accountToEdit, closeMediaModal }) => {
+const AddEditSocialMediaAccount = ({
+  accountToEdit,
+  closeMediaModal,
+  updateSocialMediaData,
+}) => {
   const [accountTitle, setAccountTitle] = useState("");
   const [accountWebsiteUrl, setAccountWebsiteUrl] = useState("");
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (accountToEdit) {
@@ -37,9 +35,9 @@ const AddEditSocialMediaAccount = ({ accountToEdit, closeMediaModal }) => {
         icon_name: accountToEdit.iconName,
         color: accountToEdit.color,
       };
-      dispatch(editSocialMediaAccount(updatedAccount));
+      updateSocialMediaData(updatedAccount);
     } else {
-      dispatch(addNewAccount(account));
+      updateSocialMediaData(account);
     }
     closeMediaModal();
   };

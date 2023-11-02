@@ -15,13 +15,7 @@ import {
   NEWSLETTERS_PUBLISH,
   PUT,
 } from "../../APIData";
-import {
-  ERROR_MESSAGE,
-  ERROR_FETCHING,
-  SUCCESS_UPDATE_API,
-  ERROR_UPDATING,
-} from "../constants";
-import { notificationActions } from "../notification/notification-slice";
+import { ERROR_MESSAGE } from "../constants";
 export const fetchNewsletters = () => {
   return async (dispatch) => {
     dispatch(newslettersActions.setIsLoading({ isLoading: true }));
@@ -34,12 +28,6 @@ export const fetchNewsletters = () => {
       }
     } catch (err) {
       dispatch(newslettersActions.setNewsletters({ newsletters: [] }));
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_FETCHING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(newslettersActions.setIsLoading({ isLoading: false }));
     }
@@ -61,22 +49,11 @@ export const addNewsletterItem = (newsletterItem) => {
             newsletterItem: response.newItem,
           })
         );
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
       dispatch(newslettersActions.setNewsletters({ newsletters: [] }));
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(newslettersActions.setIsLoading({ isLoading: false }));
     }
@@ -93,21 +70,10 @@ export const removeNewsletterItem = (idToDelete) => {
       );
       if (response) {
         dispatch(newslettersActions.removeNewslettersItem({ id: idToDelete }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(newslettersActions.setIsLoading({ isLoading: false }));
     }
@@ -138,21 +104,10 @@ export const removeNewslettersItems = (idsToDelete, deleteAll) => {
             deleteAll: deleteAll,
           })
         );
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(newslettersActions.setIsLoading({ isLoading: false }));
     }
@@ -175,22 +130,11 @@ export const editNewsletterItem = (updatedNewsletterItem) => {
             newsletterItem: response.updatedData,
           })
         );
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
       dispatch(newslettersActions.setNewsletters({ newsletters: [] }));
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(newslettersActions.setIsLoading({ isLoading: false }));
     }
