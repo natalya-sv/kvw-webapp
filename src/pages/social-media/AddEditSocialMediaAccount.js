@@ -4,6 +4,7 @@ import { SAVE } from "../../helpers/constants";
 import { PLATFORM_TITEL, SOCIAL_MEDIA_URL } from "./constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
+
 const AddEditSocialMediaAccount = ({
   accountToEdit,
   closeMediaModal,
@@ -19,16 +20,14 @@ const AddEditSocialMediaAccount = ({
     }
   }, [accountToEdit]);
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-    const isEditing = accountToEdit;
+  const submitHandler = () => {
     const account = {
       title: accountTitle,
       website_url: accountWebsiteUrl,
       icon_name: "person-circle-outline",
       color: "#72c6c8",
     };
-    if (isEditing) {
+    if (accountToEdit) {
       const updatedAccount = {
         ...account,
         id: accountToEdit.id,
@@ -41,6 +40,7 @@ const AddEditSocialMediaAccount = ({
     }
     closeMediaModal();
   };
+
   return (
     <Box display={"flex"} flexDirection={"column"} gap={"20px"}>
       <TextInput
@@ -55,7 +55,6 @@ const AddEditSocialMediaAccount = ({
         value={accountWebsiteUrl}
         label={SOCIAL_MEDIA_URL}
       />
-
       <CustomButton
         title={SAVE}
         onClick={submitHandler}

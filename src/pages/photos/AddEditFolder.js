@@ -16,10 +16,8 @@ const AddEditFolder = ({ selectedFolder, handleClose }) => {
     }
   }, [selectedFolder]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const isEditing = selectedFolder;
-    if (isEditing) {
+  const submitHandler = () => {
+    if (selectedFolder) {
       const updatedFolder = {
         id: selectedFolder.id,
         year: folderYear,

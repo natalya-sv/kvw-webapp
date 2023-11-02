@@ -2,7 +2,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import React, { useContext } from "react";
 import Login from "./pages/Login";
 import Layout from "./components/UI/layout/Layout.js";
-import KVWPage from "./pages/kvw/index.js";
+import HomwPage from "./pages/home/index.js";
 import NewsPage from "./pages/news/index";
 import AuthContext from "./context/auth-context";
 import SponsorsPage from "./pages/sponsors/index";
@@ -13,6 +13,7 @@ import MorePage from "./pages/more";
 import SocialMediaPage from "./pages/social-media";
 import PhotosPage from "./pages/photos";
 import NewslettersPage from "./pages/more/newsletters";
+
 const App = () => {
   const auth = useContext(AuthContext);
   return (
@@ -29,7 +30,7 @@ const App = () => {
         </Route>
 
         <Route path="/home">
-          {auth.isLoggedIn && <KVWPage />}
+          {auth.isLoggedIn && <HomwPage />}
           {!auth.isLoggedIn && <Redirect to="/login" />}
         </Route>
 

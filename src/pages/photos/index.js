@@ -59,7 +59,6 @@ const PhotosPage = () => {
       style={{ width: "100%" }}
     >
       {/* <AlertNotification  /> */}
-
       <Title title={PHOTOS_PAGE_TITLE} />
       <PageDescription text={PHOTOS_PAGE_DESCRIPTION} />
 
@@ -79,7 +78,6 @@ const PhotosPage = () => {
           />
         }
       />
-
       <CustomDialog
         openDialog={openAddEditAlbumDialog}
         handleCloseDialog={handleCloseAddEditAlbumDialog}
@@ -92,7 +90,6 @@ const PhotosPage = () => {
           />
         }
       />
-
       <PhotosTable
         handleOpenFolderModal={handleOpenFolderModal}
         setSelectedFolder={setSelectedFolder}

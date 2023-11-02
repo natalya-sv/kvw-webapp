@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { makeStyles } from "@mui/styles";
 import { DAY_SPONSORS } from "./constants";
 import { Typography } from "@mui/material";
+
 const useStyles = makeStyles({
   container: {
     display: "flex",
@@ -20,10 +21,10 @@ const useStyles = makeStyles({
     width: "auto",
   },
 });
+
 const SponsorsCheckboxList = (props) => {
   const [checkedSponsors, setCheckedSponsors] = useState([]);
   const { sponsors } = useSelector((state) => state.sponsors);
-
   const classes = useStyles();
 
   useEffect(() => {
@@ -35,7 +36,6 @@ const SponsorsCheckboxList = (props) => {
   const handleToggle = (value) => () => {
     const currentIndex = checkedSponsors.indexOf(value);
     const newChecked = [...checkedSponsors];
-
     if (currentIndex === -1) {
       newChecked.push(value);
     } else {

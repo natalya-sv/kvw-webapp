@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import newsSlice from "./news/news-slice";
-import { kvwApi } from "../services/kvw";
+import { homeApi } from "../services/home";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { countdownApi } from "../services/countdown";
 import { moreDataApi } from "../services/more";
@@ -13,7 +13,7 @@ import { foldersApi } from "../services/folders";
 
 const store = configureStore({
   reducer: {
-    [kvwApi.reducerPath]: kvwApi.reducer,
+    [homeApi.reducerPath]: homeApi.reducer,
     [countdownApi.reducerPath]: countdownApi.reducer,
     [moreDataApi.reducerPath]: moreDataApi.reducer,
     news: newsSlice.reducer,
@@ -27,7 +27,7 @@ const store = configureStore({
 
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
-      kvwApi.middleware,
+      homeApi.middleware,
       countdownApi.middleware,
       moreDataApi.middleware,
       sponsorsApi.middleware,

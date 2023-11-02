@@ -19,13 +19,13 @@ const NewsletteraTable = ({
     if (newsletters && newsletters.length > 0) {
       return [...newsletters]
         .sort((a, b) => new Date(b.date) - new Date(a.date))
-        .map((nl) => {
+        .map((nlItem) => {
           return {
-            id: nl.id,
-            title: nl.title,
-            newsletterLink: nl.newsletter_link,
-            date: nl.date,
-            truncatedText: truncateString(nl.newsletter_link, 70),
+            id: nlItem.id,
+            title: nlItem.title,
+            newsletterLink: nlItem.newsletter_link,
+            date: nlItem.date,
+            truncatedText: truncateString(nlItem.newsletter_link, 70),
           };
         });
     } else {

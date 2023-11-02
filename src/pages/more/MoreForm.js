@@ -45,8 +45,7 @@ const MoreForm = ({ moreData, setMoreData }) => {
     }
   }, [moreData]);
 
-  const onSubmitHandler = (event) => {
-    event.preventDefault();
+  const onSubmitHandler = () => {
     const updatedMoreData = {
       id: moreData[0].id,
       about_us_title: aboutUsTitle,
@@ -106,7 +105,6 @@ const MoreForm = ({ moreData, setMoreData }) => {
       <Typography color={"#ea507c"} variant="subtitle2">
         {PRIVACY_PAGE}
       </Typography>
-
       <TextInput
         id="privacy-content"
         fullWidth={true}
@@ -115,7 +113,6 @@ const MoreForm = ({ moreData, setMoreData }) => {
         label={PRIVACY_STATEMENT_CONTENT}
         onChange={setPrivacyStatementContent}
       />
-
       <TextInput
         id="privacy-link"
         fullWidth={true}
@@ -124,11 +121,9 @@ const MoreForm = ({ moreData, setMoreData }) => {
         onChange={setPrivacyStatementLink}
       />
       <Divider variant="fullWidth" />
-
       <Typography color={"#ea507c"} variant="subtitle2">
         {CONTACTS_PAGE}
       </Typography>
-
       <TextInput
         id="contact-email"
         fullWidth={true}

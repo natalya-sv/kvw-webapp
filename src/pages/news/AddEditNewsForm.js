@@ -26,9 +26,7 @@ const AddEditNewsForm = ({ editedNewsItem, closeNewsModal }) => {
     }
   }, [editedNewsItem]);
 
-  const submitHandler = (event) => {
-    event.preventDefault();
-
+  const submitHandler = () => {
     const newsItem = {
       title: newsTitle,
       content: newsContent,
@@ -55,7 +53,6 @@ const AddEditNewsForm = ({ editedNewsItem, closeNewsModal }) => {
         onChange={setNewsTitle}
         label={NEWS_TITLE}
       />
-
       <TextInput
         id="news-content"
         multiline={true}
@@ -63,7 +60,6 @@ const AddEditNewsForm = ({ editedNewsItem, closeNewsModal }) => {
         value={newsContent}
         label={NEWS_CONTENT}
       />
-
       <TextInput
         id="news-image-url"
         value={imageUrl}
@@ -72,7 +68,6 @@ const AddEditNewsForm = ({ editedNewsItem, closeNewsModal }) => {
         label={IMAGE_URL_OPT}
         type={"url"}
       />
-
       <CustomButton
         disabled={newsTitle === "" || newsContent === ""}
         title={editedNewsItem ? UPDATE_NEWSITEM : SEND_PUSH_MESSAGE}

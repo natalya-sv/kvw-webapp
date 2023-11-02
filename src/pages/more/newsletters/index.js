@@ -22,6 +22,7 @@ const NewslettersPage = () => {
     isError: errorFetching,
     error: fetchingErrorRes,
   } = useGetNewslettersQuery();
+
   const [
     updateNewslettersData,
     {
@@ -30,6 +31,7 @@ const NewslettersPage = () => {
       error: updatingErrorRes,
     },
   ] = useUpdateNewslettersDataMutation();
+
   const openNewslettersModal = () => {
     setOpen(true);
   };
@@ -58,7 +60,6 @@ const NewslettersPage = () => {
           fetchingErrorRes?.message ?? updatingErrorRes?.message ?? ""
         }
       />
-
       <Title title={NEWSLETTERS} />
       <PageDescription text={NEWSLETTERS_DESC} />
       <Box style={{ width: "90%" }}>

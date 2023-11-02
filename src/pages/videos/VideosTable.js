@@ -14,8 +14,6 @@ const VideosTable = ({
   setEditedVideo,
   openVideosModal,
 }) => {
-  const buttons = ["edit", "delete"];
-
   const updatedVideos = useMemo(() => {
     if (videos && videos.length > 0) {
       return [...videos]
@@ -59,7 +57,7 @@ const VideosTable = ({
       headCells={videosTableDefinitions}
       title={VIDEOS_PAGE_TITLE}
       onRemove={handleRemoveVideos}
-      buttons={buttons}
+      buttons={["edit", "delete"]}
       onEditItem={handleEditVideo}
     />
   ) : (

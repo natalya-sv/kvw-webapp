@@ -12,6 +12,7 @@ import {
   useGetSocialMediaAccountsQuery,
   useUpdateSocialMediaDataMutation,
 } from "../../services/social-media";
+
 const SocialMediaPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [accountToEdit, setAccountToEdit] = useState(null);
@@ -30,6 +31,7 @@ const SocialMediaPage = () => {
       error: updatingErrorRes,
     },
   ] = useUpdateSocialMediaDataMutation();
+
   const openMediaModal = () => {
     setOpenModal(true);
   };
@@ -58,7 +60,6 @@ const SocialMediaPage = () => {
           fetchingErrorRes?.message ?? updatingErrorRes?.message ?? ""
         }
       />
-
       <Title title={SOCIAL_MEDIA_TITLE} />
       <PageDescription text={SOCIAL_MEDIA_PAGE_DESCRIPTION} />
       <Box style={{ width: "90%" }}>
@@ -78,7 +79,6 @@ const SocialMediaPage = () => {
           />
         }
       />
-
       <SocialMediaTable
         closeMediaModal={closeMediaModal}
         openMediaModal={openMediaModal}

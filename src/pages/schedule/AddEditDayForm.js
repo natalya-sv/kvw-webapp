@@ -15,7 +15,6 @@ import {
 } from "./constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
-
 import "dayjs/locale/nl";
 import CustomDatePicker from "../../components/UI/pickers/CustomDatePicker";
 import CustomTimePicker from "../../components/UI/pickers/CustomTimePicker";
@@ -51,8 +50,7 @@ const AddEditDayForm = ({
     }
   }, [selectedDay]);
 
-  const onSubmitHandler = (e) => {
-    e.preventDefault();
+  const onSubmitHandler = () => {
     const dateValue =
       typeof date === "string" ? date : date.format("YYYY-MM-DD");
     const formattedStartTime = startTime.format("HH:mm");
@@ -75,7 +73,6 @@ const AddEditDayForm = ({
         ...day,
         id: selectedDay.id,
       };
-
       // editDay(updatedDay)
     } else {
       // addNewDay(day)
@@ -135,7 +132,6 @@ const AddEditDayForm = ({
         multiline={true}
         onChange={setExtraInfo}
       />
-
       <TextInput
         id="startLocation"
         value={startLocation}
@@ -148,12 +144,10 @@ const AddEditDayForm = ({
         label={END_LOCATION}
         onChange={setEndLocation}
       />
-
       <SponsorsCheckboxList
         setSelectedDaySponsors={setSelectedDaySponsors}
         selectedDaySponsors={selectedDaySponsors}
       />
-
       <CustomButton title={SAVE} onClick={onSubmitHandler} />
     </Box>
   );

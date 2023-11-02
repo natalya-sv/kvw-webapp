@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { KVW_GET, KVW_PUBLISH, PUT } from "../APIData";
+import { KVW_GET, KVW_PUBLISH } from "../APIData";
 const tokenPrefix = process.env.REACT_APP_TOKEN_PREFIX + " ";
 const token = localStorage.getItem("userToken");
 
-export const kvwApi = createApi({
-  reducerPath: "kvwApi",
+export const homeApi = createApi({
+  reducerPath: "homeApi",
   baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_API_URL }),
   endpoints: (builder) => ({
-    getKvwData: builder.query({
+    getHomeData: builder.query({
       query: () => ({
         url: KVW_GET,
         method: "GET",
@@ -16,9 +16,9 @@ export const kvwApi = createApi({
           Authorization: tokenPrefix + token,
         },
       }),
-      providesTags: ["Kvw"],
+      providesTags: ["Home"],
     }),
-    setKvwData: builder.mutation({
+    setHomeData: builder.mutation({
       query: (updatedKvwData) => ({
         url: KVW_PUBLISH,
         method: "POST",
@@ -28,8 +28,8 @@ export const kvwApi = createApi({
         },
         body: updatedKvwData,
       }),
-      invalidatesTags: ["Kvw"],
+      invalidatesTags: ["Home"],
     }),
   }),
 });
-export const { useGetKvwDataQuery, useSetKvwDataMutation } = kvwApi;
+export const { useGetHomeDataQuery, useSetHomeDataMutation } = homeApi;

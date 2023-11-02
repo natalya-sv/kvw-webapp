@@ -6,8 +6,8 @@ import {
   subRowItemsDefinition,
 } from "./constants";
 import { useMemo } from "react";
-
 import CollapsableTable from "../../components/table/CollapsableTable";
+
 const GroupsTable = ({
   groups,
   days,
@@ -63,7 +63,6 @@ const GroupsTable = ({
     }
   };
 
-  //delete groups and days that belong to these groups
   const handleRemoveGroups = (idsToRemove) => {
     const deleteAllGroups = groups.length === idsToRemove.length;
 
@@ -75,7 +74,6 @@ const GroupsTable = ({
       const dayIds = days
         .filter((day) => idsToRemove.includes(day.groupId))
         .map((d) => d.id);
-
       // removeGroups(idsToRemove, false))
       // removeDays(dayIds, false);
     }

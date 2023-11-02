@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { LOGIN, LOGOUT } from "../APIData";
+
 const AuthContext = React.createContext({
   isLoggedIn: false,
   token: null,
@@ -39,10 +40,11 @@ export const AuthContextProvider = (props) => {
   const logoutHandler = async () => {
     try {
       await fetch(LOGOUT);
+    } catch (error) {
+      console.error(error);
+    } finally {
       setToken(null);
       localStorage.removeItem("userToken");
-    } catch (error) {
-      setToken(null);
     }
   };
 

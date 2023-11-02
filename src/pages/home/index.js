@@ -1,26 +1,27 @@
 import React, { useEffect, useState } from "react";
-import Title from "../../components/UI/Title";
-import SpinnerView from "../../components/UI/SpinnerView";
-import AlertNotification from "../../components/UI/AlertNotification";
-import { KVW_DESC, KVW_INFO } from "./constants";
-import PageDescription from "../../components/UI/PageDescription";
+import Title from "../../components/UI/Title.js";
+import SpinnerView from "../../components/UI/SpinnerView.js";
+import AlertNotification from "../../components/UI/AlertNotification.js";
+import { KVW_DESC, KVW_INFO } from "./constants.js";
+import PageDescription from "../../components/UI/PageDescription.js";
 import { Box } from "@mui/material";
-import {
-  useGetKvwDataQuery,
-  useSetKvwDataMutation,
-} from "../../services/kvw.js";
 import TextInput from "../../components/TextInput.js";
-import { SAVE } from "../../helpers/constants";
+import { SAVE } from "../../helpers/constants.js";
 import {
   HOME_PAGE_CONTENT,
   HOME_PAGE_TITLE,
   THEMA_TITLE,
   THEME_IMAGE,
   KVW_WEBSITE_URL,
-} from "./constants";
-import CustomButton from "../../components/CustomButton";
-import ImageView from "../../components/ImageView";
-const KVWPage = () => {
+} from "./constants.js";
+import CustomButton from "../../components/CustomButton.js";
+import ImageView from "../../components/ImageView.js";
+import {
+  useGetHomeDataQuery,
+  useSetHomeDataMutation,
+} from "../../services/home.js";
+
+const HomePage = () => {
   const [title, setHomeTitle] = useState("");
   const [content, setHomeContent] = useState("");
   const [themaYearTitle, setThemaYearTitle] = useState("");
@@ -31,9 +32,10 @@ const KVWPage = () => {
     isLoading,
     isError: errorFetching,
     error: fetchingErrorRes,
-  } = useGetKvwDataQuery();
-  const [setKvwData, { isSuccess: successUpdating, isError: errorUpdating }] =
-    useSetKvwDataMutation();
+  } = useGetHomeDataQuery();
+
+  const [setHomeData, { isSuccess: successUpdating, isError: errorUpdating }] =
+    useSetHomeDataMutation();
 
   useEffect(() => {
     if (data && data[0]) {
@@ -53,8 +55,7 @@ const KVWPage = () => {
   }, [data]);
 
   const onSubmitHandler = (event) => {
-    event.preventDefault();
-    const updatedKVWData = {
+    const updatedHomeData = {
       id: data[0].id,
       home_page_title: title,
       home_page_content: content,
@@ -63,7 +64,7 @@ const KVWPage = () => {
       thema_image: image,
     };
 
-    setKvwData(updatedKVWData);
+    setHomeData(updatedHomeData);
   };
 
   if (isLoading) {
@@ -88,14 +89,14 @@ const KVWPage = () => {
       <PageDescription text={KVW_DESC} />
       <Box display={"flex"} flexDirection={"column"} gap={"20px"} width={"90%"}>
         <TextInput
-          id="kvw-title"
+          id="home-title"
           value={title}
           label={HOME_PAGE_TITLE}
           onChange={setHomeTitle}
         />
 
         <TextInput
-          id="kvw-content"
+          id="home-content"
           multiline={true}
           value={content}
           label={HOME_PAGE_CONTENT}
@@ -140,4 +141,4 @@ const KVWPage = () => {
   );
 };
 
-export default KVWPage;
+export default HomePage;

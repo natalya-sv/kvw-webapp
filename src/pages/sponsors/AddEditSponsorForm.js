@@ -40,9 +40,7 @@ const AddEditSponsorForm = ({
     }
   }, [editedSponsor]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-
+  const submitHandler = () => {
     const newSponsor = {
       sponsor_name: sponsorName,
       website_url: sponsorWebsiteUrl,
@@ -75,14 +73,12 @@ const AddEditSponsorForm = ({
         value={sponsorName}
         label={SPONSOR_NAME}
       />
-
       <TextInput
         id="sponsor-website"
         onChange={setSponsorWebsiteUrl}
         label={SPONSOR_WEB}
         value={sponsorWebsiteUrl}
       />
-
       <TextInput
         id="sponsor-image-url"
         multiline={true}
@@ -90,7 +86,6 @@ const AddEditSponsorForm = ({
         label={SPONSOR_IMAGE}
         value={sponsorImageUrl}
       />
-
       <FormControl>
         <FormLabel id="demo-radio-buttons-group-label">
           {SPONSOR_TYPE}

@@ -31,6 +31,7 @@ const VideosPage = () => {
       error: updatingErrorRes,
     },
   ] = useUpdateVideosDataMutation();
+
   const openVideosModal = () => {
     setOpenModal(true);
   };
