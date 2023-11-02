@@ -1,12 +1,7 @@
 import { Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
 import TextInput from "../../../components/TextInput";
 import CustomButton from "../../../components/CustomButton";
-import {
-  addNewsletterItem,
-  editNewsletterItem,
-} from "../../../store/newsletters/newsletters-actions";
 import { NEWSLETTERS_LINK, NEWSLETTERS_TITLE, SENT_ON } from "./constants";
 import { SAVE } from "../../../helpers/constants";
 import { LocalizationProvider } from "@mui/x-date-pickers";
@@ -18,11 +13,11 @@ import CustomDatePicker from "../../../components/UI/pickers/CustomDatePicker";
 const AddEditNewslettersItem = ({
   editedNewsletterItem,
   closeNewslettersModal,
+  updateNewslettersData,
 }) => {
   const [newsLetterTitle, setNewsletterTitle] = useState("");
   const [newsletterLink, setNewsletterLink] = useState("");
   const [dateSent, setDateSent] = useState(dayjs());
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (editedNewsletterItem) {
@@ -48,9 +43,9 @@ const AddEditNewslettersItem = ({
         ...newsletterItem,
         id: editedNewsletterItem.id,
       };
-      dispatch(editNewsletterItem(updatedItem));
+      updateNewslettersData(updatedItem);
     } else {
-      dispatch(addNewsletterItem(newsletterItem));
+      updateNewslettersData(newsletterItem);
     }
     closeNewslettersModal();
   };

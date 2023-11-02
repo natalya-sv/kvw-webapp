@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import SimpleTable from "../../../components/table/SimpleTable";
 import { Typography } from "@mui/material";
 import {
@@ -7,24 +6,26 @@ import {
   SENT_NEWSLETTERS,
   newslettersTableDefinition,
 } from "./constants";
-import {
-  removeNewsletterItem,
-  removeNewslettersItems,
-} from "../../../store/newsletters/newsletters-actions";
 import { truncateString } from "../../../helpers/utils";
 
-const NewsletteraTable = (props) => {
-  const { newsletters } = useSelector((state) => state.newsletters);
-  const dispatch = useDispatch();
-
+const NewsletteraTable = ({
+  newsletters,
+  updateNewslettersData,
+  closeNewslettersModal,
+  setEditedNewsletterItem,
+  openNewslettersModal,
+}) => {
   const newslettersItems = useMemo(() => {
     if (newsletters && newsletters.length > 0) {
       return [...newsletters]
         .sort((a, b) => new Date(b.date) - new Date(a.date))
         .map((nl) => {
           return {
-            ...nl,
-            truncatedText: truncateString(nl.newsletterLink, 70),
+            id: nl.id,
+            title: nl.title,
+            newsletterLink: nl.newsletter_link,
+            date: nl.date,
+            truncatedText: truncateString(nl.newsletter_link, 70),
           };
         });
     } else {
@@ -34,20 +35,20 @@ const NewsletteraTable = (props) => {
 
   const handleRemoveNewsletterItem = (idsToRemove) => {
     if (idsToRemove.length === 1) {
-      dispatch(removeNewsletterItem(idsToRemove[0]));
+      updateNewslettersData(idsToRemove[0]);
     } else {
       const deleteAllItems = newslettersItems.length === idsToRemove.length;
-      dispatch(removeNewslettersItems(idsToRemove, deleteAllItems));
+      updateNewslettersData(idsToRemove, deleteAllItems);
     }
-    props.closeNewslettersModal();
+    closeNewslettersModal();
   };
 
   const handleEditNewsletterItem = (id) => {
     const item = newslettersItems.find(
       (newslettersItem) => newslettersItem.id === id
     );
-    props.setEditedNewsletterItem(item);
-    props.openNewslettersModal();
+    setEditedNewsletterItem(item);
+    openNewslettersModal();
   };
 
   return newslettersItems.length > 0 ? (

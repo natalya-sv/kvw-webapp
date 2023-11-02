@@ -2,7 +2,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import scheduleSlice from "./schedule/schedule-slice";
 import newsSlice from "./news/news-slice";
 import photosSlice from "./photos/photos-slice";
-import newslettersSlice from "./newsletters/newsletters-slice";
 import { kvwApi } from "../services/kvw";
 import { setupListeners } from "@reduxjs/toolkit/dist/query";
 import { countdownApi } from "../services/countdown";
@@ -10,6 +9,7 @@ import { moreDataApi } from "../services/more";
 import { sponsorsApi } from "../services/sponsors";
 import { videosApi } from "../services/videos";
 import { socialMediaApi } from "../services/social-media";
+import { newslettersApi } from "../services/newsletters";
 
 const store = configureStore({
   reducer: {
@@ -22,7 +22,7 @@ const store = configureStore({
     photos: photosSlice.reducer,
     [videosApi.reducerPath]: videosApi.reducer,
     [socialMediaApi.reducerPath]: socialMediaApi.reducer,
-    newsletters: newslettersSlice.reducer,
+    [newslettersApi.reducerPath]: newslettersApi.reducer,
   },
 
   middleware: (getDefaultMiddleware) =>
@@ -32,7 +32,8 @@ const store = configureStore({
       moreDataApi.middleware,
       sponsorsApi.middleware,
       videosApi.middleware,
-      socialMediaApi.middleware
+      socialMediaApi.middleware,
+      newslettersApi.middleware
     ),
 });
 setupListeners(store.dispatch);

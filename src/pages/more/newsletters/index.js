@@ -1,23 +1,35 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import SpinnerView from "../../../components/UI/SpinnerView";
 import { Box } from "@mui/material";
 import AlertNotification from "../../../components/UI/AlertNotification";
 import Title from "../../../components/UI/Title";
 import PageDescription from "../../../components/UI/PageDescription";
-import { fetchNewsletters } from "../../../store/newsletters/newsletters-actions";
 import AddEditNewslettersItem from "./AddEditNewsletterItem";
 import CustomModal from "../../../components/CustomModal";
 import NewsletteraTable from "./NewslettersTable";
 import { NEWSLETTERS, NEWSLETTERS_DESC } from "./constants";
+import {
+  useGetNewslettersQuery,
+  useUpdateNewslettersDataMutation,
+} from "../../../services/newsletters";
 
 const NewslettersPage = () => {
-  const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.newsletters);
-  const { notification } = useSelector((state) => state.notification);
   const [open, setOpen] = useState(false);
   const [editedNewsletterItem, setEditedNewsletterItem] = useState(null);
-
+  const {
+    data: newsletters,
+    isLoading,
+    isError: errorFetching,
+    error: fetchingErrorRes,
+  } = useGetNewslettersQuery();
+  const [
+    updateNewslettersData,
+    {
+      isSuccess: successUpdating,
+      isError: errorUpdating,
+      error: updatingErrorRes,
+    },
+  ] = useUpdateNewslettersDataMutation();
   const openNewslettersModal = () => {
     setOpen(true);
   };
@@ -26,10 +38,6 @@ const NewslettersPage = () => {
     setEditedNewsletterItem(null);
     setOpen(false);
   };
-
-  useEffect(() => {
-    dispatch(fetchNewsletters());
-  }, [dispatch]);
 
   if (isLoading) {
     return <SpinnerView />;
@@ -42,13 +50,22 @@ const NewslettersPage = () => {
       alignItems={"center"}
       style={{ width: "100%" }}
     >
-      {notification?.isActive && (
-        <AlertNotification notification={notification} />
-      )}
+      <AlertNotification
+        errorFetching={errorFetching}
+        errorUpdating={errorUpdating}
+        successUpdating={successUpdating}
+        subMessage={
+          fetchingErrorRes?.message ?? updatingErrorRes?.message ?? ""
+        }
+      />
+
       <Title title={NEWSLETTERS} />
       <PageDescription text={NEWSLETTERS_DESC} />
       <Box style={{ width: "90%" }}>
-        <AddEditNewslettersItem closeNewslettersModal={closeNewslettersModal} />
+        <AddEditNewslettersItem
+          closeNewslettersModal={closeNewslettersModal}
+          updateNewslettersData={updateNewslettersData}
+        />
       </Box>
       <CustomModal
         open={open}
@@ -57,6 +74,7 @@ const NewslettersPage = () => {
           <AddEditNewslettersItem
             editedNewsletterItem={editedNewsletterItem}
             closeNewslettersModal={closeNewslettersModal}
+            updateNewslettersData={updateNewslettersData}
           />
         }
       />
@@ -64,6 +82,8 @@ const NewslettersPage = () => {
         setEditedNewsletterItem={setEditedNewsletterItem}
         closeNewslettersModal={closeNewslettersModal}
         openNewslettersModal={openNewslettersModal}
+        updateNewslettersData={updateNewslettersData}
+        newsletters={newsletters}
       />
     </Box>
   );
