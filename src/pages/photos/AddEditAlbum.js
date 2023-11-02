@@ -3,8 +3,6 @@ import { useEffect, useState } from "react";
 import { SAVE } from "../../helpers/constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
-import { useDispatch } from "react-redux";
-import { addNewAlbum, editAlbum } from "../../store/photos/photos-actions";
 const AddEditAlbum = ({
   selectedAlbum,
   handleCloseAddEditAlbumDialog,
@@ -13,7 +11,6 @@ const AddEditAlbum = ({
   const [title, setTitle] = useState("");
   const [albumCoverPhoto, setAlbumCoverPhoto] = useState("");
   const [albumLink, setAlbumLink] = useState("");
-  const dispatch = useDispatch();
   useEffect(() => {
     if (selectedAlbum) {
       setTitle(selectedAlbum.title);
@@ -35,9 +32,9 @@ const AddEditAlbum = ({
         ...album,
         id: selectedAlbum.id,
       };
-      dispatch(editAlbum(updAlbum));
+      // editAlbum(updAlbum)
     } else {
-      dispatch(addNewAlbum(album));
+      //  addNewAlbum(album)
     }
     handleCloseAddEditAlbumDialog();
   };

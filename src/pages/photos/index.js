@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Title from "../../components/UI/Title";
 import { Box } from "@mui/material";
 import PageDescription from "../../components/UI/PageDescription";
-import { useSelector, useDispatch } from "react-redux";
 import SpinnerView from "../../components/UI/SpinnerView";
 import AlertNotification from "../../components/UI/AlertNotification";
 import { ADD_NEW_ALBUM, EDIT_ALBUM, PHOTOS_PAGE_TITLE } from "./constants";
 import { PHOTOS_PAGE_DESCRIPTION } from "./constants";
-import { fetchPhotoFolders } from "../../store/photos/photos-actions";
 import PhotosTable from "./PhotosTable";
 import AddIcon from "@mui/icons-material/Add";
 import { ADD_NEW_FOLDER } from "./constants";
@@ -16,16 +14,21 @@ import CustomModal from "../../components/CustomModal";
 import CustomDialog from "../../components/CustomDialog";
 import AddEditAlbum from "./AddEditAlbum";
 import CustomButton from "../../components/CustomButton";
+import { useGetAlbumsQuery, useGetFoldersQuery } from "../../services/folders";
 
 const PhotosPage = () => {
-  const { isLoading } = useSelector((state) => state.photos);
-  const { notification } = useSelector((state) => state.notification);
-  const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const [openAddEditAlbumDialog, setOpenAddEditAlbumDialog] = useState(false);
   const [selectedFolder, setSelectedFolder] = useState(null);
   const [selectedFolderId, setSelectedFolderId] = useState(null);
   const [selectedAlbum, setSelectedAlbum] = useState(null);
+  const {
+    data: folders,
+    isError: errorFetching,
+    error: fetchingErrorRes,
+    isLoading,
+  } = useGetFoldersQuery();
+  const { data: albums } = useGetAlbumsQuery();
 
   const handleOpenFolderModal = () => {
     setOpen(true);
@@ -45,10 +48,6 @@ const PhotosPage = () => {
     setOpenAddEditAlbumDialog(false);
   };
 
-  useEffect(() => {
-    dispatch(fetchPhotoFolders());
-  }, [dispatch]);
-
   if (isLoading) {
     return <SpinnerView />;
   }
@@ -59,9 +58,8 @@ const PhotosPage = () => {
       alignItems={"center"}
       style={{ width: "100%" }}
     >
-      {notification?.isActive && (
-        <AlertNotification notification={notification} />
-      )}
+      {/* <AlertNotification  /> */}
+
       <Title title={PHOTOS_PAGE_TITLE} />
       <PageDescription text={PHOTOS_PAGE_DESCRIPTION} />
 
@@ -101,6 +99,8 @@ const PhotosPage = () => {
         setSelectedFolderId={setSelectedFolderId}
         handleOpenAddEditAlbumDialog={handleOpenAddEditAlbumDialog}
         setSelectedAlbum={setSelectedAlbum}
+        folders={folders}
+        albums={albums}
       />
     </Box>
   );
