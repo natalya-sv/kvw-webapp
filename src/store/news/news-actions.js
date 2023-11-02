@@ -16,13 +16,7 @@ import {
   updateSingleItem,
   sendPushMessage,
 } from "../api/apiHelper";
-import {
-  ERROR_MESSAGE,
-  ERROR_FETCHING,
-  SUCCESS_UPDATE_API,
-  ERROR_UPDATING,
-} from "../constants";
-import { notificationActions } from "../notification/notification-slice";
+import { ERROR_MESSAGE, ERROR_UPDATING } from "../constants";
 import { truncateString } from "../../helpers/utils";
 
 export const fetchNewsItems = () => {
@@ -38,12 +32,6 @@ export const fetchNewsItems = () => {
       }
     } catch (err) {
       dispatch(newsActions.setNewsItems({ news: [] }));
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_FETCHING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(newsActions.setIsLoading({ isLoading: false }));
     }
@@ -69,21 +57,10 @@ export const addNewsItem = (newsItem) => {
           throw new Error(ERROR_MESSAGE);
         }
         dispatch(newsActions.addNewsItem({ newsItem: response.newItem }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(newsActions.setIsLoading({ isLoading: false }));
     }
@@ -101,21 +78,10 @@ export const removeNewsItem = (idToDelete) => {
       );
       if (response) {
         dispatch(newsActions.removeNewsItem({ id: idToDelete }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(newsActions.setIsLoading({ isLoading: false }));
     }
@@ -140,21 +106,10 @@ export const removeNewsItems = (idsToDelete, deleteAll) => {
 
       if (response) {
         dispatch(newsActions.removeNewsItems({ ids: idsToDelete, deleteAll }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(newsActions.setIsLoading({ isLoading: false }));
     }
@@ -175,21 +130,10 @@ export const editNewsItem = (updatedNewsitem) => {
         dispatch(
           newsActions.updateNewsItem({ newsItem: response.updatedData })
         );
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_UPDATING);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(newsActions.setIsLoading({ isLoading: false }));
     }

@@ -20,13 +20,7 @@ import {
   removeAllItems,
   publishScheduleV2,
 } from "../api/apiHelper";
-import {
-  ERROR_MESSAGE,
-  ERROR_FETCHING,
-  SUCCESS_UPDATE_API,
-  ERROR_UPDATING,
-} from "../constants";
-import { notificationActions } from "../notification/notification-slice";
+import { ERROR_MESSAGE } from "../constants";
 
 export const addNewGroupItem = (newGroup) => {
   return async (dispatch) => {
@@ -43,21 +37,10 @@ export const addNewGroupItem = (newGroup) => {
             newGroup: response.newItem,
           })
         );
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(scheduleActions.setIsLoading({ isLoading: false }));
     }
@@ -86,12 +69,6 @@ export const fetchGroupsData = () => {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_FETCHING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(scheduleActions.setIsLoading({ isLoading: false }));
     }
@@ -115,21 +92,10 @@ export const removeGroupItem = (groupIdToDelete) => {
             id: groupIdToDelete,
           })
         );
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(scheduleActions.setIsLoading({ isLoading: false }));
     }
@@ -149,22 +115,11 @@ export const updateGroupName = (updatedGroup) => {
         GROUPS_PUBLISH_V2
       );
       if (response && responseUpdateScheduleV2) {
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
         dispatch(scheduleActions.updateGroup(response.updatedData));
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(scheduleActions.setIsLoading({ isLoading: false }));
     }
@@ -185,21 +140,10 @@ export const removeGroups = (ids, deleteAll) => {
       );
       if (response && responseUpdateScheduleV2) {
         dispatch(scheduleActions.removeGroups({ ids, deleteAll }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(scheduleActions.setIsLoading({ isLoading: false }));
     }
@@ -218,22 +162,11 @@ export const removeDayItem = (dayIdToDelete) => {
         GROUPS_PUBLISH_V2
       );
       if (response && responseUpdateScheduleV2) {
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
         dispatch(scheduleActions.removeDay({ id: dayIdToDelete }));
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(scheduleActions.setIsLoading({ isLoading: false }));
     }
@@ -253,21 +186,10 @@ export const addNewDay = (day) => {
       );
       if (response.isUpdateSuccessful && responseUpdateScheduleV2) {
         dispatch(scheduleActions.addNewDay({ newDay: response.newItem }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(scheduleActions.setIsLoading({ isLoading: false }));
     }
@@ -284,21 +206,10 @@ export const editDay = (day) => {
       );
       if (response.isUpdateSuccessful && responseUpdateScheduleV2) {
         dispatch(scheduleActions.editDay({ editedDay: response.updatedData }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(scheduleActions.setIsLoading({ isLoading: false }));
     }
@@ -326,21 +237,10 @@ export const removeDays = (daysIds, deleteAll) => {
       );
       if (response && responseUpdateScheduleV2) {
         dispatch(scheduleActions.removeDays({ daysIds, deleteAll }));
-        dispatch(
-          notificationActions.showNotification({
-            ...SUCCESS_UPDATE_API,
-          })
-        );
       } else {
         throw new Error(ERROR_MESSAGE);
       }
     } catch (err) {
-      dispatch(
-        notificationActions.showNotification({
-          ...ERROR_UPDATING,
-          subMessage: err.message,
-        })
-      );
     } finally {
       dispatch(scheduleActions.setIsLoading({ isLoading: false }));
     }
