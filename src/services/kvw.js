@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { KVW_GET, PUT } from "../APIData";
+import { KVW_GET, KVW_PUBLISH, PUT } from "../APIData";
 const tokenPrefix = process.env.REACT_APP_TOKEN_PREFIX + " ";
 const token = localStorage.getItem("userToken");
 
@@ -20,8 +20,8 @@ export const kvwApi = createApi({
     }),
     setKvwData: builder.mutation({
       query: (updatedKvwData) => ({
-        url: `${PUT}${updatedKvwData.id}`,
-        method: "PUT",
+        url: KVW_PUBLISH,
+        method: "POST",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,

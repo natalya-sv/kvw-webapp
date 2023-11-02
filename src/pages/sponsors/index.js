@@ -10,29 +10,21 @@ import SponsorsTable from "./SponsorsTable";
 import CustomModal from "../../components/CustomModal";
 import {
   useGetSponsorsQuery,
-  useUpdateSponsorMutation,
-  useCreateSponsorMutation,
+  useUpdateSponsorsDataMutation,
 } from "../../services/sponsors";
 
 const SponsorsPage = () => {
   const [open, setOpen] = useState(false);
   const [editedSponsor, setEditedSponsor] = useState(null);
   const [
-    updateSponsor,
+    updateSponsorsData,
     {
       isSuccess: successUpdating,
       isError: errorUpdating,
       error: updatingErrorRes,
     },
-  ] = useUpdateSponsorMutation();
-  const [
-    createSponsor,
-    {
-      isSuccess: successCreating,
-      isError: errorCreating,
-      error: creatingErrorRes,
-    },
-  ] = useCreateSponsorMutation();
+  ] = useUpdateSponsorsDataMutation();
+
   const {
     data: sponsors,
     isLoading,
@@ -61,13 +53,10 @@ const SponsorsPage = () => {
     >
       <AlertNotification
         errorFetching={errorFetching}
-        errorUpdating={errorUpdating || errorCreating}
-        successUpdating={successUpdating || successCreating}
+        errorUpdating={errorUpdating}
+        successUpdating={successUpdating}
         subMessage={
-          fetchingErrorRes?.message ??
-          updatingErrorRes?.message ??
-          creatingErrorRes?.message ??
-          ""
+          fetchingErrorRes?.message ?? updatingErrorRes?.message ?? ""
         }
       />
 
@@ -77,7 +66,7 @@ const SponsorsPage = () => {
       <Box style={{ width: "90%" }}>
         <AddEditSponsorForm
           closeSponsorsModal={closeSponsorsModal}
-          createSponsor={createSponsor}
+          updateSponsorsData={updateSponsorsData}
         />
       </Box>
 
@@ -88,7 +77,7 @@ const SponsorsPage = () => {
           <AddEditSponsorForm
             editedSponsor={editedSponsor}
             closeSponsorsModal={closeSponsorsModal}
-            updateSponsor={updateSponsor}
+            updateSponsorsData={updateSponsorsData}
           />
         }
       />
@@ -98,6 +87,7 @@ const SponsorsPage = () => {
         closeSponsorsModal={closeSponsorsModal}
         openSponsorsModal={openSponsorsModal}
         sponsors={sponsors}
+        updateSponsorsData={updateSponsorsData}
       />
     </Box>
   );

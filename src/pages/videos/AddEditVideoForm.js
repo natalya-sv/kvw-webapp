@@ -5,17 +5,15 @@ import { VIDEO_DESCRIPTION, VIDEO_TITLE, YOUTUBE_LINK } from "./constants";
 import { getEmbeddedUrl } from "./utils";
 import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
-import { useDispatch } from "react-redux";
-import {
-  addNewVideoItem,
-  updateVideoitem,
-} from "../../store/videos/videos-actions";
 
-const AddEditVideoForm = ({ editedVideo, closeVideosModal }) => {
+const AddEditVideoForm = ({
+  editedVideo,
+  closeVideosModal,
+  updateVideosData,
+}) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [youtubeLink, setYoutubeLink] = useState("");
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (editedVideo) {
@@ -40,9 +38,9 @@ const AddEditVideoForm = ({ editedVideo, closeVideosModal }) => {
         ...videoItem,
         id: editedVideo.id,
       };
-      dispatch(updateVideoitem(updatedVideo));
+      updateVideosData(updatedVideo);
     } else {
-      dispatch(addNewVideoItem(videoItem));
+      updateVideosData(videoItem);
     }
     closeVideosModal();
   };

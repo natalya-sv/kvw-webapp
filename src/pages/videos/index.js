@@ -1,23 +1,36 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Title from "../../components/UI/Title";
 import { Box } from "@mui/material";
 import PageDescription from "../../components/UI/PageDescription";
 import { VIDEOS_PAGE_DESCRIPTION, VIDEOS_PAGE_TITLE } from "./constants";
-import { useSelector, useDispatch } from "react-redux";
 import VideosTable from "./VideosTable";
-import { fetchVideosData } from "../../store/videos/videos-actions";
 import SpinnerView from "../../components/UI/SpinnerView";
 import AlertNotification from "../../components/UI/AlertNotification";
 import AddEditVideoForm from "./AddEditVideoForm";
 import CustomModal from "../../components/CustomModal";
+import {
+  useGetVideosQuery,
+  useUpdateVideosDataMutation,
+} from "../../services/videos";
 
 const VideosPage = () => {
-  const dispatch = useDispatch();
   const [openModal, setOpenModal] = useState(false);
   const [editedVideo, setEditedVideo] = useState(false);
-  const { isLoading } = useSelector((state) => state.videos);
-  const { notification } = useSelector((state) => state.notification);
+  const {
+    data: videos,
+    isLoading,
+    isError: errorFetching,
+    error: fetchingErrorRes,
+  } = useGetVideosQuery();
 
+  const [
+    updateVideosData,
+    {
+      isSuccess: successUpdating,
+      isError: errorUpdating,
+      error: updatingErrorRes,
+    },
+  ] = useUpdateVideosDataMutation();
   const openVideosModal = () => {
     setOpenModal(true);
   };
@@ -26,10 +39,6 @@ const VideosPage = () => {
     setEditedVideo(null);
     setOpenModal(false);
   };
-
-  useEffect(() => {
-    dispatch(fetchVideosData());
-  }, [dispatch]);
 
   if (isLoading) {
     return <SpinnerView />;
@@ -41,13 +50,22 @@ const VideosPage = () => {
       alignItems={"center"}
       style={{ width: "100%" }}
     >
-      {notification?.isActive && (
-        <AlertNotification notification={notification} />
-      )}
+      <AlertNotification
+        errorFetching={errorFetching}
+        errorUpdating={errorUpdating}
+        successUpdating={successUpdating}
+        subMessage={
+          fetchingErrorRes?.message ?? updatingErrorRes?.message ?? ""
+        }
+      />
+
       <Title title={VIDEOS_PAGE_TITLE} />
       <PageDescription text={VIDEOS_PAGE_DESCRIPTION} />
       <Box style={{ width: "90%" }}>
-        <AddEditVideoForm closeVideosModal={closeVideosModal} />
+        <AddEditVideoForm
+          closeVideosModal={closeVideosModal}
+          updateVideosData={updateVideosData}
+        />
       </Box>
       <CustomModal
         open={openModal}
@@ -56,14 +74,17 @@ const VideosPage = () => {
           <AddEditVideoForm
             editedVideo={editedVideo}
             closeVideosModal={closeVideosModal}
+            updateVideosData={updateVideosData}
           />
         }
       />
 
       <VideosTable
+        videos={videos}
         openVideosModal={openVideosModal}
         setEditedVideo={setEditedVideo}
         closeVideosModal={closeVideosModal}
+        updateVideosData={updateVideosData}
       />
     </Box>
   );

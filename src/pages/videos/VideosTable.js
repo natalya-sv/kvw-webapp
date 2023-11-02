@@ -4,27 +4,30 @@ import {
   VIDEOS_PAGE_TITLE,
   videosTableDefinitions,
 } from "./constants";
-import { useDispatch, useSelector } from "react-redux";
 import { Typography } from "@mui/material";
-import {
-  removeVideoItem,
-  removeVideoItems,
-} from "../../store/videos/videos-actions";
 import { useMemo } from "react";
 import { truncateString } from "../../helpers/utils";
 
-const VideosTable = (props) => {
-  const { videos } = useSelector((state) => state.videos);
+const VideosTable = ({
+  videos,
+  updateVideosData,
+  setEditedVideo,
+  openVideosModal,
+}) => {
   const buttons = ["edit", "delete"];
-  const dispatch = useDispatch();
 
   const updatedVideos = useMemo(() => {
-    if (videos) {
+    if (videos && videos.length > 0) {
       return [...videos]
         .sort((a, b) => new Date(b.date) - new Date(a.date))
         .map((videoItem) => {
           return {
-            ...videoItem,
+            id: videoItem.id,
+            title: videoItem.title,
+            url: videoItem.url,
+            description: videoItem.description,
+            youtubeLink: videoItem.youtube_link,
+            date: videoItem.date,
             truncatedText: truncateString(videoItem.description, 150),
           };
         });
@@ -35,22 +38,22 @@ const VideosTable = (props) => {
 
   const handleRemoveVideos = (idsToRemove) => {
     if (idsToRemove.length === 1) {
-      dispatch(removeVideoItem(idsToRemove[0]));
+      updateVideosData(idsToRemove[0]);
     } else {
-      const deleteAllItems = videos.length === idsToRemove.length;
-      dispatch(removeVideoItems(idsToRemove, deleteAllItems));
+      const deleteAllItems = updatedVideos.length === idsToRemove.length;
+      updateVideosData(idsToRemove, deleteAllItems);
     }
   };
 
   const handleEditVideo = (id) => {
-    const videoToEdit = videos.find((v) => v.id === id);
+    const videoToEdit = updatedVideos.find((v) => v.id === id);
     if (videoToEdit) {
-      props.setEditedVideo(videoToEdit);
-      props.openVideosModal();
+      setEditedVideo(videoToEdit);
+      openVideosModal();
     }
   };
 
-  return videos.length > 0 ? (
+  return updatedVideos && updatedVideos.length > 0 ? (
     <SimpleTable
       items={updatedVideos}
       headCells={videosTableDefinitions}

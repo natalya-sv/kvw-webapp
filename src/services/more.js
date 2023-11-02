@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { MORE_DATA_GET, PUT } from "../APIData";
+import { MORE_DATA_GET, MORE_DATA_PUBLISH, PUT } from "../APIData";
 
 const tokenPrefix = process.env.REACT_APP_TOKEN_PREFIX + " ";
 const token = localStorage.getItem("userToken");
@@ -21,8 +21,8 @@ export const moreDataApi = createApi({
     }),
     setMoreData: builder.mutation({
       query: (updatedMoreData) => ({
-        url: `${PUT}${updatedMoreData.id}`,
-        method: "PUT",
+        url: MORE_DATA_PUBLISH,
+        method: "POST",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,
