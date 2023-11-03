@@ -3,34 +3,41 @@ import AddEditSponsorForm from "./AddEditSponsorForm";
 import Title from "../../components/UI/Title";
 import AlertNotification from "../../components/UI/AlertNotification";
 import SpinnerView from "../../components/UI/SpinnerView";
-import { ALL_SPONSORS_DESC, SPONSORS } from "./constants";
+import { ADD_SPONSOR, ALL_SPONSORS_DESC, SPONSORS } from "./constants";
 import PageDescription from "../../components/UI/PageDescription";
 import { Box } from "@mui/material";
 import SponsorsTable from "./SponsorsTable";
 import CustomModal from "../../components/CustomModal";
 import {
-  useGetSponsorsQuery,
-  useUpdateSponsorsDataMutation,
-} from "../../services/sponsors";
+  useCreateDataMutation,
+  useDeleteDataMutation,
+  useGetDataQuery,
+  useUpdateDataMutation,
+} from "../../services/api";
+import CustomButton from "../../components/CustomButton";
+import { SPONSORS_GET, SPONSORS_TAG } from "../../APIData";
 
 const SponsorsPage = () => {
   const [open, setOpen] = useState(false);
   const [editedSponsor, setEditedSponsor] = useState(null);
   const [
-    updateSponsorsData,
+    updateData,
     {
       isSuccess: successUpdating,
       isError: errorUpdating,
       error: updatingErrorRes,
     },
-  ] = useUpdateSponsorsDataMutation();
+  ] = useUpdateDataMutation();
 
   const {
     data: sponsors,
     isLoading,
     isError: errorFetching,
     error: fetchingErrorRes,
-  } = useGetSponsorsQuery();
+  } = useGetDataQuery({ fetchData: SPONSORS_GET, tag: SPONSORS_TAG });
+
+  const [deleteData] = useDeleteDataMutation();
+  const [createData] = useCreateDataMutation();
 
   const openSponsorsModal = () => {
     setOpen(true);
@@ -62,12 +69,7 @@ const SponsorsPage = () => {
       <Title title={SPONSORS} />
       <PageDescription text={ALL_SPONSORS_DESC} />
 
-      <Box style={{ width: "90%" }}>
-        <AddEditSponsorForm
-          closeSponsorsModal={closeSponsorsModal}
-          updateSponsorsData={updateSponsorsData}
-        />
-      </Box>
+      <CustomButton title={ADD_SPONSOR} onClick={openSponsorsModal} />
       <CustomModal
         open={open}
         handleClose={closeSponsorsModal}
@@ -75,7 +77,8 @@ const SponsorsPage = () => {
           <AddEditSponsorForm
             editedSponsor={editedSponsor}
             closeSponsorsModal={closeSponsorsModal}
-            updateSponsorsData={updateSponsorsData}
+            updateData={updateData}
+            createData={createData}
           />
         }
       />
@@ -84,7 +87,8 @@ const SponsorsPage = () => {
         closeSponsorsModal={closeSponsorsModal}
         openSponsorsModal={openSponsorsModal}
         sponsors={sponsors}
-        updateSponsorsData={updateSponsorsData}
+        deleteData={deleteData}
+        updateData={updateData}
       />
     </Box>
   );

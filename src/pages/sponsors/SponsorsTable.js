@@ -14,13 +14,15 @@ import ClearIcon from "@mui/icons-material/Clear";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import DoNotDisturbAltIcon from "@mui/icons-material/DoDisturbAlt";
 import { Typography } from "@mui/material";
+import { SPONSORS_ACTIONS, SPONSORS_TAG } from "../../APIData";
 
 const SponsorsTable = ({
   sponsors,
   openSponsorsModal,
   closeSponsorsModal,
   setEditedSponsor,
-  updateSponsorsData,
+  deleteData,
+  updateData,
 }) => {
   const updatedSponsors = useMemo(() => {
     if (sponsors && sponsors?.length > 0) {
@@ -48,16 +50,7 @@ const SponsorsTable = ({
   }, [sponsors]);
 
   const handleRemoveSponsor = (idsToRemove) => {
-    if (idsToRemove.length === 1) {
-      updateSponsorsData(idsToRemove[0]);
-    } else {
-      const deleteAllItems = updatedSponsors.length === idsToRemove.length;
-      if (deleteAllItems) {
-        updateSponsorsData();
-      } else {
-        updateSponsorsData(idsToRemove);
-      }
-    }
+    deleteData(idsToRemove);
     closeSponsorsModal();
   };
 
@@ -71,12 +64,13 @@ const SponsorsTable = ({
 
   const setSponsorStatus = useCallback(
     (selectedSponsors, isActive) => {
-      updateSponsorsData({
-        ids: selectedSponsors,
-        status: isActive,
+      updateData({
+        data: { sponsors: selectedSponsors, status: isActive },
+        tag: SPONSORS_TAG,
+        actions: SPONSORS_ACTIONS,
       });
     },
-    [updateSponsorsData]
+    [updateData]
   );
 
   const extraButtons = useMemo(() => {

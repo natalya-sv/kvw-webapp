@@ -7,13 +7,14 @@ import {
   newslettersTableDefinition,
 } from "./constants";
 import { truncateString } from "../../../helpers/utils";
+import { NEWSLETTERS_ACTIONS, NEWSLETTERS_TAG } from "../../../APIData";
 
 const NewsletteraTable = ({
   newsletters,
-  updateNewslettersData,
   closeNewslettersModal,
   setEditedNewsletterItem,
   openNewslettersModal,
+  deleteData,
 }) => {
   const newslettersItems = useMemo(() => {
     if (newsletters && newsletters.length > 0) {
@@ -34,12 +35,11 @@ const NewsletteraTable = ({
   }, [newsletters]);
 
   const handleRemoveNewsletterItem = (idsToRemove) => {
-    if (idsToRemove.length === 1) {
-      updateNewslettersData(idsToRemove[0]);
-    } else {
-      const deleteAllItems = newslettersItems.length === idsToRemove.length;
-      updateNewslettersData(idsToRemove, deleteAllItems);
-    }
+    deleteData({
+      data: idsToRemove,
+      actions: NEWSLETTERS_ACTIONS,
+      tag: NEWSLETTERS_TAG,
+    });
     closeNewslettersModal();
   };
 
