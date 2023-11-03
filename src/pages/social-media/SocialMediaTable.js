@@ -1,10 +1,11 @@
+import { SOCIAL_MEDIA_ACTIONS, SOCIAL_MEDIA_TAG } from "../../APIData";
 import SimpleTable from "../../components/table/SimpleTable";
 import { SOCIAL_MEDIA_TITLE, socialMediaDefinition } from "./constants";
 import { useMemo } from "react";
 
 const SocialMediaTable = ({
   socialMediaAccounts,
-  updateSocialMediaData,
+  deleteData,
   setEditAccount,
   openMediaModal,
 }) => {
@@ -24,12 +25,11 @@ const SocialMediaTable = ({
   }, [socialMediaAccounts]);
 
   const handleRemoveSocialAccount = (idsToRemove) => {
-    if (idsToRemove.length === 1) {
-      updateSocialMediaData(idsToRemove[0]);
-    } else {
-      const deleteAllItems = socialMediaAccounts.length === idsToRemove.length;
-      updateSocialMediaData(idsToRemove, deleteAllItems);
-    }
+    deleteData({
+      data: idsToRemove,
+      tag: SOCIAL_MEDIA_TAG,
+      actions: SOCIAL_MEDIA_ACTIONS,
+    });
   };
 
   const handleEditSocialAccount = (id) => {

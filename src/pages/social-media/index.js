@@ -4,14 +4,22 @@ import AlertNotification from "../../components/UI/AlertNotification";
 import PageDescription from "../../components/UI/PageDescription";
 import SpinnerView from "../../components/UI/SpinnerView";
 import Title from "../../components/UI/Title";
-import { SOCIAL_MEDIA_PAGE_DESCRIPTION, SOCIAL_MEDIA_TITLE } from "./constants";
+import {
+  ADD_ACCOUNT,
+  SOCIAL_MEDIA_PAGE_DESCRIPTION,
+  SOCIAL_MEDIA_TITLE,
+} from "./constants";
 import SocialMediaTable from "./SocialMediaTable";
 import CustomModal from "../../components/CustomModal";
 import AddEditSocialMediaAccount from "./AddEditSocialMediaAccount";
 import {
-  useGetSocialMediaAccountsQuery,
-  useUpdateSocialMediaDataMutation,
-} from "../../services/social-media";
+  useCreateDataMutation,
+  useDeleteDataMutation,
+  useGetDataQuery,
+  useUpdateDataMutation,
+} from "../../services/api";
+import { SOCIAL_MEDIA_DATA_GET, SOCIAL_MEDIA_TAG } from "../../APIData";
+import CustomButton from "../../components/CustomButton";
 
 const SocialMediaPage = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -21,7 +29,10 @@ const SocialMediaPage = () => {
     isLoading,
     isError: errorFetching,
     error: fetchingErrorRes,
-  } = useGetSocialMediaAccountsQuery();
+  } = useGetDataQuery({
+    fetchData: SOCIAL_MEDIA_DATA_GET,
+    tag: SOCIAL_MEDIA_TAG,
+  });
 
   const [
     updateSocialMediaData,
@@ -30,7 +41,9 @@ const SocialMediaPage = () => {
       isError: errorUpdating,
       error: updatingErrorRes,
     },
-  ] = useUpdateSocialMediaDataMutation();
+  ] = useUpdateDataMutation();
+  const [createData] = useCreateDataMutation();
+  const [deleteData] = useDeleteDataMutation();
 
   const openMediaModal = () => {
     setOpenModal(true);
@@ -62,12 +75,7 @@ const SocialMediaPage = () => {
       />
       <Title title={SOCIAL_MEDIA_TITLE} />
       <PageDescription text={SOCIAL_MEDIA_PAGE_DESCRIPTION} />
-      <Box style={{ width: "90%" }}>
-        <AddEditSocialMediaAccount
-          closeMediaModal={closeMediaModal}
-          updateSocialMediaData={updateSocialMediaData}
-        />
-      </Box>
+      <CustomButton title={ADD_ACCOUNT} onClick={openMediaModal} />
       <CustomModal
         open={openModal}
         handleClose={closeMediaModal}
@@ -76,6 +84,7 @@ const SocialMediaPage = () => {
             closeMediaModal={closeMediaModal}
             accountToEdit={accountToEdit}
             updateSocialMediaData={updateSocialMediaData}
+            createData={createData}
           />
         }
       />
@@ -84,7 +93,7 @@ const SocialMediaPage = () => {
         openMediaModal={openMediaModal}
         setEditAccount={setAccountToEdit}
         socialMediaAccounts={socialMediaAccounts}
-        updateSocialMediaData={updateSocialMediaData}
+        deleteData={deleteData}
       />
     </Box>
   );

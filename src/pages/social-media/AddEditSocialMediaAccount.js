@@ -4,11 +4,13 @@ import { SAVE } from "../../helpers/constants";
 import { PLATFORM_TITEL, SOCIAL_MEDIA_URL } from "./constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
+import { SOCIAL_MEDIA_ACTIONS, SOCIAL_MEDIA_TAG } from "../../APIData";
 
 const AddEditSocialMediaAccount = ({
   accountToEdit,
   closeMediaModal,
   updateSocialMediaData,
+  createData,
 }) => {
   const [accountTitle, setAccountTitle] = useState("");
   const [accountWebsiteUrl, setAccountWebsiteUrl] = useState("");
@@ -34,9 +36,17 @@ const AddEditSocialMediaAccount = ({
         icon_name: accountToEdit.iconName,
         color: accountToEdit.color,
       };
-      updateSocialMediaData(updatedAccount);
+      updateSocialMediaData({
+        data: updatedAccount,
+        actions: SOCIAL_MEDIA_ACTIONS,
+        tag: SOCIAL_MEDIA_TAG,
+      });
     } else {
-      updateSocialMediaData(account);
+      createData({
+        data: account,
+        actions: SOCIAL_MEDIA_ACTIONS,
+        tag: SOCIAL_MEDIA_TAG,
+      });
     }
     closeMediaModal();
   };
