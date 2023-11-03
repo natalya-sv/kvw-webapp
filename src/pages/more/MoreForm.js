@@ -19,8 +19,9 @@ import {
 import { SAVE } from "../../helpers/constants";
 import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
+import { MORE_DATA_ACTIONS, MORE_PAGE_TAG } from "../../APIData";
 
-const MoreForm = ({ moreData, setMoreData }) => {
+const MoreForm = ({ moreData, updateData }) => {
   const [aboutUsTitle, setAboutUsTitle] = useState("");
   const [aboutUsContent, setAboutUsContent] = useState("");
   const [mailNotificationContent, setMailNotificationContent] = useState("");
@@ -58,7 +59,11 @@ const MoreForm = ({ moreData, setMoreData }) => {
       contact_phone_number: contactPhoneNumber,
       contact_content: contactContent,
     };
-    setMoreData(updatedMoreData);
+    updateData({
+      data: updatedMoreData,
+      actions: MORE_DATA_ACTIONS,
+      tag: MORE_PAGE_TAG,
+    });
   };
 
   return (

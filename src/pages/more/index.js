@@ -6,10 +6,8 @@ import MoreForm from "./MoreForm";
 import { Box } from "@mui/material";
 import AlertNotification from "../../components/UI/AlertNotification";
 import SpinnerView from "../../components/UI/SpinnerView";
-import {
-  useGetMoreDataQuery,
-  useSetMoreDataMutation,
-} from "../../services/more";
+import { MORE_DATA_GET, MORE_PAGE_TAG } from "../../APIData";
+import { useUpdateDataMutation, useGetDataQuery } from "../../services/api";
 
 const MorePage = () => {
   const {
@@ -17,10 +15,10 @@ const MorePage = () => {
     isLoading,
     isError: errorFetching,
     error: fetchingErrorRes,
-  } = useGetMoreDataQuery();
+  } = useGetDataQuery({ fetchData: MORE_DATA_GET, tag: MORE_PAGE_TAG });
 
-  const [setMoreData, { isSuccess: successUpdating, isError: errorUpdating }] =
-    useSetMoreDataMutation();
+  const [updateData, { isSuccess: successUpdating, isError: errorUpdating }] =
+    useUpdateDataMutation();
 
   if (isLoading) {
     return <SpinnerView />;
@@ -42,7 +40,7 @@ const MorePage = () => {
       <Title title={MORE_PAGE_TITLE} />
       <PageDescription text={MORE_PAGE_DESCRIPTION} />
       <Box width={"90%"}>
-        <MoreForm moreData={moreData} setMoreData={setMoreData} />
+        <MoreForm moreData={moreData} updateData={updateData} />
       </Box>
     </Box>
   );

@@ -13,10 +13,8 @@ import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
 import "dayjs/locale/nl";
 import CustomDatePicker from "../../components/UI/pickers/CustomDatePicker";
-import {
-  useGetCountdownDataQuery,
-  useSetCountdownDataMutation,
-} from "../../services/countdown";
+import { useGetDataQuery, useUpdateDataMutation } from "../../services/api";
+import { COUNTDOWN_ACTIONS, COUNTDOWN_GET, COUNTDOWN_TAG } from "../../APIData";
 
 const CountDownPage = () => {
   const [startDate, setStartDate] = useState("");
@@ -27,11 +25,9 @@ const CountDownPage = () => {
     data: countdown,
     isError: errorFetching,
     error: fetchingErrorRes,
-  } = useGetCountdownDataQuery();
-  const [
-    setCountdownData,
-    { isSuccess: successUpdating, isError: errorUpdating },
-  ] = useSetCountdownDataMutation();
+  } = useGetDataQuery({ fetchData: COUNTDOWN_GET, tag: COUNTDOWN_TAG });
+  const [updateData, { isSuccess: successUpdating, isError: errorUpdating }] =
+    useUpdateDataMutation();
 
   useEffect(() => {
     if (countdown && countdown[0]) {
@@ -55,7 +51,11 @@ const CountDownPage = () => {
       start_date: startDateUpd,
       end_date: endDateUpd,
     };
-    setCountdownData(countdownData);
+    updateData({
+      data: countdownData,
+      actions: COUNTDOWN_ACTIONS,
+      tag: COUNTDOWN_TAG,
+    });
   };
 
   if (isLoading) {
