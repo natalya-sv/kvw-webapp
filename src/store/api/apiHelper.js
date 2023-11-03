@@ -1,10 +1,12 @@
 import { PUSH_POST } from "../../APIData";
 
 const tokenPrefix = process.env.REACT_APP_TOKEN_PREFIX + " ";
+
 export const getUserToken = () => {
   const token = localStorage.getItem("userToken");
   return token;
 };
+
 export const fetchData = async (fetchApi) => {
   const token = getUserToken();
   const response = await fetch(fetchApi, {

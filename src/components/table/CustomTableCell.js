@@ -3,17 +3,10 @@ import ImageView from "../ImageView";
 import "dayjs/locale/nl";
 import dayjs from "dayjs";
 const CustomTableCell = ({ type, value, onClick, icon }) => {
-  let nDate = null;
   let content = null;
   let fontWeight = "normal";
   let fontSize = 14;
 
-  if (type === "date") {
-    nDate = dayjs(value).locale("nl").format("DD-MMMM-YYYY");
-  }
-  if (type === "date-time") {
-    nDate = dayjs(value).locale("nl").format("DD-MMMM-YYYY, HH:mm");
-  }
   switch (type) {
     case "header":
     case "subHeader":
@@ -42,7 +35,12 @@ const CustomTableCell = ({ type, value, onClick, icon }) => {
     }
     case "date":
     case "date-time":
-      content = nDate;
+      if (type === "date") {
+        content = dayjs(value).locale("nl").format("DD-MMMM-YYYY");
+      }
+      if (type === "date-time") {
+        content = dayjs(value).locale("nl").format("DD-MMMM-YYYY, HH:mm");
+      }
       break;
     case "icon":
     case "text":

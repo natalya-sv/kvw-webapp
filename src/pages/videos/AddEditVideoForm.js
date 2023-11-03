@@ -5,17 +5,17 @@ import { VIDEO_DESCRIPTION, VIDEO_TITLE, YOUTUBE_LINK } from "./constants";
 import { getEmbeddedUrl } from "./utils";
 import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
-import { useCreateVideoItemMutation } from "../../services/videos";
+import { VIDEOS_ACTIONS, VIDEOS_TAG } from "../../APIData";
 
 const AddEditVideoForm = ({
   editedVideo,
   closeVideosModal,
-  updateVideosData,
+  updateData,
+  createData,
 }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [youtubeLink, setYoutubeLink] = useState("");
-  const [createVideoItem] = useCreateVideoItemMutation();
 
   useEffect(() => {
     if (editedVideo) {
@@ -39,9 +39,17 @@ const AddEditVideoForm = ({
         ...videoItem,
         id: editedVideo.id,
       };
-      updateVideosData(updatedVideo);
+      updateData({
+        data: updatedVideo,
+        actions: VIDEOS_ACTIONS,
+        tag: VIDEOS_TAG,
+      });
     } else {
-      createVideoItem(videoItem);
+      createData({
+        data: videoItem,
+        actions: VIDEOS_ACTIONS,
+        tag: VIDEOS_TAG,
+      });
     }
     closeVideosModal();
   };
