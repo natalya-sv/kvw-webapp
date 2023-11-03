@@ -7,11 +7,15 @@ import PageDescription from "../../../components/UI/PageDescription";
 import AddEditNewslettersItem from "./AddEditNewsletterItem";
 import CustomModal from "../../../components/CustomModal";
 import NewsletteraTable from "./NewslettersTable";
-import { NEWSLETTERS, NEWSLETTERS_DESC } from "./constants";
+import { ADD_NEWSLETTER, NEWSLETTERS, NEWSLETTERS_DESC } from "./constants";
 import {
-  useGetNewslettersQuery,
-  useUpdateNewslettersDataMutation,
-} from "../../../services/newsletters";
+  useGetDataQuery,
+  useUpdateDataMutation,
+  useCreateDataMutation,
+  useDeleteDataMutation,
+} from "../../../services/api";
+import { NEWSLETTERS_GET, NEWSLETTERS_TAG } from "../../../APIData";
+import CustomButton from "../../../components/CustomButton";
 
 const NewslettersPage = () => {
   const [open, setOpen] = useState(false);
@@ -21,20 +25,22 @@ const NewslettersPage = () => {
     isLoading,
     isError: errorFetching,
     error: fetchingErrorRes,
-  } = useGetNewslettersQuery();
+  } = useGetDataQuery({ fetchData: NEWSLETTERS_GET, tag: NEWSLETTERS_TAG });
 
   const [
-    updateNewslettersData,
+    updateData,
     {
       isSuccess: successUpdating,
       isError: errorUpdating,
       error: updatingErrorRes,
     },
-  ] = useUpdateNewslettersDataMutation();
+  ] = useUpdateDataMutation();
 
+  const [createData] = useCreateDataMutation();
   const openNewslettersModal = () => {
     setOpen(true);
   };
+  const [deleteData] = useDeleteDataMutation();
 
   const closeNewslettersModal = () => {
     setEditedNewsletterItem(null);
@@ -62,12 +68,7 @@ const NewslettersPage = () => {
       />
       <Title title={NEWSLETTERS} />
       <PageDescription text={NEWSLETTERS_DESC} />
-      <Box style={{ width: "90%" }}>
-        <AddEditNewslettersItem
-          closeNewslettersModal={closeNewslettersModal}
-          updateNewslettersData={updateNewslettersData}
-        />
-      </Box>
+      <CustomButton title={ADD_NEWSLETTER} onClick={openNewslettersModal} />
       <CustomModal
         open={open}
         handleClose={closeNewslettersModal}
@@ -75,7 +76,8 @@ const NewslettersPage = () => {
           <AddEditNewslettersItem
             editedNewsletterItem={editedNewsletterItem}
             closeNewslettersModal={closeNewslettersModal}
-            updateNewslettersData={updateNewslettersData}
+            updateData={updateData}
+            createData={createData}
           />
         }
       />
@@ -83,8 +85,9 @@ const NewslettersPage = () => {
         setEditedNewsletterItem={setEditedNewsletterItem}
         closeNewslettersModal={closeNewslettersModal}
         openNewslettersModal={openNewslettersModal}
-        updateNewslettersData={updateNewslettersData}
+        updateNewslettersData={updateData}
         newsletters={newsletters}
+        deleteData={deleteData}
       />
     </Box>
   );

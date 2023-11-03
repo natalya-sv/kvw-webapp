@@ -19,7 +19,6 @@ import CustomModal from "../../components/CustomModal";
 import CustomDialog from "../../components/CustomDialog";
 import CustomButton from "../../components/CustomButton";
 import { useGetDaysQuery, useGetGroupsQuery } from "../../services/schedule";
-import { useGetSponsorsQuery } from "../../services/sponsors";
 
 const SchedulePage = () => {
   const [open, setOpen] = useState(false);
@@ -34,7 +33,7 @@ const SchedulePage = () => {
     isLoading,
   } = useGetGroupsQuery();
   const { data: days } = useGetDaysQuery();
-  const { data: sponsors } = useGetSponsorsQuery();
+
   const handleOpenGroupNameModal = () => {
     setOpen(true);
   };
@@ -104,7 +103,7 @@ const SchedulePage = () => {
         setSelectedDay={setSelectedDay}
         groups={groups}
         days={days}
-        sponsors={sponsors}
+        sponsors={[]}
       />
     </Box>
   );

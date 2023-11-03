@@ -6,6 +6,7 @@ export const NEWSLETTERS_LINK = "Nieuwsbrieven link";
 export const NO_NEWSLETTERS = "Er zijn geen vorige nieuwsbrieven";
 export const SENT_NEWSLETTERS = "Verzonden nieuwsbrieven";
 export const SENT_ON = "Datum de nieuwsbrief gestuurd";
+export const ADD_NEWSLETTER = "Nieuwsbrief toevoegen";
 export const newslettersTableDefinition = [
   {
     id: "title",

@@ -9,11 +9,13 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import dayjs from "dayjs";
 import "dayjs/locale/nl";
 import CustomDatePicker from "../../../components/UI/pickers/CustomDatePicker";
+import { NEWSLETTERS_ACTIONS, NEWSLETTERS_TAG } from "../../../APIData";
 
 const AddEditNewslettersItem = ({
   editedNewsletterItem,
   closeNewslettersModal,
-  updateNewslettersData,
+  updateData,
+  createData,
 }) => {
   const [newsLetterTitle, setNewsletterTitle] = useState("");
   const [newsletterLink, setNewsletterLink] = useState("");
@@ -44,9 +46,17 @@ const AddEditNewslettersItem = ({
         ...newsletterItem,
         id: editedNewsletterItem.id,
       };
-      updateNewslettersData(updatedItem);
+      updateData({
+        data: updatedItem,
+        actions: NEWSLETTERS_ACTIONS,
+        tag: NEWSLETTERS_TAG,
+      });
     } else {
-      updateNewslettersData(newsletterItem);
+      createData({
+        data: newsletterItem,
+        actions: NEWSLETTERS_ACTIONS,
+        tag: NEWSLETTERS_TAG,
+      });
     }
     closeNewslettersModal();
   };

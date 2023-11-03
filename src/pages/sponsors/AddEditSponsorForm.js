@@ -18,12 +18,13 @@ import {
 } from "./constants";
 import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
+import { SPONSORS_ACTIONS, SPONSORS_TAG } from "../../APIData";
 
 const AddEditSponsorForm = ({
   editedSponsor,
   closeSponsorsModal,
-  createSponsor,
-  updateSponsorsData,
+  createData,
+  updateData,
 }) => {
   const [sponsorName, setSponsorName] = useState("");
   const [sponsorWebsiteUrl, setSponsorWebsiteUrl] = useState("");
@@ -54,9 +55,17 @@ const AddEditSponsorForm = ({
         ...newSponsor,
         id: editedSponsor?.id,
       };
-      updateSponsorsData(updatedSponsor);
+      updateData({
+        data: updatedSponsor,
+        actions: SPONSORS_ACTIONS,
+        tag: SPONSORS_TAG,
+      });
     } else {
-      createSponsor(newSponsor);
+      createData({
+        data: newSponsor,
+        actions: SPONSORS_ACTIONS,
+        tag: SPONSORS_TAG,
+      });
     }
     closeSponsorsModal();
   };
