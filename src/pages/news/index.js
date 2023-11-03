@@ -13,8 +13,8 @@ import CustomModal from "../../components/CustomModal";
 
 const NewsPage = () => {
   const dispatch = useDispatch();
-  const { isLoading } = useSelector((state) => state.news);
-  const { notification } = useSelector((state) => state.notification);
+  // const { isLoading } = useSelector((state) => state.news);
+  // const { notification } = useSelector((state) => state.notification);
   const [editedNewsItem, setEditedNewsItem] = useState(null);
   const [open, setOpen] = useState(false);
 
@@ -31,9 +31,9 @@ const NewsPage = () => {
     dispatch(fetchNewsItems());
   }, [dispatch]);
 
-  if (isLoading) {
-    return <SpinnerView />;
-  }
+  // if (isLoading) {
+  //   return <SpinnerView />;
+  // }
 
   return (
     <Box
@@ -42,9 +42,7 @@ const NewsPage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      {notification?.isActive && (
-        <AlertNotification notification={notification} />
-      )}
+      {/* <AlertNotification notification={notification} /> */}
 
       <Title title={NEWS} />
       <PageDescription text={NEWS_DESC} />

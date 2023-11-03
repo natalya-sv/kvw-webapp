@@ -16,10 +16,8 @@ import {
 } from "./constants.js";
 import CustomButton from "../../components/CustomButton.js";
 import ImageView from "../../components/ImageView.js";
-import {
-  useGetHomeDataQuery,
-  useSetHomeDataMutation,
-} from "../../services/home.js";
+import { useGetDataQuery, useUpdateDataMutation } from "../../services/api.js";
+import { HOME_ACTIONS, HOME_GET, HOME_TAG } from "../../APIData.js";
 
 const HomePage = () => {
   const [title, setHomeTitle] = useState("");
@@ -27,15 +25,15 @@ const HomePage = () => {
   const [themaYearTitle, setThemaYearTitle] = useState("");
   const [image, setThemaImage] = useState("");
   const [websiteUrl, setKvwWebsiteUrl] = useState("");
+
   const {
     data,
     isLoading,
     isError: errorFetching,
     error: fetchingErrorRes,
-  } = useGetHomeDataQuery();
-
-  const [setHomeData, { isSuccess: successUpdating, isError: errorUpdating }] =
-    useSetHomeDataMutation();
+  } = useGetDataQuery({ fetchData: HOME_GET, tag: HOME_TAG });
+  const [updateData, { isSuccess: successUpdating, isError: errorUpdating }] =
+    useUpdateDataMutation();
 
   useEffect(() => {
     if (data && data[0]) {
@@ -64,7 +62,7 @@ const HomePage = () => {
       thema_image: image,
     };
 
-    setHomeData(updatedHomeData);
+    updateData({ data: updatedHomeData, actions: HOME_ACTIONS, tag: "Home" });
   };
 
   if (isLoading) {

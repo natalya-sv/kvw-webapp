@@ -7,10 +7,11 @@ import {
 import { Typography } from "@mui/material";
 import { useMemo } from "react";
 import { truncateString } from "../../helpers/utils";
+import { VIDEOS_ACTIONS, VIDEOS_TAG } from "../../APIData";
 
 const VideosTable = ({
   videos,
-  updateVideosData,
+  deleteData,
   setEditedVideo,
   openVideosModal,
 }) => {
@@ -35,12 +36,11 @@ const VideosTable = ({
   }, [videos]);
 
   const handleRemoveVideos = (idsToRemove) => {
-    if (idsToRemove.length === 1) {
-      updateVideosData(idsToRemove[0]);
-    } else {
-      const deleteAllItems = updatedVideos.length === idsToRemove.length;
-      updateVideosData(idsToRemove, deleteAllItems);
-    }
+    deleteData({
+      data: idsToRemove,
+      tag: VIDEOS_TAG,
+      actions: VIDEOS_ACTIONS,
+    });
   };
 
   const handleEditVideo = (id) => {

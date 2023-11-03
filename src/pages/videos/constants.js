@@ -8,6 +8,7 @@ export const VIDEO_DESCRIPTION = "Video beschrijving";
 export const YOUTUBE_LINK = "YouTube Link";
 export const NO_VIDEOS_YET = "Nog geen videos";
 export const DESCRIPTION = "Beschrijving";
+export const ADD_NEW_VIDEO = "Video toevoegen";
 export const videosTableDefinitions = [
   {
     id: "title",

@@ -2,7 +2,7 @@ import { Switch, Route, Redirect } from "react-router-dom";
 import React, { useContext } from "react";
 import Login from "./pages/Login";
 import Layout from "./components/UI/layout/Layout.js";
-import HomwPage from "./pages/home/index.js";
+import HomePage from "./pages/home/index.js";
 import NewsPage from "./pages/news/index";
 import AuthContext from "./context/auth-context";
 import SponsorsPage from "./pages/sponsors/index";
@@ -30,7 +30,7 @@ const App = () => {
         </Route>
 
         <Route path="/home">
-          {auth.isLoggedIn && <HomwPage />}
+          {auth.isLoggedIn && <HomePage />}
           {!auth.isLoggedIn && <Redirect to="/login" />}
         </Route>
 
