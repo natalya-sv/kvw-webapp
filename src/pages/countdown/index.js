@@ -52,7 +52,7 @@ const CountDownPage = () => {
       end_date: endDateUpd,
     };
     updateData({
-      data: countdownData,
+      updatedItem: countdownData,
       actions: COUNTDOWN_ACTIONS,
       tag: COUNTDOWN_TAG,
     });

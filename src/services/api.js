@@ -20,42 +20,42 @@ export const api = createApi({
       },
     }),
     createData: builder.mutation({
-      query: ({ data, actions }) => ({
+      query: ({ newItem, actions }) => ({
         url: actions,
         method: "POST",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,
         },
-        body: { action: "create", item: data },
+        body: { action: "create", newItem: newItem },
       }),
       invalidatesTags: (_result, _error, id) => {
         return [id.tag];
       },
     }),
     updateData: builder.mutation({
-      query: ({ data, actions }) => ({
+      query: ({ updatedItem, actions }) => ({
         url: actions,
         method: "POST",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,
         },
-        body: { action: "update", item: data },
+        body: { action: "update", updatedItem: updatedItem },
       }),
       invalidatesTags: (_result, _error, id) => {
         return [id.tag];
       },
     }),
     deleteData: builder.mutation({
-      query: ({ data, actions }) => ({
+      query: ({ deletedItems, actions }) => ({
         url: actions,
         method: "POST",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,
         },
-        body: { action: "delete", items: data },
+        body: { action: "delete", deletedItems: deletedItems },
       }),
       invalidatesTags: (_result, _error, id) => {
         return [id.tag];

@@ -14,7 +14,11 @@ import ClearIcon from "@mui/icons-material/Clear";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import DoNotDisturbAltIcon from "@mui/icons-material/DoDisturbAlt";
 import { Typography } from "@mui/material";
-import { SPONSORS_ACTIONS, SPONSORS_TAG } from "../../APIData";
+import {
+  SET_SPONSORS_STATUS,
+  SPONSORS_ACTIONS,
+  SPONSORS_TAG,
+} from "../../APIData";
 
 const SponsorsTable = ({
   sponsors,
@@ -51,7 +55,7 @@ const SponsorsTable = ({
 
   const handleRemoveSponsor = (idsToRemove) => {
     deleteData({
-      data: idsToRemove,
+      deletedItems: idsToRemove,
       actions: SPONSORS_ACTIONS,
       tag: SPONSORS_TAG,
     });
@@ -69,7 +73,11 @@ const SponsorsTable = ({
   const setSponsorStatus = useCallback(
     (selectedSponsors, isActive) => {
       updateData({
-        data: { sponsors: selectedSponsors, status: isActive },
+        updatedItem: {
+          sponsors: selectedSponsors,
+          status: isActive,
+        },
+        type: SET_SPONSORS_STATUS,
         tag: SPONSORS_TAG,
         actions: SPONSORS_ACTIONS,
       });

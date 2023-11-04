@@ -47,13 +47,13 @@ const AddEditNewslettersItem = ({
         id: editedNewsletterItem.id,
       };
       updateData({
-        data: updatedItem,
+        updatedItem: updatedItem,
         actions: NEWSLETTERS_ACTIONS,
         tag: NEWSLETTERS_TAG,
       });
     } else {
       createData({
-        data: newsletterItem,
+        newItem: newsletterItem,
         actions: NEWSLETTERS_ACTIONS,
         tag: NEWSLETTERS_TAG,
       });

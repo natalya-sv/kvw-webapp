@@ -8,17 +8,17 @@ import {
 import { useMemo } from "react";
 import CollapsableTable from "../../components/table/CollapsableTable";
 import {
-  DAYS_ACTIONS,
-  DAYS_TAG,
-  GROUPS_ACTIONS,
-  GROUPS_TAG,
+  SCHEDULE_TAG,
+  SCHEDULE_ACTIONS,
+  DAY_TYPE,
+  GROUP_TYPE,
 } from "../../APIData";
 
 const GroupsTable = ({
   groups,
   days,
   sponsors,
-  setSelectedGroupName,
+  setSelectedGroup,
   handleOpenGroupNameModal,
   setSelectedGroupId,
   setSelectedDay,
@@ -64,22 +64,25 @@ const GroupsTable = ({
 
   const handleEditGroupName = (groupId) => {
     const groupToEdit = mergedDaysAndGroups.find((gr) => gr.id === groupId);
-
-    if (groupToEdit?.id) {
-      setSelectedGroupName(groupToEdit);
+    if (groupToEdit) {
+      setSelectedGroup(groupToEdit);
       handleOpenGroupNameModal();
     }
   };
 
   const handleRemoveGroups = (idsToRemove) => {
-    deleteData({ data: idsToRemove, tag: GROUPS_TAG, actions: GROUPS_ACTIONS });
+    deleteData({
+      deletedItems: { items: idsToRemove, type: GROUP_TYPE },
+      tag: SCHEDULE_TAG,
+      actions: SCHEDULE_ACTIONS,
+    });
   };
 
   const handleEditDay = (dayId, groupId) => {
-    setSelectedGroupId(groupId);
     const group = mergedDaysAndGroups.find((gr) => gr.id === groupId);
     const day = group.weekSchedule.find((day) => day.id === dayId);
     if (day) {
+      setSelectedGroupId(groupId);
       setSelectedDay(day);
       handleOpenAddEditDayDialog();
     }
@@ -91,7 +94,11 @@ const GroupsTable = ({
   };
 
   const handleRemoveDay = (dayToDelete) => {
-    deleteData({ data: dayToDelete, tag: DAYS_TAG, actions: DAYS_ACTIONS });
+    deleteData({
+      deletedItems: { item: dayToDelete, type: DAY_TYPE },
+      tag: SCHEDULE_TAG,
+      actions: SCHEDULE_ACTIONS,
+    });
   };
 
   return groups.length > 0 ? (

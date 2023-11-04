@@ -56,13 +56,13 @@ const AddEditSponsorForm = ({
         id: editedSponsor?.id,
       };
       updateData({
-        data: updatedSponsor,
+        updatedItem: updatedSponsor,
         actions: SPONSORS_ACTIONS,
         tag: SPONSORS_TAG,
       });
     } else {
       createData({
-        data: newSponsor,
+        newItem: newSponsor,
         actions: SPONSORS_ACTIONS,
         tag: SPONSORS_TAG,
       });

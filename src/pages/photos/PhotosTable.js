@@ -6,6 +6,14 @@ import {
   subRowAlbumsDefinition,
 } from "./constants";
 import { truncateString } from "../../helpers/utils";
+import {
+  ALBUMS_ACTIONS,
+  ALBUMS_TAG,
+  ALBUM_TYPE,
+  PHOTOS_ACTIONS,
+  PHOTOS_TAG,
+  FOLDER_TYPE,
+} from "../../APIData";
 
 const PhotosTable = ({
   folders,
@@ -15,8 +23,9 @@ const PhotosTable = ({
   setSelectedFolderId,
   handleOpenAddEditAlbumDialog,
   setSelectedAlbum,
+  deleteData,
 }) => {
-  const updatedFolders = useMemo(() => {
+  const mergedFoldersAndAlbums = useMemo(() => {
     if (folders && albums) {
       const photos = folders.map((folder) => {
         const folderAlbums = albums
@@ -44,24 +53,16 @@ const PhotosTable = ({
     return [];
   }, [folders, albums]);
 
-  //To Do: change way of deleting at the backend
   const handleRemoveFolders = (idsToRemove) => {
-    const deleteAllFolders = updatedFolders.length === idsToRemove.length;
-    if (deleteAllFolders) {
-      // removeFolders(idsToRemove, true)
-      const albumsToRemove = albums.map((album) => album.id);
-      // removeAlbums(albumsToRemove, true)
-    } else {
-      const albumsToDelete = albums
-        .filter((al) => idsToRemove.includes(al.folderId))
-        .map((a) => a.id);
-      // removeFolders(idsToRemove, false);
-      // removeAlbums(albumsToDelete, false);
-    }
+    deleteData({
+      deletedItems: { items: idsToRemove, type: FOLDER_TYPE },
+      actions: PHOTOS_ACTIONS,
+      tag: PHOTOS_TAG,
+    });
   };
 
   const handleEditFolder = (folderId) => {
-    const folder = folders.find((f) => f.id === folderId);
+    const folder = mergedFoldersAndAlbums.find((f) => f.id === folderId);
     if (folder) {
       setSelectedFolder(folder);
       handleOpenFolderModal();
@@ -74,22 +75,26 @@ const PhotosTable = ({
   };
 
   const handleEditAlbum = (albumId, folderId) => {
-    setSelectedFolderId(folderId);
-
-    const album = albums.find((a) => a.id === albumId);
+    const folder = mergedFoldersAndAlbums.find((f) => f.id === folderId);
+    const album = folder.albums.find((a) => a.id === albumId);
     if (album) {
+      setSelectedFolderId(folderId);
       setSelectedAlbum(album);
       handleOpenAddEditAlbumDialog();
     }
   };
 
   const handleRemoveAlbum = (albumId) => {
-    // removeAlbum(albumId);
+    deleteData({
+      deletedItems: { item: albumId, type: ALBUM_TYPE },
+      actions: PHOTOS_ACTIONS,
+      tag: PHOTOS_TAG,
+    });
   };
 
   return (
     <CollapsableTable
-      items={updatedFolders}
+      items={mergedFoldersAndAlbums}
       tableDefinition={albumsTableDefinition}
       buttons={["edit", "delete", "add"]}
       onRemoveItems={handleRemoveFolders}

@@ -18,7 +18,7 @@ import TextInput from "../../components/TextInput";
 import "dayjs/locale/nl";
 import CustomDatePicker from "../../components/UI/pickers/CustomDatePicker";
 import CustomTimePicker from "../../components/UI/pickers/CustomTimePicker";
-import { DAYS_ACTIONS, DAYS_TAG } from "../../APIData";
+import { DAY_TYPE, SCHEDULE_ACTIONS, SCHEDULE_TAG } from "../../APIData";
 
 const AddEditDayForm = ({
   selectedDay,
@@ -26,6 +26,7 @@ const AddEditDayForm = ({
   selectedGroupId,
   createData,
   updateData,
+  sponsors,
 }) => {
   const [programma, setProgramma] = useState("");
   const [extraInfo, setExtraInfo] = useState("");
@@ -75,9 +76,17 @@ const AddEditDayForm = ({
         ...day,
         id: selectedDay.id,
       };
-      updateData({ data: updatedDay, actions: DAYS_ACTIONS, tag: DAYS_TAG });
+      updateData({
+        updatedItem: { item: updatedDay, type: DAY_TYPE },
+        actions: SCHEDULE_ACTIONS,
+        tag: SCHEDULE_TAG,
+      });
     } else {
-      createData({ data: day, actions: DAYS_ACTIONS, tag: DAYS_TAG });
+      createData({
+        newItem: { item: day, type: DAY_TYPE },
+        actions: SCHEDULE_ACTIONS,
+        tag: SCHEDULE_TAG,
+      });
     }
 
     handleCloseAddEditDayDialog();
@@ -147,6 +156,7 @@ const AddEditDayForm = ({
         onChange={setEndLocation}
       />
       <SponsorsCheckboxList
+        sponsors={sponsors}
         setSelectedDaySponsors={setSelectedDaySponsors}
         selectedDaySponsors={selectedDaySponsors}
       />

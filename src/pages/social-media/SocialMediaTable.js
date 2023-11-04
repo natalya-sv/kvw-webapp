@@ -26,7 +26,7 @@ const SocialMediaTable = ({
 
   const handleRemoveSocialAccount = (idsToRemove) => {
     deleteData({
-      data: idsToRemove,
+      deletedItems: idsToRemove,
       tag: SOCIAL_MEDIA_TAG,
       actions: SOCIAL_MEDIA_ACTIONS,
     });
