@@ -7,6 +7,12 @@ import {
 } from "./constants";
 import { useMemo } from "react";
 import CollapsableTable from "../../components/table/CollapsableTable";
+import {
+  DAYS_ACTIONS,
+  DAYS_TAG,
+  GROUPS_ACTIONS,
+  GROUPS_TAG,
+} from "../../APIData";
 
 const GroupsTable = ({
   groups,
@@ -17,6 +23,7 @@ const GroupsTable = ({
   setSelectedGroupId,
   setSelectedDay,
   handleOpenAddEditDayDialog,
+  deleteData,
 }) => {
   const mergedDaysAndGroups = useMemo(() => {
     if (groups && sponsors && days) {
@@ -56,7 +63,8 @@ const GroupsTable = ({
   }, [groups, days, sponsors]);
 
   const handleEditGroupName = (groupId) => {
-    const groupToEdit = groups.find((gr) => gr.id === groupId);
+    const groupToEdit = mergedDaysAndGroups.find((gr) => gr.id === groupId);
+
     if (groupToEdit?.id) {
       setSelectedGroupName(groupToEdit);
       handleOpenGroupNameModal();
@@ -64,24 +72,13 @@ const GroupsTable = ({
   };
 
   const handleRemoveGroups = (idsToRemove) => {
-    const deleteAllGroups = groups.length === idsToRemove.length;
-
-    if (deleteAllGroups) {
-      // removeGroups(idsToRemove, true)
-      const daysToRemove = days.map((day) => day.id);
-      // removeDays(daysToRemove, true)
-    } else {
-      const dayIds = days
-        .filter((day) => idsToRemove.includes(day.groupId))
-        .map((d) => d.id);
-      // removeGroups(idsToRemove, false))
-      // removeDays(dayIds, false);
-    }
+    deleteData({ data: idsToRemove, tag: GROUPS_TAG, actions: GROUPS_ACTIONS });
   };
 
   const handleEditDay = (dayId, groupId) => {
     setSelectedGroupId(groupId);
-    const day = days.find((day) => day.id === dayId);
+    const group = mergedDaysAndGroups.find((gr) => gr.id === groupId);
+    const day = group.weekSchedule.find((day) => day.id === dayId);
     if (day) {
       setSelectedDay(day);
       handleOpenAddEditDayDialog();
@@ -94,7 +91,7 @@ const GroupsTable = ({
   };
 
   const handleRemoveDay = (dayToDelete) => {
-    // removeDayItem(dayToDelete);
+    deleteData({ data: dayToDelete, tag: DAYS_TAG, actions: DAYS_ACTIONS });
   };
 
   return groups.length > 0 ? (

@@ -24,7 +24,7 @@ const useStyles = makeStyles({
 
 const SponsorsCheckboxList = (props) => {
   const [checkedSponsors, setCheckedSponsors] = useState([]);
-  const { sponsors } = useSelector((state) => state.sponsors);
+  const sponsors = [];
   const classes = useStyles();
 
   useEffect(() => {

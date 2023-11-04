@@ -18,7 +18,20 @@ import AddEditDayForm from "./AddEditDayForm";
 import CustomModal from "../../components/CustomModal";
 import CustomDialog from "../../components/CustomDialog";
 import CustomButton from "../../components/CustomButton";
-import { useGetDaysQuery, useGetGroupsQuery } from "../../services/schedule";
+import {
+  useCreateDataMutation,
+  useDeleteDataMutation,
+  useGetDataQuery,
+  useUpdateDataMutation,
+} from "../../services/api";
+import {
+  DAYS_TAG,
+  DAY_GET,
+  GROUPS_GET,
+  GROUPS_TAG,
+  SPONSORS_GET,
+  SPONSORS_TAG,
+} from "../../APIData";
 
 const SchedulePage = () => {
   const [open, setOpen] = useState(false);
@@ -31,8 +44,21 @@ const SchedulePage = () => {
     isError: errorFetching,
     error: fetchingErrorRes,
     isLoading,
-  } = useGetGroupsQuery();
-  const { data: days } = useGetDaysQuery();
+  } = useGetDataQuery({ fetchData: GROUPS_GET, tag: GROUPS_TAG });
+
+  const { data: days } = useGetDataQuery({
+    fetchData: DAY_GET,
+    tag: DAYS_TAG,
+  });
+
+  const { data: sponsors } = useGetDataQuery({
+    fetchData: SPONSORS_GET,
+    tag: SPONSORS_TAG,
+  });
+
+  const [updateData] = useUpdateDataMutation();
+  const [deleteData] = useDeleteDataMutation();
+  const [createData] = useCreateDataMutation();
 
   const handleOpenGroupNameModal = () => {
     setOpen(true);
@@ -67,7 +93,6 @@ const SchedulePage = () => {
       {/* <AlertNotification /> */}
       <Title title={GROUPS} />
       <PageDescription text={GROUPS_DESC} />
-
       <CustomButton
         title={ADD_NEW_GROUP}
         onClick={handleOpenGroupNameModal}
@@ -80,6 +105,8 @@ const SchedulePage = () => {
           <AddEditGroupForm
             selectedGroupName={selectedGroupName}
             handleClose={handleCloseGroupNameModal}
+            updateData={updateData}
+            createData={createData}
           />
         }
       />
@@ -92,6 +119,8 @@ const SchedulePage = () => {
             selectedDay={selectedDay}
             selectedGroupId={selectedGroupId}
             handleCloseAddEditDayDialog={handleCloseAddEditDayDialog}
+            updateData={updateData}
+            createData={createData}
           />
         }
       />
@@ -103,7 +132,8 @@ const SchedulePage = () => {
         setSelectedDay={setSelectedDay}
         groups={groups}
         days={days}
-        sponsors={[]}
+        sponsors={sponsors}
+        deleteData={deleteData}
       />
     </Box>
   );

@@ -50,7 +50,11 @@ const SponsorsTable = ({
   }, [sponsors]);
 
   const handleRemoveSponsor = (idsToRemove) => {
-    deleteData(idsToRemove);
+    deleteData({
+      data: idsToRemove,
+      actions: SPONSORS_ACTIONS,
+      tag: SPONSORS_TAG,
+    });
     closeSponsorsModal();
   };
 
