@@ -4,8 +4,14 @@ import { SAVE } from "../../helpers/constants";
 import { GROUP_NAME } from "./constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
+import { GROUPS_ACTIONS, GROUPS_TAG } from "../../APIData";
 
-const AddEditGroupForm = ({ selectedGroupName, handleClose }) => {
+const AddEditGroupForm = ({
+  selectedGroupName,
+  handleClose,
+  createData,
+  updateData,
+}) => {
   const [groupName, setGroupName] = useState("");
 
   useEffect(() => {
@@ -14,8 +20,7 @@ const AddEditGroupForm = ({ selectedGroupName, handleClose }) => {
     }
   }, [selectedGroupName]);
 
-  const submitHandler = (e) => {
-    e.preventDefault();
+  const handleGroup = () => {
     const group = {
       group_name: groupName,
     };
@@ -24,9 +29,13 @@ const AddEditGroupForm = ({ selectedGroupName, handleClose }) => {
         ...group,
         id: selectedGroupName.id,
       };
-      // updateGroupName(updatedGroup)
+      updateData({
+        data: updatedGroup,
+        actions: GROUPS_ACTIONS,
+        tag: GROUPS_TAG,
+      });
     } else {
-      // addNewGroupItem(group)
+      createData({ data: group, actions: GROUPS_ACTIONS, tag: GROUPS_TAG });
     }
     handleClose();
   };
@@ -41,7 +50,7 @@ const AddEditGroupForm = ({ selectedGroupName, handleClose }) => {
       />
       <CustomButton
         title={SAVE}
-        onClick={submitHandler}
+        onClick={handleGroup}
         disabled={groupName === ""}
       />
     </Box>

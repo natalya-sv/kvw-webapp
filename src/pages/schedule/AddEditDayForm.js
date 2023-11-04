@@ -18,11 +18,14 @@ import TextInput from "../../components/TextInput";
 import "dayjs/locale/nl";
 import CustomDatePicker from "../../components/UI/pickers/CustomDatePicker";
 import CustomTimePicker from "../../components/UI/pickers/CustomTimePicker";
+import { DAYS_ACTIONS, DAYS_TAG } from "../../APIData";
 
 const AddEditDayForm = ({
   selectedDay,
   handleCloseAddEditDayDialog,
   selectedGroupId,
+  createData,
+  updateData,
 }) => {
   const [programma, setProgramma] = useState("");
   const [extraInfo, setExtraInfo] = useState("");
@@ -67,15 +70,14 @@ const AddEditDayForm = ({
       day_sponsors: selectedDaySponsors,
       group_id: selectedGroupId,
     };
-
     if (selectedDay) {
       const updatedDay = {
         ...day,
         id: selectedDay.id,
       };
-      // editDay(updatedDay)
+      updateData({ data: updatedDay, actions: DAYS_ACTIONS, tag: DAYS_TAG });
     } else {
-      // addNewDay(day)
+      createData({ data: day, actions: DAYS_ACTIONS, tag: DAYS_TAG });
     }
 
     handleCloseAddEditDayDialog();
