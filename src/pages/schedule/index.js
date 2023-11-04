@@ -25,10 +25,8 @@ import {
   useUpdateDataMutation,
 } from "../../services/api";
 import {
-  DAYS_TAG,
   DAY_GET,
   GROUPS_GET,
-  GROUPS_TAG,
   SCHEDULE_TAG,
   SPONSORS_GET,
   SPONSORS_TAG,
@@ -57,7 +55,8 @@ const SchedulePage = () => {
     tag: SPONSORS_TAG,
   });
 
-  const [updateData] = useUpdateDataMutation();
+  const [updateData, { isSuccess: successUpdating, isError: errorUpdating }] =
+    useUpdateDataMutation();
   const [deleteData] = useDeleteDataMutation();
   const [createData] = useCreateDataMutation();
 
@@ -106,7 +105,12 @@ const SchedulePage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      {/* <AlertNotification /> */}
+      <AlertNotification
+        errorFetching={errorFetching}
+        errorUpdating={errorUpdating}
+        successUpdating={successUpdating}
+        subMessage={fetchingErrorRes?.message}
+      />
       <Title title={GROUPS} />
       <PageDescription text={GROUPS_DESC} />
       <CustomButton

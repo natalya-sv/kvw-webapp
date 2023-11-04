@@ -3,8 +3,6 @@ export const ERROR_FETCHING = {
   title: "Error!",
   message: "Er is een fout opgetreden bij het ophalen van gegevens!",
 };
-export const ERROR_MESSAGE =
-  "Er is een fout opgetreden bij het ophalen van gegevens.";
 export const SUCCESS_UPDATE_API = {
   severity: "success",
   title: "Success!",

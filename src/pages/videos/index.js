@@ -20,6 +20,7 @@ import {
 } from "../../services/api";
 import { VIDEOS_GET, VIDEOS_TAG } from "../../APIData";
 import CustomButton from "../../components/CustomButton";
+import AddIcon from "@mui/icons-material/Add";
 
 const VideosPage = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -73,7 +74,11 @@ const VideosPage = () => {
       />
       <Title title={VIDEOS_PAGE_TITLE} />
       <PageDescription text={VIDEOS_PAGE_DESCRIPTION} />
-      <CustomButton title={ADD_NEW_VIDEO} onClick={openVideosModal} />
+      <CustomButton
+        title={ADD_NEW_VIDEO}
+        onClick={openVideosModal}
+        startIcon={<AddIcon />}
+      />
       <CustomModal
         open={openModal}
         handleClose={closeVideosModal}

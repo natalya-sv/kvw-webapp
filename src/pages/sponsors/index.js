@@ -16,6 +16,7 @@ import {
 } from "../../services/api";
 import CustomButton from "../../components/CustomButton";
 import { SPONSORS_GET, SPONSORS_TAG } from "../../APIData";
+import AddIcon from "@mui/icons-material/Add";
 
 const SponsorsPage = () => {
   const [open, setOpen] = useState(false);
@@ -69,7 +70,11 @@ const SponsorsPage = () => {
       <Title title={SPONSORS} />
       <PageDescription text={ALL_SPONSORS_DESC} />
 
-      <CustomButton title={ADD_SPONSOR} onClick={openSponsorsModal} />
+      <CustomButton
+        title={ADD_SPONSOR}
+        onClick={openSponsorsModal}
+        startIcon={<AddIcon />}
+      />
       <CustomModal
         open={open}
         handleClose={closeSponsorsModal}

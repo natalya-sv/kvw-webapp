@@ -15,6 +15,7 @@ export const TITLE = "Title";
 export const ADD_NEW_FOLDER = "Nieuwe folder toevoegen";
 export const FOLDER_TITLE = "Jaar";
 export const FOLDER_COVER_PHOTO_TITLE = "Folder omslagfoto link";
+export const NO_PHOTOS = "Er zijn nog geen foto albums";
 export const albumsTableDefinition = [
   {
     id: "empty",

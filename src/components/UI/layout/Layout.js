@@ -30,10 +30,7 @@ const Layout = (props) => {
           <p>
             Version: {process.env.REACT_APP_BUILD_NUMBER} {isDev ? "DEV" : ""}
           </p>
-          <p>
-            Copyright © 2023 Kindervakantieweek Brandevoort. All Rights
-            Reserved.
-          </p>
+          <p>KVW</p>
         </small>
       </footer>
     </div>

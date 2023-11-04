@@ -15,6 +15,7 @@ const AlertNotification = ({
 }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState();
+
   const handleCloseSnackBar = (_event, reason) => {
     if (reason === "clickaway") {
       return;

@@ -26,6 +26,7 @@ const CountDownPage = () => {
     isError: errorFetching,
     error: fetchingErrorRes,
   } = useGetDataQuery({ fetchData: COUNTDOWN_GET, tag: COUNTDOWN_TAG });
+
   const [updateData, { isSuccess: successUpdating, isError: errorUpdating }] =
     useUpdateDataMutation();
 
@@ -75,7 +76,6 @@ const CountDownPage = () => {
         successUpdating={successUpdating}
         subMessage={fetchingErrorRes?.message ?? ""}
       />
-
       <Title title={COUNTDOWN} />
       <PageDescription text={COUNTDOWN_DESC} />
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"nl"}>

@@ -9,7 +9,7 @@ import { SOCIAL_MEDIA_ACTIONS, SOCIAL_MEDIA_TAG } from "../../APIData";
 const AddEditSocialMediaAccount = ({
   accountToEdit,
   closeMediaModal,
-  updateSocialMediaData,
+  updateData,
   createData,
 }) => {
   const [accountTitle, setAccountTitle] = useState("");
@@ -36,7 +36,7 @@ const AddEditSocialMediaAccount = ({
         icon_name: accountToEdit.iconName,
         color: accountToEdit.color,
       };
-      updateSocialMediaData({
+      updateData({
         updatedItem: updatedAccount,
         actions: SOCIAL_MEDIA_ACTIONS,
         tag: SOCIAL_MEDIA_TAG,

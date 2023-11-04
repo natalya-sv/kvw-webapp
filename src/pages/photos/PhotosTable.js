@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 import CollapsableTable from "../../components/table/CollapsableTable";
 import {
   ALBUMS_TITLE,
+  NO_PHOTOS,
   albumsTableDefinition,
   subRowAlbumsDefinition,
 } from "./constants";
@@ -14,6 +15,7 @@ import {
   PHOTOS_TAG,
   FOLDER_TYPE,
 } from "../../APIData";
+import { Typography } from "@mui/material";
 
 const PhotosTable = ({
   folders,
@@ -92,7 +94,7 @@ const PhotosTable = ({
     });
   };
 
-  return (
+  return mergedFoldersAndAlbums && mergedFoldersAndAlbums.length > 0 ? (
     <CollapsableTable
       items={mergedFoldersAndAlbums}
       tableDefinition={albumsTableDefinition}
@@ -106,6 +108,8 @@ const PhotosTable = ({
       onEditSubRowItem={handleEditAlbum}
       onRemoveSubRowItem={handleRemoveAlbum}
     />
+  ) : (
+    <Typography>{NO_PHOTOS}</Typography>
   );
 };
 export default PhotosTable;
