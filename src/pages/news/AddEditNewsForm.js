@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IMAGE_URL_OPT } from "./constants";
 import { Box } from "@mui/material";
-import { useDispatch } from "react-redux";
 import {
   NEWS_CONTENT,
   NEWS_TITLE,
@@ -10,13 +9,17 @@ import {
 } from "./constants";
 import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
-import { addNewsItem, editNewsItem } from "../../store/news/news-actions";
+import { NEWS_ACTIONS, NEWS_TAG } from "../../APIData";
 
-const AddEditNewsForm = ({ editedNewsItem, closeNewsModal }) => {
+const AddEditNewsForm = ({
+  editedNewsItem,
+  closeNewsModal,
+  updateData,
+  createData,
+}) => {
   const [newsTitle, setNewsTitle] = useState("");
   const [newsContent, setNewsContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (editedNewsItem) {
@@ -38,11 +41,18 @@ const AddEditNewsForm = ({ editedNewsItem, closeNewsModal }) => {
         ...newsItem,
         id: editedNewsItem.id,
       };
-      dispatch(editNewsItem(newsUpdated));
-      closeNewsModal();
+      updateData({
+        updatedItem: newsUpdated,
+        tag: NEWS_TAG,
+        actions: NEWS_ACTIONS,
+      });
     } else {
-      dispatch(addNewsItem(newsItem));
+      createData({ newItem: newsItem, tag: NEWS_TAG, actions: NEWS_ACTIONS });
     }
+    // setNewsContent("");
+    // setNewsTitle("");
+    // setImageUrl("");
+    closeNewsModal();
   };
 
   return (
