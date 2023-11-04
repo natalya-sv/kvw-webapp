@@ -38,12 +38,12 @@ const Login = () => {
           value={username}
           onChange={setUsername}
         />
-        <TextField
+        <TextInput
           id="password"
           label={PASSWORD}
           value={password}
           type={"password"}
-          onChange={(e) => setPassword(e.target.value)}
+          onChange={setPassword}
         />
         <CustomButton
           onClick={login}

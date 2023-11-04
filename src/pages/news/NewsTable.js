@@ -1,18 +1,21 @@
 import SimpleTable from "../../components/table/SimpleTable";
-import { useDispatch, useSelector } from "react-redux";
 import {
   NO_NEWS_MESSAGE,
   PREVIOUS_NEWS,
   newsTableDefinition,
 } from "./constants";
-import { removeNewsItem, removeNewsItems } from "../../store/news/news-actions";
 import { Typography } from "@mui/material";
 import { useMemo } from "react";
 import { truncateString } from "../../helpers/utils";
-const NewsTable = (props) => {
-  const { news } = useSelector((state) => state.news);
-  const dispatch = useDispatch();
+import { NEWS_ACTIONS, NEWS_TAG } from "../../APIData";
 
+const NewsTable = ({
+  news,
+  closeNewsModal,
+  setEditedNewsItem,
+  openNewsModal,
+  deleteData,
+}) => {
   const updatedNews = useMemo(() => {
     if (news) {
       return [...news]
@@ -20,6 +23,7 @@ const NewsTable = (props) => {
         .map((newsItem) => {
           return {
             ...newsItem,
+            imageUrl: newsItem.image_url,
             truncatedText: truncateString(newsItem.content, 150),
           };
         });
@@ -29,24 +33,23 @@ const NewsTable = (props) => {
   }, [news]);
 
   const handleRemoveNews = (idsToRemove) => {
-    if (idsToRemove.length === 1) {
-      dispatch(removeNewsItem(idsToRemove[0]));
-    } else {
-      const deleteAllItems = news.length === idsToRemove.length;
-      dispatch(removeNewsItems(idsToRemove, deleteAllItems));
-    }
-    props.closeNewsModal();
+    deleteData({
+      deletedItems: idsToRemove,
+      tag: NEWS_TAG,
+      actions: NEWS_ACTIONS,
+    });
+    closeNewsModal();
   };
 
   const handleEditNewsItem = (id) => {
-    const newsItem = news.find((newsItemId) => newsItemId.id === id);
+    const newsItem = updatedNews.find((newsItemId) => newsItemId.id === id);
     if (newsItem) {
-      props.setEditedNewsItem(newsItem);
-      props.openNewsModal();
+      setEditedNewsItem(newsItem);
+      openNewsModal();
     }
   };
 
-  return news.length > 0 ? (
+  return updatedNews && updatedNews.length > 0 ? (
     <SimpleTable
       items={updatedNews}
       headCells={newsTableDefinition}
