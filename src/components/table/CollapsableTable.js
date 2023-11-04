@@ -83,7 +83,7 @@ const CollapsableTable = ({
               rowCount={items.length}
             />
             <TableBody>
-              {items.map((row, index) => {
+              {items.map((row) => {
                 return (
                   <SubTable
                     key={row.id}

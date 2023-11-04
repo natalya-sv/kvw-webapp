@@ -20,6 +20,7 @@ import {
 } from "../../services/api";
 import { SOCIAL_MEDIA_DATA_GET, SOCIAL_MEDIA_TAG } from "../../APIData";
 import CustomButton from "../../components/CustomButton";
+import AddIcon from "@mui/icons-material/Add";
 
 const SocialMediaPage = () => {
   const [openModal, setOpenModal] = useState(false);
@@ -35,7 +36,7 @@ const SocialMediaPage = () => {
   });
 
   const [
-    updateSocialMediaData,
+    updateData,
     {
       isSuccess: successUpdating,
       isError: errorUpdating,
@@ -75,7 +76,11 @@ const SocialMediaPage = () => {
       />
       <Title title={SOCIAL_MEDIA_TITLE} />
       <PageDescription text={SOCIAL_MEDIA_PAGE_DESCRIPTION} />
-      <CustomButton title={ADD_ACCOUNT} onClick={openMediaModal} />
+      <CustomButton
+        title={ADD_ACCOUNT}
+        onClick={openMediaModal}
+        startIcon={<AddIcon />}
+      />
       <CustomModal
         open={openModal}
         handleClose={closeMediaModal}
@@ -83,7 +88,7 @@ const SocialMediaPage = () => {
           <AddEditSocialMediaAccount
             closeMediaModal={closeMediaModal}
             accountToEdit={accountToEdit}
-            updateSocialMediaData={updateSocialMediaData}
+            updateData={updateData}
             createData={createData}
           />
         }

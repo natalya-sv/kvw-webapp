@@ -5,7 +5,6 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
-import { useSelector } from "react-redux";
 import { makeStyles } from "@mui/styles";
 import { DAY_SPONSORS } from "./constants";
 import { Typography } from "@mui/material";

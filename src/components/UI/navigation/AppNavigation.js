@@ -12,6 +12,7 @@ const isDev = process.env.REACT_APP_API_URL.includes(
 const AppNavigation = () => {
   const auth = useContext(AuthContext);
   const [currentPage, setCurrentPage] = useState("KVW");
+
   const logoutHandler = () => {
     auth.onLogout();
   };
@@ -48,9 +49,7 @@ const AppNavigation = () => {
                 color: "black",
                 textDecoration: "none",
               }}
-              onClick={() => {
-                setCurrentPage(routeItem.name);
-              }}
+              onClick={() => setCurrentPage(routeItem.name)}
               activeStyle={{ color: "white", fontWeight: "bold" }}
               to={routeItem.url}
             >

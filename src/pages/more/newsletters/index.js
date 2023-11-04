@@ -16,6 +16,7 @@ import {
 } from "../../../services/api";
 import { NEWSLETTERS_GET, NEWSLETTERS_TAG } from "../../../APIData";
 import CustomButton from "../../../components/CustomButton";
+import AddIcon from "@mui/icons-material/Add";
 
 const NewslettersPage = () => {
   const [open, setOpen] = useState(false);
@@ -68,7 +69,11 @@ const NewslettersPage = () => {
       />
       <Title title={NEWSLETTERS} />
       <PageDescription text={NEWSLETTERS_DESC} />
-      <CustomButton title={ADD_NEWSLETTER} onClick={openNewslettersModal} />
+      <CustomButton
+        title={ADD_NEWSLETTER}
+        onClick={openNewslettersModal}
+        startIcon={<AddIcon />}
+      />
       <CustomModal
         open={open}
         handleClose={closeNewslettersModal}

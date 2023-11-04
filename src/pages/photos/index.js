@@ -40,7 +40,8 @@ const PhotosPage = () => {
     tag: ALBUMS_GET,
   });
 
-  const [updateData] = useUpdateDataMutation();
+  const [updateData, { isSuccess: successUpdating, isError: errorUpdating }] =
+    useUpdateDataMutation();
   const [deleteData] = useDeleteDataMutation();
   const [createData] = useCreateDataMutation();
 
@@ -72,7 +73,12 @@ const PhotosPage = () => {
       alignItems={"center"}
       style={{ width: "100%" }}
     >
-      {/* <AlertNotification  /> */}
+      <AlertNotification
+        errorFetching={errorFetching}
+        errorUpdating={errorUpdating}
+        successUpdating={successUpdating}
+        subMessage={fetchingErrorRes?.message ?? ""}
+      />
       <Title title={PHOTOS_PAGE_TITLE} />
       <PageDescription text={PHOTOS_PAGE_DESCRIPTION} />
 
