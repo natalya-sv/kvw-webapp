@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 import { SAVE } from "../../helpers/constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
+import { PHOTOS_TAG, PHOTOS_ACTIONS, ALBUM_TYPE } from "../../APIData";
 
 const AddEditAlbum = ({
   selectedAlbum,
   handleCloseAddEditAlbumDialog,
   selectedFolderId,
+  createData,
+  updateData,
 }) => {
   const [title, setTitle] = useState("");
   const [albumCoverPhoto, setAlbumCoverPhoto] = useState("");
@@ -33,9 +36,17 @@ const AddEditAlbum = ({
         ...album,
         id: selectedAlbum.id,
       };
-      // editAlbum(updAlbum)
+      updateData({
+        updatedItem: { item: updAlbum, type: ALBUM_TYPE },
+        actions: PHOTOS_ACTIONS,
+        tag: PHOTOS_TAG,
+      });
     } else {
-      //  addNewAlbum(album)
+      createData({
+        newItem: { item: album, type: ALBUM_TYPE },
+        actions: PHOTOS_ACTIONS,
+        tag: PHOTOS_TAG,
+      });
     }
     handleCloseAddEditAlbumDialog();
   };

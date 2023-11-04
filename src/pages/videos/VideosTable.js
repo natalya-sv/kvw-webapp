@@ -37,7 +37,7 @@ const VideosTable = ({
 
   const handleRemoveVideos = (idsToRemove) => {
     deleteData({
-      data: idsToRemove,
+      deletedItems: idsToRemove,
       tag: VIDEOS_TAG,
       actions: VIDEOS_ACTIONS,
     });

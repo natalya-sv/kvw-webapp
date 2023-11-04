@@ -37,13 +37,13 @@ const AddEditSocialMediaAccount = ({
         color: accountToEdit.color,
       };
       updateSocialMediaData({
-        data: updatedAccount,
+        updatedItem: updatedAccount,
         actions: SOCIAL_MEDIA_ACTIONS,
         tag: SOCIAL_MEDIA_TAG,
       });
     } else {
       createData({
-        data: account,
+        newItem: account,
         actions: SOCIAL_MEDIA_ACTIONS,
         tag: SOCIAL_MEDIA_TAG,
       });

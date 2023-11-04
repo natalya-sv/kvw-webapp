@@ -60,7 +60,7 @@ const MoreForm = ({ moreData, updateData }) => {
       contact_content: contactContent,
     };
     updateData({
-      data: updatedMoreData,
+      updatedItem: updatedMoreData,
       actions: MORE_DATA_ACTIONS,
       tag: MORE_PAGE_TAG,
     });

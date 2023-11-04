@@ -14,7 +14,13 @@ import CustomModal from "../../components/CustomModal";
 import CustomDialog from "../../components/CustomDialog";
 import AddEditAlbum from "./AddEditAlbum";
 import CustomButton from "../../components/CustomButton";
-import { useGetAlbumsQuery, useGetFoldersQuery } from "../../services/folders";
+import {
+  useCreateDataMutation,
+  useDeleteDataMutation,
+  useGetDataQuery,
+  useUpdateDataMutation,
+} from "../../services/api";
+import { ALBUMS_GET, FOLDERS_GET, PHOTOS_TAG } from "../../APIData";
 
 const PhotosPage = () => {
   const [open, setOpen] = useState(false);
@@ -27,8 +33,16 @@ const PhotosPage = () => {
     isError: errorFetching,
     error: fetchingErrorRes,
     isLoading,
-  } = useGetFoldersQuery();
-  const { data: albums } = useGetAlbumsQuery();
+  } = useGetDataQuery({ fetchData: FOLDERS_GET, tag: PHOTOS_TAG });
+
+  const { data: albums } = useGetDataQuery({
+    fetchData: ALBUMS_GET,
+    tag: ALBUMS_GET,
+  });
+
+  const [updateData] = useUpdateDataMutation();
+  const [deleteData] = useDeleteDataMutation();
+  const [createData] = useCreateDataMutation();
 
   const handleOpenFolderModal = () => {
     setOpen(true);
@@ -75,6 +89,8 @@ const PhotosPage = () => {
           <AddEditFolder
             selectedFolder={selectedFolder}
             handleClose={handleCloseFolderModal}
+            createData={createData}
+            updateData={updateData}
           />
         }
       />
@@ -87,6 +103,8 @@ const PhotosPage = () => {
             selectedAlbum={selectedAlbum}
             selectedFolderId={selectedFolderId}
             handleCloseAddEditAlbumDialog={handleCloseAddEditAlbumDialog}
+            createData={createData}
+            updateData={updateData}
           />
         }
       />
@@ -98,6 +116,7 @@ const PhotosPage = () => {
         setSelectedAlbum={setSelectedAlbum}
         folders={folders}
         albums={albums}
+        deleteData={deleteData}
       />
     </Box>
   );

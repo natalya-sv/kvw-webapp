@@ -36,7 +36,7 @@ const NewsletteraTable = ({
 
   const handleRemoveNewsletterItem = (idsToRemove) => {
     deleteData({
-      data: idsToRemove,
+      deletedItems: idsToRemove,
       actions: NEWSLETTERS_ACTIONS,
       tag: NEWSLETTERS_TAG,
     });

@@ -4,8 +4,14 @@ import React, { useEffect, useState } from "react";
 import { FOLDER_COVER_PHOTO_TITLE, FOLDER_TITLE } from "./constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
+import { PHOTOS_ACTIONS, PHOTOS_TAG, FOLDER_TYPE } from "../../APIData";
 
-const AddEditFolder = ({ selectedFolder, handleClose }) => {
+const AddEditFolder = ({
+  selectedFolder,
+  handleClose,
+  createData,
+  updateData,
+}) => {
   const [folderYear, setFolderYear] = useState("");
   const [folderCoverPhoto, setFolderCoverPhoto] = useState("");
 
@@ -23,12 +29,21 @@ const AddEditFolder = ({ selectedFolder, handleClose }) => {
         year: folderYear,
         folder_cover_photo: folderCoverPhoto,
       };
-      // editFolder(updatedFolder);
+      updateData({
+        updatedItem: { item: updatedFolder, type: FOLDER_TYPE },
+        actions: PHOTOS_ACTIONS,
+        tag: PHOTOS_TAG,
+      });
     } else {
-      // addNewFolderItem({
-      //   year: folderYear,
-      //   folder_cover_photo: folderCoverPhoto,
-      // });
+      const newFolder = {
+        year: folderYear,
+        folder_cover_photo: folderCoverPhoto,
+      };
+      createData({
+        newItem: { item: newFolder, type: FOLDER_TYPE },
+        actions: PHOTOS_ACTIONS,
+        tag: PHOTOS_TAG,
+      });
     }
     handleClose();
   };

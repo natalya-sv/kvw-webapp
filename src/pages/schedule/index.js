@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import PageDescription from "../../components/UI/PageDescription";
 import Title from "../../components/UI/Title";
@@ -29,6 +29,7 @@ import {
   DAY_GET,
   GROUPS_GET,
   GROUPS_TAG,
+  SCHEDULE_TAG,
   SPONSORS_GET,
   SPONSORS_TAG,
 } from "../../APIData";
@@ -36,7 +37,7 @@ import {
 const SchedulePage = () => {
   const [open, setOpen] = useState(false);
   const [openAddEditDayDialog, setOpenAddEditDayDialog] = useState(false);
-  const [selectedGroupName, setSelectedGroupName] = useState(null);
+  const [selectedGroup, setSelectedGroup] = useState(null);
   const [selectedGroupId, setSelectedGroupId] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
   const {
@@ -44,11 +45,11 @@ const SchedulePage = () => {
     isError: errorFetching,
     error: fetchingErrorRes,
     isLoading,
-  } = useGetDataQuery({ fetchData: GROUPS_GET, tag: GROUPS_TAG });
+  } = useGetDataQuery({ fetchData: GROUPS_GET, tag: SCHEDULE_TAG });
 
   const { data: days } = useGetDataQuery({
     fetchData: DAY_GET,
-    tag: DAYS_TAG,
+    tag: SCHEDULE_TAG,
   });
 
   const { data: sponsors } = useGetDataQuery({
@@ -64,8 +65,8 @@ const SchedulePage = () => {
     setOpen(true);
   };
   const handleCloseGroupNameModal = () => {
-    if (selectedGroupName) {
-      setSelectedGroupName(null);
+    if (selectedGroup) {
+      setSelectedGroup(null);
     }
     setOpen(false);
   };
@@ -78,6 +79,21 @@ const SchedulePage = () => {
     setSelectedDay(null);
     setOpenAddEditDayDialog(false);
   };
+  const transformedSponsors = useMemo(() => {
+    if (sponsors && sponsors.length > 0) {
+      return sponsors.map((sponsor) => {
+        return {
+          id: sponsor.id,
+          sponsorName: sponsor.sponsor_name,
+          sponsorType: sponsor.sponsor_type,
+          imageUrl: sponsor.image_url,
+          active: sponsor.active,
+          website_url: sponsor.website_url,
+        };
+      });
+    }
+    return [];
+  }, [sponsors]);
 
   if (isLoading) {
     return <SpinnerView />;
@@ -103,7 +119,7 @@ const SchedulePage = () => {
         handleClose={handleCloseGroupNameModal}
         modalComponent={
           <AddEditGroupForm
-            selectedGroupName={selectedGroupName}
+            selectedGroupName={selectedGroup}
             handleClose={handleCloseGroupNameModal}
             updateData={updateData}
             createData={createData}
@@ -121,18 +137,19 @@ const SchedulePage = () => {
             handleCloseAddEditDayDialog={handleCloseAddEditDayDialog}
             updateData={updateData}
             createData={createData}
+            sponsors={transformedSponsors}
           />
         }
       />
       <GroupsTable
         handleOpenGroupNameModal={handleOpenGroupNameModal}
-        setSelectedGroupName={setSelectedGroupName}
+        setSelectedGroup={setSelectedGroup}
         setSelectedGroupId={setSelectedGroupId}
         handleOpenAddEditDayDialog={handleOpenAddEditDayDialog}
         setSelectedDay={setSelectedDay}
         groups={groups}
         days={days}
-        sponsors={sponsors}
+        sponsors={transformedSponsors}
         deleteData={deleteData}
       />
     </Box>

@@ -40,13 +40,13 @@ const AddEditVideoForm = ({
         id: editedVideo.id,
       };
       updateData({
-        data: updatedVideo,
+        updatedItem: updatedVideo,
         actions: VIDEOS_ACTIONS,
         tag: VIDEOS_TAG,
       });
     } else {
       createData({
-        data: videoItem,
+        newItem: videoItem,
         actions: VIDEOS_ACTIONS,
         tag: VIDEOS_TAG,
       });

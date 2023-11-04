@@ -62,7 +62,11 @@ const HomePage = () => {
       thema_image: image,
     };
 
-    updateData({ data: updatedHomeData, actions: HOME_ACTIONS, tag: "Home" });
+    updateData({
+      updatedItem: updatedHomeData,
+      actions: HOME_ACTIONS,
+      tag: HOME_TAG,
+    });
   };
 
   if (isLoading) {

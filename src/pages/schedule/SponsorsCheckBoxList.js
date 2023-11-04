@@ -22,16 +22,19 @@ const useStyles = makeStyles({
   },
 });
 
-const SponsorsCheckboxList = (props) => {
+const SponsorsCheckboxList = ({
+  sponsors,
+  selectedDaySponsors,
+  setSelectedDaySponsors,
+}) => {
   const [checkedSponsors, setCheckedSponsors] = useState([]);
-  const sponsors = [];
   const classes = useStyles();
 
   useEffect(() => {
-    if (props.selectedDaySponsors) {
-      setCheckedSponsors(props.selectedDaySponsors);
+    if (selectedDaySponsors) {
+      setCheckedSponsors(selectedDaySponsors);
     }
-  }, [props.selectedDaySponsors]);
+  }, [selectedDaySponsors]);
 
   const handleToggle = (value) => () => {
     const currentIndex = checkedSponsors.indexOf(value);
@@ -41,7 +44,7 @@ const SponsorsCheckboxList = (props) => {
     } else {
       newChecked.splice(currentIndex, 1);
     }
-    props.setSelectedDaySponsors(newChecked);
+    setSelectedDaySponsors(newChecked);
   };
 
   return (
