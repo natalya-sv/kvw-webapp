@@ -1,4 +1,3 @@
-import SimpleTable from "../../components/table/SimpleTable";
 import {
   NO_VIDEOS_YET,
   VIDEOS_PAGE_TITLE,
@@ -8,6 +7,7 @@ import { Typography } from "@mui/material";
 import { useMemo } from "react";
 import { truncateString } from "../../helpers/utils";
 import { VIDEOS_ACTIONS, VIDEOS_TAG } from "../../APIData";
+import MainTable from "../../components/table/MainTable";
 
 const VideosTable = ({
   videos,
@@ -52,12 +52,11 @@ const VideosTable = ({
   };
 
   return updatedVideos && updatedVideos.length > 0 ? (
-    <SimpleTable
+    <MainTable
       items={updatedVideos}
-      headCells={videosTableDefinitions}
+      tableDefinition={videosTableDefinitions}
       title={VIDEOS_PAGE_TITLE}
-      onRemove={handleRemoveVideos}
-      buttons={["edit", "delete"]}
+      onRemoveItems={handleRemoveVideos}
       onEditItem={handleEditVideo}
     />
   ) : (

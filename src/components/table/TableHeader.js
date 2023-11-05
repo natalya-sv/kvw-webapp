@@ -3,10 +3,10 @@ import React from "react";
 import { ADD, EDIT } from "../../helpers/constants";
 import CustomTableCell from "./CustomTableCell";
 const TableHeader = ({
-  hasEditButton,
+  onEditItem,
   onSelectAllClick,
   numSelected,
-  hasAddButton,
+  onAddNewSubRowItem,
   rowCount,
   headCells,
 }) => {
@@ -28,10 +28,10 @@ const TableHeader = ({
             key={headCell.id}
           />
         ))}
-        {hasEditButton && (
+        {onEditItem && (
           <CustomTableCell type={"tableButton"} value={EDIT} key={"edit"} />
         )}
-        {hasAddButton && (
+        {onAddNewSubRowItem && (
           <CustomTableCell type={"tableButton"} value={ADD} key={"add"} />
         )}
       </TableRow>

@@ -1,5 +1,5 @@
 import { SOCIAL_MEDIA_ACTIONS, SOCIAL_MEDIA_TAG } from "../../APIData";
-import SimpleTable from "../../components/table/SimpleTable";
+import MainTable from "../../components/table/MainTable";
 import { SOCIAL_MEDIA_TITLE, socialMediaDefinition } from "./constants";
 import { useMemo } from "react";
 
@@ -41,12 +41,11 @@ const SocialMediaTable = ({
   };
 
   return (
-    <SimpleTable
+    <MainTable
       items={updatedAccounts}
-      headCells={socialMediaDefinition}
+      tableDefinition={socialMediaDefinition}
       title={SOCIAL_MEDIA_TITLE}
-      onRemove={handleRemoveSocialAccount}
-      buttons={["edit", "delete"]}
+      onRemoveItems={handleRemoveSocialAccount}
       onEditItem={handleEditSocialAccount}
     />
   );

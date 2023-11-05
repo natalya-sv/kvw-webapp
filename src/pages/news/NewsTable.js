@@ -1,4 +1,3 @@
-import SimpleTable from "../../components/table/SimpleTable";
 import {
   NO_NEWS_MESSAGE,
   PREVIOUS_NEWS,
@@ -8,6 +7,7 @@ import { Typography } from "@mui/material";
 import { useMemo } from "react";
 import { truncateString } from "../../helpers/utils";
 import { NEWS_ACTIONS, NEWS_TAG } from "../../APIData";
+import MainTable from "../../components/table/MainTable";
 
 const NewsTable = ({
   news,
@@ -50,11 +50,11 @@ const NewsTable = ({
   };
 
   return updatedNews && updatedNews.length > 0 ? (
-    <SimpleTable
+    <MainTable
       items={updatedNews}
-      headCells={newsTableDefinition}
+      tableDefinition={newsTableDefinition}
       title={PREVIOUS_NEWS}
-      onRemove={handleRemoveNews}
+      onRemoveItems={handleRemoveNews}
       buttons={["delete", "edit"]}
       onEditItem={handleEditNewsItem}
     />

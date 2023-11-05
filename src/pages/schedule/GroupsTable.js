@@ -6,13 +6,13 @@ import {
   subRowItemsDefinition,
 } from "./constants";
 import { useMemo } from "react";
-import CollapsableTable from "../../components/table/CollapsableTable";
 import {
   SCHEDULE_TAG,
   SCHEDULE_ACTIONS,
   DAY_TYPE,
   GROUP_TYPE,
 } from "../../APIData";
+import MainTable from "../../components/table/MainTable";
 
 const GroupsTable = ({
   groups,
@@ -102,10 +102,9 @@ const GroupsTable = ({
   };
 
   return groups.length > 0 ? (
-    <CollapsableTable
+    <MainTable
       items={mergedDaysAndGroups}
       tableDefinition={groupsTableDefinition}
-      buttons={["edit", "delete", "add"]}
       onRemoveItems={handleRemoveGroups}
       onEditItem={handleEditGroupName}
       subRowItemsDefinition={subRowItemsDefinition}

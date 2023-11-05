@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-import SimpleTable from "../../../components/table/SimpleTable";
 import { Typography } from "@mui/material";
 import {
   NO_NEWSLETTERS,
@@ -8,6 +7,7 @@ import {
 } from "./constants";
 import { truncateString } from "../../../helpers/utils";
 import { NEWSLETTERS_ACTIONS, NEWSLETTERS_TAG } from "../../../APIData";
+import MainTable from "../../../components/table/MainTable";
 
 const NewsletteraTable = ({
   newsletters,
@@ -52,12 +52,11 @@ const NewsletteraTable = ({
   };
 
   return newslettersItems.length > 0 ? (
-    <SimpleTable
+    <MainTable
       items={newslettersItems}
-      headCells={newslettersTableDefinition}
+      tableDefinition={newslettersTableDefinition}
       title={SENT_NEWSLETTERS}
-      onRemove={handleRemoveNewsletterItem}
-      buttons={["delete", "edit"]}
+      onRemoveItems={handleRemoveNewsletterItem}
       onEditItem={handleEditNewsletterItem}
     />
   ) : (

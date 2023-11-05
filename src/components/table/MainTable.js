@@ -1,18 +1,18 @@
-import { Table, Box } from "@mui/material";
+import { Box, Table } from "@mui/material";
 import { useState } from "react";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
 import TableHeader from "./TableHeader";
 import TableToolbar from "./TableToolbar";
-import SubTable from "./SubTable";
+import SubTableRow from "./SubTableRow";
+import SimpleTableRow from "./SimpleTableRow";
 
-const CollapsableTable = ({
+const MainTable = ({
   items,
   tableDefinition,
   title,
   onRemoveItems,
-  buttons,
   onEditItem,
   onEditSubRowItem,
   subRowItemsDefinition,
@@ -20,15 +20,10 @@ const CollapsableTable = ({
   subTableListName,
   onAddNewSubRowItem,
   onRemoveSubRowItem,
+  extraButtons,
 }) => {
   const [selected, setSelected] = useState([]);
   const isSelected = (id) => selected.indexOf(id) !== -1;
-  const removeSelectedItems = (selectedIds) => {
-    onRemoveItems(selectedIds);
-  };
-  const hasDeleteButton = buttons && buttons.includes("delete");
-  const hasEditButton = buttons && buttons.includes("edit");
-  const hasAddButton = buttons && buttons.includes("add");
 
   const handleSelectAllClick = (event) => {
     if (event.target.checked) {
@@ -63,10 +58,10 @@ const CollapsableTable = ({
       <Paper style={{ width: "100%", mb: 2 }}>
         <TableToolbar
           title={title}
-          numSelected={selected.length}
-          removeSelectedItems={removeSelectedItems}
+          removeSelectedItems={onRemoveItems}
           selected={selected}
-          hasDeleteItemsButton={hasDeleteButton}
+          onRemoveItems={onRemoveItems}
+          extraButtons={extraButtons}
         />
         <TableContainer component={Paper}>
           <Table
@@ -75,8 +70,8 @@ const CollapsableTable = ({
             size={"small"}
           >
             <TableHeader
-              hasEditButton={hasEditButton}
-              hasAddButton={hasAddButton}
+              onEditItem={onEditItem}
+              onAddNewSubRowItem={onAddNewSubRowItem}
               headCells={tableDefinition}
               numSelected={selected.length}
               onSelectAllClick={handleSelectAllClick}
@@ -84,8 +79,8 @@ const CollapsableTable = ({
             />
             <TableBody>
               {items.map((row) => {
-                return (
-                  <SubTable
+                return subRowItemsDefinition ? (
+                  <SubTableRow
                     key={row.id}
                     row={row}
                     isSelected={isSelected}
@@ -96,10 +91,17 @@ const CollapsableTable = ({
                     subRowItemsDefinition={subRowItemsDefinition}
                     subTableTitle={subTableTitle}
                     subTableListName={subTableListName}
-                    hasAddButton={hasAddButton}
                     onAddNewSubRowItem={onAddNewSubRowItem}
-                    hasEditButton={hasEditButton}
                     onRemoveSubRowItem={onRemoveSubRowItem}
+                  />
+                ) : (
+                  <SimpleTableRow
+                    tableDefinition={tableDefinition}
+                    onEditItem={onEditItem}
+                    handleClick={handleClick}
+                    isSelected={isSelected}
+                    row={row}
+                    key={row.id}
                   />
                 );
               })}
@@ -111,4 +113,4 @@ const CollapsableTable = ({
   );
 };
 
-export default CollapsableTable;
+export default MainTable;
