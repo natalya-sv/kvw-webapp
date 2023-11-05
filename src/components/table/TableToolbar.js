@@ -5,22 +5,14 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { SELECTED } from "../../helpers/constants";
-const TableToolbar = (props) => {
-  const {
-    title,
-    numSelected,
-    hasDeleteItemsButton,
-    removeSelectedItems,
-    selected,
-    extraButtons,
-  } = props;
+import { REMOVE, SELECTED } from "../../helpers/constants";
+const TableToolbar = ({ title, onRemoveItems, selected, extraButtons }) => {
   return (
     <Toolbar
       sx={{
         pl: { sm: 2 },
         pr: { xs: 1, sm: 1 },
-        ...(numSelected > 0 && {
+        ...(selected.length > 0 && {
           bgcolor: (theme) =>
             alpha(
               theme.palette.primary.main,
@@ -29,14 +21,14 @@ const TableToolbar = (props) => {
         }),
       }}
     >
-      {numSelected > 0 ? (
+      {selected.length > 0 ? (
         <Typography
           sx={{ flex: "1 1 100%" }}
           color="inherit"
           variant="subtitle1"
           component="div"
         >
-          {numSelected} {SELECTED}
+          {selected.length} {SELECTED}
         </Typography>
       ) : (
         <Typography
@@ -48,22 +40,20 @@ const TableToolbar = (props) => {
           {title}
         </Typography>
       )}
-      {extraButtons && numSelected > 0 && (
+      {extraButtons && selected.length > 0 && (
         <Box display={"flex"} flexDirection={"row"} marginRight={5}>
-          {extraButtons.map((b) => {
-            return (
-              <Tooltip title={b.title} key={b.id}>
-                <IconButton onClick={(e) => b.func(selected, b.status)}>
-                  {b.icon}
-                </IconButton>
-              </Tooltip>
-            );
-          })}
+          {extraButtons.map((btn) => (
+            <Tooltip title={btn.title} key={btn.id}>
+              <IconButton onClick={() => btn.action(selected, btn.status)}>
+                {btn.icon}
+              </IconButton>
+            </Tooltip>
+          ))}
         </Box>
       )}
-      {hasDeleteItemsButton && numSelected > 0 && (
-        <Tooltip title={"REMOVE"} key={"btn-remove "}>
-          <IconButton onClick={() => removeSelectedItems(selected)}>
+      {onRemoveItems && selected.length > 0 && (
+        <Tooltip title={REMOVE} key={"btn-remove "}>
+          <IconButton onClick={() => onRemoveItems(selected)}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>

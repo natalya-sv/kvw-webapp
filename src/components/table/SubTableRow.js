@@ -19,7 +19,7 @@ import Tooltip from "@mui/material/Tooltip";
 import DeleteIcon from "@mui/icons-material/Delete";
 import CustomTableCell from "./CustomTableCell";
 import { EDIT, REMOVE } from "../../helpers/constants";
-const SubTable = ({
+const SubTableRow = ({
   row,
   isSelected,
   handleClick,
@@ -29,9 +29,7 @@ const SubTable = ({
   subRowItemsDefinition,
   subTableTitle,
   subTableListName,
-  hasAddButton,
   onAddNewSubRowItem,
-  hasEditButton,
   onRemoveSubRowItem,
 }) => {
   const [open, setOpen] = useState(false);
@@ -52,20 +50,20 @@ const SubTable = ({
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        {tableDefinition.map((t, i) => {
+        {tableDefinition.map((t) => {
           if (t.type === "empty") {
             return null;
           }
           return <CustomTableCell key={t.id} value={row[t.id]} type={t.type} />;
         })}
-        {hasEditButton && (
+        {onEditItem && (
           <TableCell align={"center"} width={50}>
             <IconButton onClick={() => onEditItem(row.id)}>
               <ModeEditIcon />
             </IconButton>
           </TableCell>
         )}
-        {hasAddButton && (
+        {onAddNewSubRowItem && (
           <TableCell align={"center"} width={50}>
             <IconButton onClick={() => onAddNewSubRowItem(row.id)}>
               <AddCircleIcon />
@@ -83,15 +81,13 @@ const SubTable = ({
               <Table>
                 <TableHead>
                   <TableRow key={row.id}>
-                    {subRowItemsDefinition.map((itemDef) => {
-                      return (
-                        <CustomTableCell
-                          value={itemDef.label}
-                          key={itemDef.id}
-                          type={"subHeader"}
-                        />
-                      );
-                    })}
+                    {subRowItemsDefinition.map((itemDef) => (
+                      <CustomTableCell
+                        value={itemDef.label}
+                        key={itemDef.id}
+                        type={"subHeader"}
+                      />
+                    ))}
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -136,4 +132,4 @@ const SubTable = ({
     </>
   );
 };
-export default SubTable;
+export default SubTableRow;

@@ -1,5 +1,4 @@
 import React, { useMemo } from "react";
-import CollapsableTable from "../../components/table/CollapsableTable";
 import {
   ALBUMS_TITLE,
   NO_PHOTOS,
@@ -8,14 +7,13 @@ import {
 } from "./constants";
 import { truncateString } from "../../helpers/utils";
 import {
-  ALBUMS_ACTIONS,
-  ALBUMS_TAG,
   ALBUM_TYPE,
   PHOTOS_ACTIONS,
   PHOTOS_TAG,
   FOLDER_TYPE,
 } from "../../APIData";
 import { Typography } from "@mui/material";
+import MainTable from "../../components/table/MainTable";
 
 const PhotosTable = ({
   folders,
@@ -95,10 +93,9 @@ const PhotosTable = ({
   };
 
   return mergedFoldersAndAlbums && mergedFoldersAndAlbums.length > 0 ? (
-    <CollapsableTable
+    <MainTable
       items={mergedFoldersAndAlbums}
       tableDefinition={albumsTableDefinition}
-      buttons={["edit", "delete", "add"]}
       onRemoveItems={handleRemoveFolders}
       onEditItem={handleEditFolder}
       subRowItemsDefinition={subRowAlbumsDefinition}

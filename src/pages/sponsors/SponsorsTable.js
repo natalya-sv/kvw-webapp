@@ -1,5 +1,4 @@
 import React, { useCallback, useMemo } from "react";
-import SimpleTable from "../../components/table/SimpleTable";
 import {
   ACTIVE,
   MAIN_SPONSOR,
@@ -19,6 +18,7 @@ import {
   SPONSORS_ACTIONS,
   SPONSORS_TAG,
 } from "../../APIData";
+import MainTable from "../../components/table/MainTable";
 
 const SponsorsTable = ({
   sponsors,
@@ -91,26 +91,25 @@ const SponsorsTable = ({
         id: 1,
         title: ACTIVE,
         icon: <TaskAltIcon />,
-        func: setSponsorStatus,
+        action: setSponsorStatus,
         status: "active",
       },
       {
         id: 2,
         title: NOT_ACTIVE,
         icon: <DoNotDisturbAltIcon />,
-        func: setSponsorStatus,
+        action: setSponsorStatus,
         status: "",
       },
     ];
   }, [setSponsorStatus]);
 
   return updatedSponsors && updatedSponsors.length > 0 ? (
-    <SimpleTable
+    <MainTable
       items={updatedSponsors}
-      headCells={sponsorsTableDefinitions}
+      tableDefinition={sponsorsTableDefinitions}
       title={SPONSORS}
-      onRemove={handleRemoveSponsor}
-      buttons={["edit", "delete"]}
+      onRemoveItems={handleRemoveSponsor}
       onEditItem={handleEditSponsor}
       extraButtons={extraButtons}
     />
