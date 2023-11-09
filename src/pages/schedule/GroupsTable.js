@@ -7,7 +7,6 @@ import {
 } from "./constants";
 import { useMemo } from "react";
 import {
-  SCHEDULE_TAG,
   SCHEDULE_ACTIONS,
   DAY_TYPE,
   GROUP_TYPE,
@@ -76,8 +75,8 @@ const GroupsTable = ({
     deleteData({
       deletedItems: idsToRemove,
       type: GROUP_TYPE,
-      tag: SCHEDULE_TAG,
-      actions: GROUPS_TAG,
+      tag: GROUPS_TAG,
+      actions: SCHEDULE_ACTIONS,
     });
   };
 
