@@ -26,6 +26,7 @@ export const EDIT_GROUP_NAME = "Groep naam bewerken";
 export const ADD_NEW_DAY = "Nieuwe Dag Toevoegen";
 export const EDIT_DAY = "Dag Bewerken";
 export const REMOVE_DAY = "Dag Verwijderen";
+export const SCHEDULE_BOOK_URL = "Groepsdraaiboeken url";
 export const groupsTableDefinition = [
   {
     id: "empty",

@@ -6,7 +6,6 @@ const CustomButton = ({ onClick, title, disabled, startIcon, width }) => {
       sx={{
         width: width ?? "100%",
         marginTop: 3,
-        marginBottom: 5,
         display: "flex",
         justifyContent: "center",
       }}
