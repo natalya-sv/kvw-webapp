@@ -63,7 +63,7 @@ const HomePage = () => {
       id: data[0].id,
       home_page_title: title,
       home_page_content: content,
-      kvw_website: websiteUrl,
+      kvw_website: websiteUrl.trim(),
       thema_title: themaYearTitle,
       thema_image: image,
     };

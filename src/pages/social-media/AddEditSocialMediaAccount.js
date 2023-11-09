@@ -25,7 +25,7 @@ const AddEditSocialMediaAccount = ({
   const submitHandler = () => {
     const account = {
       title: accountTitle,
-      website_url: accountWebsiteUrl,
+      website_url: accountWebsiteUrl.trim(),
       icon_name: "person-circle-outline",
       color: "#72c6c8",
     };

@@ -35,7 +35,7 @@ const AddEditNewsForm = ({
     const newsItem = {
       title: newsTitle,
       content: newsContent,
-      image_url: imageUrl,
+      image_url: imageUrl.trim(),
     };
     if (editedNewsItem) {
       const newsUpdated = {

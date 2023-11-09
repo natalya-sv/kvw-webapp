@@ -32,8 +32,8 @@ const AddEditAlbum = ({
   const onSubmitHandler = () => {
     const album = {
       title: title,
-      album_link: albumLink,
-      album_cover_photo: albumCoverPhoto,
+      album_link: albumLink.trim(),
+      album_cover_photo: albumCoverPhoto.trim(),
       folder_id: selectedFolderId,
     };
     if (selectedAlbum) {
