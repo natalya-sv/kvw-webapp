@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import PageDescription from "../../components/UI/PageDescription";
 import Title from "../../components/UI/Title";
@@ -23,10 +23,16 @@ import {
   DAY_GET,
   GROUPS_GET,
   GROUPS_TAG,
+  SCHEDULE_BOOK_ACTIONS,
+  SCHEDULE_BOOK_GET,
+  SCHEDULE_BOOK_TAG,
   SPONSORS_GET,
   SPONSORS_TAG,
 } from "../../APIData";
 import useCustomDataQuery from "../../useCustomDataQuery";
+import TextInput from "../../components/TextInput";
+import { SAVE } from "../../helpers/constants";
+import AddEditScheduleBookLink from "./AddEditScheduleBook";
 
 const SchedulePage = () => {
   const [open, setOpen] = useState(false);
@@ -34,6 +40,7 @@ const SchedulePage = () => {
   const [selectedGroup, setSelectedGroup] = useState(null);
   const [selectedGroupId, setSelectedGroupId] = useState(null);
   const [selectedDay, setSelectedDay] = useState(null);
+
   const {
     data: groups,
     fetchingData: fetchingGroups,
@@ -66,6 +73,15 @@ const SchedulePage = () => {
     fetchData: SPONSORS_GET,
     tag: SPONSORS_TAG,
   });
+  const {
+    data: scheduleBook,
+    isError: scheduleBookError,
+    isSuccess: scheduleBookSuccessUpdating,
+    error: scheduleBookErrorMessage,
+  } = useCustomDataQuery({
+    fetchData: SCHEDULE_BOOK_GET,
+    tag: SCHEDULE_BOOK_TAG,
+  });
 
   const isSuccess =
     groupsSuccessCreating ||
@@ -73,9 +89,11 @@ const SchedulePage = () => {
     groupsSuccessUpdating ||
     daysSuccessCreating ||
     daysSuccessDeleting ||
-    daysSuccessUpdating;
-  const errMessage = groupsErrorMessage || daysErrorMessage;
-
+    daysSuccessUpdating ||
+    scheduleBookSuccessUpdating;
+  const errMessage =
+    groupsErrorMessage || daysErrorMessage || scheduleBookErrorMessage;
+  const isError = scheduleBookError || daysError || groupsError;
   const handleOpenGroupNameModal = () => {
     setOpen(true);
   };
@@ -94,6 +112,7 @@ const SchedulePage = () => {
     setSelectedDay(null);
     setOpenAddEditDayDialog(false);
   };
+
   const transformedSponsors = useMemo(() => {
     if (sponsors && sponsors.length > 0) {
       return sponsors
@@ -124,14 +143,18 @@ const SchedulePage = () => {
       width={"100%"}
     >
       {(groupsLoading || daysLoading) && <SpinnerView />}
-      {(groupsError || isSuccess || daysError) && (
+      {(isError || isSuccess) && (
         <AlertNotification
-          isError={groupsError || daysError}
+          isError={isError}
           isSuccess={isSuccess}
           errorMessage={errMessage}
         />
       )}
       <Title title={GROUPS} />
+      <AddEditScheduleBookLink
+        scheduleBook={scheduleBook}
+        updateData={updateData}
+      />
       <PageDescription text={GROUPS_DESC} />
       <CustomButton
         title={ADD_NEW_GROUP}
