@@ -1,5 +1,5 @@
 import { Box, Table } from "@mui/material";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TableBody from "@mui/material/TableBody";
 import TableContainer from "@mui/material/TableContainer";
 import Paper from "@mui/material/Paper";
@@ -21,20 +21,27 @@ const MainTable = ({
   onAddNewSubRowItem,
   onRemoveSubRowItem,
   extraButtons,
+  successDeleting,
 }) => {
   const [selected, setSelected] = useState([]);
   const isSelected = (id) => selected.indexOf(id) !== -1;
 
-  const handleSelectAllClick = (event) => {
+  const handleSelectAllRowsClick = (event) => {
     if (event.target.checked) {
-      const newSelected = items.map((n) => n.id);
+      const newSelected = items.map((item) => item.id);
       setSelected(newSelected);
       return;
     }
     setSelected([]);
   };
 
-  const handleClick = (_event, id) => {
+  useEffect(() => {
+    if (successDeleting) {
+      setSelected([]);
+    }
+  }, [successDeleting]);
+
+  const handleRowClick = (_event, id) => {
     const selectedIndex = selected.indexOf(id);
     let newSelected = [];
     if (selectedIndex === -1) {
@@ -55,26 +62,21 @@ const MainTable = ({
 
   return (
     <Box style={{ width: "90%", marginBottom: 30 }}>
-      <Paper style={{ width: "100%", mb: 2 }}>
+      <Paper style={{ width: "100%" }}>
         <TableToolbar
           title={title}
-          removeSelectedItems={onRemoveItems}
           selected={selected}
           onRemoveItems={onRemoveItems}
           extraButtons={extraButtons}
         />
         <TableContainer component={Paper}>
-          <Table
-            sx={{ minWidth: 750 }}
-            aria-labelledby="tableTitle"
-            size={"small"}
-          >
+          <Table sx={{ minWidth: 750 }} size={"small"}>
             <TableHeader
               onEditItem={onEditItem}
               onAddNewSubRowItem={onAddNewSubRowItem}
-              headCells={tableDefinition}
+              tableDefinition={tableDefinition}
               numSelected={selected.length}
-              onSelectAllClick={handleSelectAllClick}
+              onSelectAllClick={handleSelectAllRowsClick}
               rowCount={items.length}
             />
             <TableBody>
@@ -84,7 +86,7 @@ const MainTable = ({
                     key={row.id}
                     row={row}
                     isSelected={isSelected}
-                    handleClick={handleClick}
+                    handleClick={handleRowClick}
                     tableDefinition={tableDefinition}
                     onEditItem={onEditItem}
                     onEditSubRowItem={onEditSubRowItem}
@@ -98,7 +100,7 @@ const MainTable = ({
                   <SimpleTableRow
                     tableDefinition={tableDefinition}
                     onEditItem={onEditItem}
-                    handleClick={handleClick}
+                    handleClick={handleRowClick}
                     isSelected={isSelected}
                     row={row}
                     key={row.id}

@@ -8,47 +8,39 @@ import AddEditNewslettersItem from "./AddEditNewsletterItem";
 import CustomModal from "../../../components/CustomModal";
 import NewsletteraTable from "./NewslettersTable";
 import { ADD_NEWSLETTER, NEWSLETTERS, NEWSLETTERS_DESC } from "./constants";
-import {
-  useGetDataQuery,
-  useUpdateDataMutation,
-  useCreateDataMutation,
-  useDeleteDataMutation,
-} from "../../../services/api";
+
 import { NEWSLETTERS_GET, NEWSLETTERS_TAG } from "../../../APIData";
 import CustomButton from "../../../components/CustomButton";
 import AddIcon from "@mui/icons-material/Add";
+import useCustomDataQuery from "../../../useCustomDataQuery";
 
 const NewslettersPage = () => {
   const [open, setOpen] = useState(false);
   const [editedNewsletterItem, setEditedNewsletterItem] = useState(null);
   const {
     data: newsletters,
+    fetchingData,
+    isError,
+    successCreating,
+    successUpdating,
+    successDeleting,
     isLoading,
-    isError: errorFetching,
-    error: fetchingErrorRes,
-  } = useGetDataQuery({ fetchData: NEWSLETTERS_GET, tag: NEWSLETTERS_TAG });
-
-  const [
+    errorMessage,
     updateData,
-    {
-      isSuccess: successUpdating,
-      isError: errorUpdating,
-      error: updatingErrorRes,
-    },
-  ] = useUpdateDataMutation();
+    createData,
+    deleteData,
+  } = useCustomDataQuery({ fetchData: NEWSLETTERS_GET, tag: NEWSLETTERS_TAG });
 
-  const [createData] = useCreateDataMutation();
   const openNewslettersModal = () => {
     setOpen(true);
   };
-  const [deleteData] = useDeleteDataMutation();
 
   const closeNewslettersModal = () => {
     setEditedNewsletterItem(null);
     setOpen(false);
   };
 
-  if (isLoading) {
+  if (fetchingData) {
     return <SpinnerView />;
   }
 
@@ -59,16 +51,16 @@ const NewslettersPage = () => {
       alignItems={"center"}
       style={{ width: "100%" }}
     >
-      <AlertNotification
-        errorFetching={errorFetching}
-        errorUpdating={errorUpdating}
-        successUpdating={successUpdating}
-        subMessage={
-          fetchingErrorRes?.message ?? updatingErrorRes?.message ?? ""
-        }
-      />
       <Title title={NEWSLETTERS} />
       <PageDescription text={NEWSLETTERS_DESC} />
+      {isLoading && <SpinnerView />}
+      {(isError || successCreating || successUpdating || successDeleting) && (
+        <AlertNotification
+          isError={isError}
+          isSuccess={successCreating || successUpdating || successDeleting}
+          errorMessage={errorMessage}
+        />
+      )}
       <CustomButton
         title={ADD_NEWSLETTER}
         onClick={openNewslettersModal}
@@ -93,6 +85,7 @@ const NewslettersPage = () => {
         updateNewslettersData={updateData}
         newsletters={newsletters}
         deleteData={deleteData}
+        successDeleting={successDeleting}
       />
     </Box>
   );

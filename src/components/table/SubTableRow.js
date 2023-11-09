@@ -100,27 +100,32 @@ const SubTableRow = ({
                           value={subTableItem[subRowDef.id]}
                         />
                       ))}
-                      <TableCell>
-                        <Tooltip title={EDIT}>
-                          <IconButton
-                            onClick={() =>
-                              onEditSubRowItem(subTableItem.id, row.id)
-                            }
-                          >
-                            <ModeEditIcon />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
-
-                      <TableCell>
-                        <Tooltip title={REMOVE}>
-                          <IconButton
-                            onClick={() => onRemoveSubRowItem(subTableItem.id)}
-                          >
-                            <DeleteIcon />
-                          </IconButton>
-                        </Tooltip>
-                      </TableCell>
+                      {onEditSubRowItem && (
+                        <TableCell>
+                          <Tooltip title={EDIT}>
+                            <IconButton
+                              onClick={() =>
+                                onEditSubRowItem(subTableItem.id, row.id)
+                              }
+                            >
+                              <ModeEditIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      )}
+                      {onRemoveSubRowItem && (
+                        <TableCell>
+                          <Tooltip title={REMOVE}>
+                            <IconButton
+                              onClick={() =>
+                                onRemoveSubRowItem(subTableItem.id)
+                              }
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </Tooltip>
+                        </TableCell>
+                      )}
                     </TableRow>
                   ))}
                 </TableBody>

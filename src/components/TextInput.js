@@ -9,6 +9,7 @@ const TextInput = ({
   onChange,
   type,
   multiline,
+  disabled,
 }) => {
   return (
     <TextField
@@ -20,6 +21,7 @@ const TextInput = ({
       onChange={(e) => onChange(e.target.value)}
       type={type ?? "text"}
       multiline={multiline ?? false}
+      disabled={disabled}
     />
   );
 };

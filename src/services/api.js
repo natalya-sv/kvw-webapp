@@ -15,47 +15,48 @@ export const api = createApi({
           Authorization: tokenPrefix + token,
         },
       }),
+
       providesTags: (_result, _error, id) => {
         return [id.tag];
       },
     }),
     createData: builder.mutation({
-      query: ({ newItem, actions }) => ({
+      query: ({ newItem, actions, type }) => ({
         url: actions,
         method: "POST",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,
         },
-        body: { action: "create", newItem: newItem },
+        body: { action: "create", newItem: newItem, type: type },
       }),
       invalidatesTags: (_result, _error, id) => {
         return [id.tag];
       },
     }),
     updateData: builder.mutation({
-      query: ({ updatedItem, actions }) => ({
+      query: ({ updatedItem, actions, type }) => ({
         url: actions,
         method: "POST",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,
         },
-        body: { action: "update", updatedItem: updatedItem },
+        body: { action: "update", updatedItem: updatedItem, type: type },
       }),
       invalidatesTags: (_result, _error, id) => {
         return [id.tag];
       },
     }),
     deleteData: builder.mutation({
-      query: ({ deletedItems, actions }) => ({
+      query: ({ deletedItems, actions, type }) => ({
         url: actions,
         method: "POST",
         headers: {
           "Content-type": "application/json",
           Authorization: tokenPrefix + token,
         },
-        body: { action: "delete", deletedItems: deletedItems },
+        body: { action: "delete", deletedItems: deletedItems, type: type },
       }),
       invalidatesTags: (_result, _error, id) => {
         return [id.tag];

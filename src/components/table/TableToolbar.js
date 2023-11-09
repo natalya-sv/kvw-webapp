@@ -24,19 +24,13 @@ const TableToolbar = ({ title, onRemoveItems, selected, extraButtons }) => {
       {selected.length > 0 ? (
         <Typography
           sx={{ flex: "1 1 100%" }}
-          color="inherit"
           variant="subtitle1"
           component="div"
         >
           {selected.length} {SELECTED}
         </Typography>
       ) : (
-        <Typography
-          sx={{ flex: "1 1 100%" }}
-          variant="h6"
-          id="tableTitle"
-          component="div"
-        >
+        <Typography sx={{ flex: "1 1 100%" }} variant="h6" component="div">
           {title}
         </Typography>
       )}
@@ -52,7 +46,7 @@ const TableToolbar = ({ title, onRemoveItems, selected, extraButtons }) => {
         </Box>
       )}
       {onRemoveItems && selected.length > 0 && (
-        <Tooltip title={REMOVE} key={"btn-remove "}>
+        <Tooltip title={REMOVE} key={"btn-remove"}>
           <IconButton onClick={() => onRemoveItems(selected)}>
             <DeleteIcon />
           </IconButton>

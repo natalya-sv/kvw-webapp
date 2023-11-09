@@ -13,22 +13,25 @@ import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
 import "dayjs/locale/nl";
 import CustomDatePicker from "../../components/UI/pickers/CustomDatePicker";
-import { useGetDataQuery, useUpdateDataMutation } from "../../services/api";
 import { COUNTDOWN_ACTIONS, COUNTDOWN_GET, COUNTDOWN_TAG } from "../../APIData";
+import useCustomDataQuery from "../../useCustomDataQuery";
 
 const CountDownPage = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [title, setTitle] = useState("");
-  const {
-    isLoading,
-    data: countdown,
-    isError: errorFetching,
-    error: fetchingErrorRes,
-  } = useGetDataQuery({ fetchData: COUNTDOWN_GET, tag: COUNTDOWN_TAG });
 
-  const [updateData, { isSuccess: successUpdating, isError: errorUpdating }] =
-    useUpdateDataMutation();
+  const {
+    data: countdown,
+    updateData,
+    isError,
+    fetchingData,
+    successCreating,
+    successUpdating,
+    successDeleting,
+    isLoading,
+    errorMessage,
+  } = useCustomDataQuery({ fetchData: COUNTDOWN_GET, tag: COUNTDOWN_TAG });
 
   useEffect(() => {
     if (countdown && countdown[0]) {
@@ -52,6 +55,7 @@ const CountDownPage = () => {
       start_date: startDateUpd,
       end_date: endDateUpd,
     };
+
     updateData({
       updatedItem: countdownData,
       actions: COUNTDOWN_ACTIONS,
@@ -59,7 +63,7 @@ const CountDownPage = () => {
     });
   };
 
-  if (isLoading) {
+  if (fetchingData) {
     return <SpinnerView />;
   }
 
@@ -70,14 +74,16 @@ const CountDownPage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      <AlertNotification
-        errorFetching={errorFetching}
-        errorUpdating={errorUpdating}
-        successUpdating={successUpdating}
-        subMessage={fetchingErrorRes?.message ?? ""}
-      />
+      {(isError || successCreating || successUpdating || successDeleting) && (
+        <AlertNotification
+          isError={isError}
+          isSuccess={successCreating || successUpdating || successDeleting}
+          errorMessage={errorMessage}
+        />
+      )}
       <Title title={COUNTDOWN} />
       <PageDescription text={COUNTDOWN_DESC} />
+      {fetchingData.isLoading && <SpinnerView />}
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"nl"}>
         <Stack
           style={{
@@ -92,25 +98,27 @@ const CountDownPage = () => {
             format={"DD/MM/YYYY"}
             value={startDate}
             onChange={setStartDate}
+            disabled={isLoading}
           />
           <CustomDatePicker
             label={END_DATE}
             format={"DD/MM/YYYY"}
             value={endDate}
             onChange={setEndDate}
+            disabled={isLoading}
           />
         </Stack>
       </LocalizationProvider>
-
       <Box style={{ marginBottom: 10, marginTop: 20, width: "70%" }}>
         <TextInput
           fullWidth={true}
           label={EVENT_TITLE}
           value={title}
           onChange={setTitle}
+          disabled={isLoading}
         />
       </Box>
-      <CustomButton title={SAVE} onClick={submitHandler} />
+      <CustomButton title={SAVE} onClick={submitHandler} disabled={isLoading} />
     </Box>
   );
 };

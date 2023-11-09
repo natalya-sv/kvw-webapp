@@ -11,6 +11,8 @@ import {
   SCHEDULE_ACTIONS,
   DAY_TYPE,
   GROUP_TYPE,
+  GROUPS_TAG,
+  DAYS_TAG,
 } from "../../APIData";
 import MainTable from "../../components/table/MainTable";
 
@@ -32,7 +34,7 @@ const GroupsTable = ({
           .filter((d) => d.group_id === group.id)
           .map((day) => {
             const sponsorsNames = sponsors
-              .filter((sp) => day.day_sponsors.includes(sp.id))
+              .filter((sp) => day.day_sponsors?.includes(sp.id))
               .map((sp) => sp.sponsorName);
             return {
               id: day.id,
@@ -72,9 +74,10 @@ const GroupsTable = ({
 
   const handleRemoveGroups = (idsToRemove) => {
     deleteData({
-      deletedItems: { items: idsToRemove, type: GROUP_TYPE },
+      deletedItems: idsToRemove,
+      type: GROUP_TYPE,
       tag: SCHEDULE_TAG,
-      actions: SCHEDULE_ACTIONS,
+      actions: GROUPS_TAG,
     });
   };
 
@@ -95,13 +98,14 @@ const GroupsTable = ({
 
   const handleRemoveDay = (dayToDelete) => {
     deleteData({
-      deletedItems: { item: dayToDelete, type: DAY_TYPE },
-      tag: SCHEDULE_TAG,
+      deletedItems: [dayToDelete],
+      type: DAY_TYPE,
+      tag: DAYS_TAG,
       actions: SCHEDULE_ACTIONS,
     });
   };
 
-  return groups.length > 0 ? (
+  return groups && groups.length > 0 ? (
     <MainTable
       items={mergedDaysAndGroups}
       tableDefinition={groupsTableDefinition}

@@ -19,18 +19,14 @@ import CustomModal from "../../components/CustomModal";
 import CustomDialog from "../../components/CustomDialog";
 import CustomButton from "../../components/CustomButton";
 import {
-  useCreateDataMutation,
-  useDeleteDataMutation,
-  useGetDataQuery,
-  useUpdateDataMutation,
-} from "../../services/api";
-import {
+  DAYS_TAG,
   DAY_GET,
   GROUPS_GET,
-  SCHEDULE_TAG,
+  GROUPS_TAG,
   SPONSORS_GET,
   SPONSORS_TAG,
 } from "../../APIData";
+import useCustomDataQuery from "../../useCustomDataQuery";
 
 const SchedulePage = () => {
   const [open, setOpen] = useState(false);
@@ -40,25 +36,45 @@ const SchedulePage = () => {
   const [selectedDay, setSelectedDay] = useState(null);
   const {
     data: groups,
-    isError: errorFetching,
-    error: fetchingErrorRes,
-    isLoading,
-  } = useGetDataQuery({ fetchData: GROUPS_GET, tag: SCHEDULE_TAG });
+    fetchingData: fetchingGroups,
+    isError: groupsError,
+    successCreating: groupsSuccessCreating,
+    successUpdating: groupsSuccessUpdating,
+    successDeleting: groupsSuccessDeleting,
+    isLoading: groupsLoading,
+    errorMessage: groupsErrorMessage,
+    updateData,
+    createData,
+    deleteData,
+  } = useCustomDataQuery({ fetchData: GROUPS_GET, tag: GROUPS_TAG });
 
-  const { data: days } = useGetDataQuery({
+  const {
+    data: days,
+    fetchingData: fetchingDays,
+    isError: daysError,
+    successCreating: daysSuccessCreating,
+    successUpdating: daysSuccessUpdating,
+    successDeleting: daysSuccessDeleting,
+    isLoading: daysLoading,
+    errorMessage: daysErrorMessage,
+  } = useCustomDataQuery({
     fetchData: DAY_GET,
-    tag: SCHEDULE_TAG,
+    tag: DAYS_TAG,
   });
 
-  const { data: sponsors } = useGetDataQuery({
+  const { data: sponsors } = useCustomDataQuery({
     fetchData: SPONSORS_GET,
     tag: SPONSORS_TAG,
   });
 
-  const [updateData, { isSuccess: successUpdating, isError: errorUpdating }] =
-    useUpdateDataMutation();
-  const [deleteData] = useDeleteDataMutation();
-  const [createData] = useCreateDataMutation();
+  const isSuccess =
+    groupsSuccessCreating ||
+    groupsSuccessDeleting ||
+    groupsSuccessUpdating ||
+    daysSuccessCreating ||
+    daysSuccessDeleting ||
+    daysSuccessUpdating;
+  const errMessage = groupsErrorMessage || daysErrorMessage;
 
   const handleOpenGroupNameModal = () => {
     setOpen(true);
@@ -80,21 +96,23 @@ const SchedulePage = () => {
   };
   const transformedSponsors = useMemo(() => {
     if (sponsors && sponsors.length > 0) {
-      return sponsors.map((sponsor) => {
-        return {
-          id: sponsor.id,
-          sponsorName: sponsor.sponsor_name,
-          sponsorType: sponsor.sponsor_type,
-          imageUrl: sponsor.image_url,
-          active: sponsor.active,
-          website_url: sponsor.website_url,
-        };
-      });
+      return sponsors
+        .filter((sp) => sp.active)
+        .map((sponsor) => {
+          return {
+            id: sponsor.id,
+            sponsorName: sponsor.sponsor_name,
+            sponsorType: sponsor.sponsor_type,
+            imageUrl: sponsor.image_url,
+            active: sponsor.active,
+            website_url: sponsor.website_url,
+          };
+        });
     }
     return [];
   }, [sponsors]);
 
-  if (isLoading) {
+  if (fetchingGroups || fetchingDays) {
     return <SpinnerView />;
   }
 
@@ -105,12 +123,14 @@ const SchedulePage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      <AlertNotification
-        errorFetching={errorFetching}
-        errorUpdating={errorUpdating}
-        successUpdating={successUpdating}
-        subMessage={fetchingErrorRes?.message}
-      />
+      {(groupsLoading || daysLoading) && <SpinnerView />}
+      {(groupsError || isSuccess || daysError) && (
+        <AlertNotification
+          isError={groupsError || daysError}
+          isSuccess={isSuccess}
+          errorMessage={errMessage}
+        />
+      )}
       <Title title={GROUPS} />
       <PageDescription text={GROUPS_DESC} />
       <CustomButton
@@ -155,6 +175,7 @@ const SchedulePage = () => {
         days={days}
         sponsors={transformedSponsors}
         deleteData={deleteData}
+        successDeleting={groupsSuccessDeleting}
       />
     </Box>
   );

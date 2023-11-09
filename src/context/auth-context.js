@@ -30,10 +30,10 @@ export const AuthContextProvider = (props) => {
         localStorage.setItem("userToken", loginToken);
         setToken(loginToken);
       } else {
-        alert("Password and email do not match");
+        throw new Error(response);
       }
     } catch (error) {
-      alert("Server is not available", error);
+      alert("Something went wrong..." + error.message);
     }
   };
 

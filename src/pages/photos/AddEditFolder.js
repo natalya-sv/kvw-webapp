@@ -30,7 +30,8 @@ const AddEditFolder = ({
         folder_cover_photo: folderCoverPhoto,
       };
       updateData({
-        updatedItem: { item: updatedFolder, type: FOLDER_TYPE },
+        updatedItem: updatedFolder,
+        type: FOLDER_TYPE,
         actions: PHOTOS_ACTIONS,
         tag: PHOTOS_TAG,
       });
@@ -40,7 +41,8 @@ const AddEditFolder = ({
         folder_cover_photo: folderCoverPhoto,
       };
       createData({
-        newItem: { item: newFolder, type: FOLDER_TYPE },
+        newItem: newFolder,
+        type: FOLDER_TYPE,
         actions: PHOTOS_ACTIONS,
         tag: PHOTOS_TAG,
       });

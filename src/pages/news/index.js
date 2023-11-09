@@ -8,34 +8,27 @@ import PageDescription from "../../components/UI/PageDescription";
 import NewsTable from "./NewsTable";
 import { Box } from "@mui/material";
 import CustomModal from "../../components/CustomModal";
-import {
-  useCreateDataMutation,
-  useDeleteDataMutation,
-  useGetDataQuery,
-  useUpdateDataMutation,
-} from "../../services/api";
+import {} from "../../services/api";
 import { NEWS_GET, NEWS_TAG } from "../../APIData";
+import useCustomDataQuery from "../../useCustomDataQuery";
 
 const NewsPage = () => {
   const [editedNewsItem, setEditedNewsItem] = useState(null);
   const [open, setOpen] = useState(false);
+
   const {
     data: news,
+    fetchingData,
+    isError,
+    successCreating,
+    successUpdating,
+    successDeleting,
     isLoading,
-    isError: errorFetching,
-    error: fetchingErrorRes,
-  } = useGetDataQuery({ fetchData: NEWS_GET, tag: NEWS_TAG });
-
-  const [
+    errorMessage,
     updateData,
-    {
-      isSuccess: successUpdating,
-      isError: errorUpdating,
-      error: updatingErrorRes,
-    },
-  ] = useUpdateDataMutation();
-  const [createData] = useCreateDataMutation();
-  const [deleteData] = useDeleteDataMutation();
+    createData,
+    deleteData,
+  } = useCustomDataQuery({ fetchData: NEWS_GET, tag: NEWS_TAG });
 
   const openNewsModal = () => {
     setOpen(true);
@@ -46,7 +39,7 @@ const NewsPage = () => {
     setOpen(false);
   };
 
-  if (isLoading) {
+  if (fetchingData) {
     return <SpinnerView />;
   }
 
@@ -57,23 +50,26 @@ const NewsPage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      <AlertNotification
-        errorFetching={errorFetching}
-        errorUpdating={errorUpdating}
-        successUpdating={successUpdating}
-        subMessage={
-          fetchingErrorRes?.message ?? updatingErrorRes?.message ?? ""
-        }
-      />
+      {(isError || successCreating || successUpdating || successDeleting) && (
+        <AlertNotification
+          isError={isError}
+          isSuccess={successCreating || successUpdating || successDeleting}
+          errorMessage={errorMessage}
+        />
+      )}
       <Title title={NEWS} />
       <PageDescription text={NEWS_DESC} />
-
+      {isLoading && <SpinnerView />}
       <Box
         style={{
           width: "90%",
         }}
       >
-        <AddEditNewsForm createData={createData} />
+        <AddEditNewsForm
+          createData={createData}
+          successCreating={successCreating}
+          closeNewsModal={closeNewsModal}
+        />
       </Box>
       <CustomModal
         open={open}
@@ -83,6 +79,7 @@ const NewsPage = () => {
             editedNewsItem={editedNewsItem}
             closeNewsModal={closeNewsModal}
             updateData={updateData}
+            isLoading={isLoading}
           />
         }
       />
@@ -92,6 +89,7 @@ const NewsPage = () => {
         openNewsModal={openNewsModal}
         deleteData={deleteData}
         news={news}
+        successDeleting={successDeleting}
       />
     </Box>
   );

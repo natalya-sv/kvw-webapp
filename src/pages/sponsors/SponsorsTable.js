@@ -27,6 +27,7 @@ const SponsorsTable = ({
   setEditedSponsor,
   deleteData,
   updateData,
+  successDeleting,
 }) => {
   const updatedSponsors = useMemo(() => {
     if (sponsors && sponsors?.length > 0) {
@@ -76,8 +77,8 @@ const SponsorsTable = ({
         updatedItem: {
           sponsors: selectedSponsors,
           status: isActive,
+          type: SET_SPONSORS_STATUS,
         },
-        type: SET_SPONSORS_STATUS,
         tag: SPONSORS_TAG,
         actions: SPONSORS_ACTIONS,
       });
@@ -112,6 +113,7 @@ const SponsorsTable = ({
       onRemoveItems={handleRemoveSponsor}
       onEditItem={handleEditSponsor}
       extraButtons={extraButtons}
+      successDeleting={successDeleting}
     />
   ) : (
     <Typography>{NO_SPONSORS_YET}</Typography>

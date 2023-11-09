@@ -7,20 +7,22 @@ import { Box } from "@mui/material";
 import AlertNotification from "../../components/UI/AlertNotification";
 import SpinnerView from "../../components/UI/SpinnerView";
 import { MORE_DATA_GET, MORE_PAGE_TAG } from "../../APIData";
-import { useUpdateDataMutation, useGetDataQuery } from "../../services/api";
+import useCustomDataQuery from "../../useCustomDataQuery";
 
 const MorePage = () => {
   const {
     data: moreData,
+    updateData,
+    isError,
+    fetchingData,
+    successCreating,
+    successUpdating,
+    successDeleting,
     isLoading,
-    isError: errorFetching,
-    error: fetchingErrorRes,
-  } = useGetDataQuery({ fetchData: MORE_DATA_GET, tag: MORE_PAGE_TAG });
+    errorMessage,
+  } = useCustomDataQuery({ fetchData: MORE_DATA_GET, tag: MORE_PAGE_TAG });
 
-  const [updateData, { isSuccess: successUpdating, isError: errorUpdating }] =
-    useUpdateDataMutation();
-
-  if (isLoading) {
+  if (fetchingData) {
     return <SpinnerView />;
   }
 
@@ -31,16 +33,23 @@ const MorePage = () => {
       alignItems={"center"}
       style={{ width: "100%" }}
     >
-      <AlertNotification
-        errorFetching={errorFetching}
-        errorUpdating={errorUpdating}
-        successUpdating={successUpdating}
-        subMessage={fetchingErrorRes?.message ?? ""}
-      />
+      {(isError || successCreating || successUpdating || successDeleting) && (
+        <AlertNotification
+          isError={isError}
+          isSuccess={successCreating || successUpdating || successDeleting}
+          errorMessage={errorMessage}
+        />
+      )}
+
       <Title title={MORE_PAGE_TITLE} />
       <PageDescription text={MORE_PAGE_DESCRIPTION} />
+      {fetchingData.isLoading && <SpinnerView />}
       <Box width={"90%"}>
-        <MoreForm moreData={moreData} updateData={updateData} />
+        <MoreForm
+          moreData={moreData}
+          updateData={updateData}
+          isUpdating={isLoading}
+        />
       </Box>
     </Box>
   );

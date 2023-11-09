@@ -8,7 +8,7 @@ const TableHeader = ({
   numSelected,
   onAddNewSubRowItem,
   rowCount,
-  headCells,
+  tableDefinition,
 }) => {
   return (
     <TableHead>
@@ -16,12 +16,11 @@ const TableHeader = ({
         <TableCell>
           <Checkbox
             color="primary"
-            indeterminate={numSelected > 0 && numSelected < rowCount}
             checked={rowCount > 0 && numSelected === rowCount}
             onChange={onSelectAllClick}
           />
         </TableCell>
-        {headCells.map((headCell) => (
+        {tableDefinition.map((headCell) => (
           <CustomTableCell
             type={"header"}
             value={headCell.label}

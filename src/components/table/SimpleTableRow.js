@@ -5,16 +5,16 @@ import { EDIT } from "../../helpers/constants";
 import CustomTableCell from "./CustomTableCell";
 
 const SimpleTableRow = ({
+  row,
   isSelected,
   handleClick,
-  row,
   tableDefinition,
   onEditItem,
 }) => {
   const isItemSelected = isSelected(row.id);
   return (
     <TableRow hover key={row.id}>
-      <TableCell key={`selected-key-${row.id}`}>
+      <TableCell key={`key-${row.id}`}>
         <Checkbox
           color="primary"
           checked={isItemSelected}

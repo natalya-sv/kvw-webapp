@@ -1,18 +1,9 @@
 import { Alert, Snackbar, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import {
-  ERROR_FETCHING,
-  ERROR_UPDATING,
-  SUCCESS_UPDATE_API,
-} from "../../store/constants";
+import { ERROR_UPDATING, SUCCESS_UPDATE_API } from "../../store/constants";
 
-const AlertNotification = ({
-  successUpdating,
-  errorFetching,
-  subMessage,
-  errorUpdating,
-}) => {
+const AlertNotification = ({ isSuccess, errorMessage, isError }) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState();
 
@@ -24,22 +15,25 @@ const AlertNotification = ({
   };
 
   useEffect(() => {
-    if (successUpdating) {
+    if (isSuccess) {
       setMessage(SUCCESS_UPDATE_API);
       setOpen(true);
     }
-    if (errorFetching) {
-      setMessage(ERROR_FETCHING);
+    if (isError && errorMessage) {
+      const errMessage = {
+        ...ERROR_UPDATING,
+        subMessage: errorMessage?.data.message,
+      };
+      setMessage(errMessage);
       setOpen(true);
     }
-    if (errorUpdating) {
-      setMessage(ERROR_UPDATING);
-      setOpen(true);
-    }
+
     return () => {
       setOpen(false);
+      setMessage("");
+      handleCloseSnackBar();
     };
-  }, [successUpdating, errorFetching, errorUpdating]);
+  }, [errorMessage, isError, isSuccess]);
 
   return (
     <Box sx={{ width: "50%" }}>
@@ -52,10 +46,13 @@ const AlertNotification = ({
         >
           <Alert
             onClose={handleCloseSnackBar}
-            severity={message?.severity}
+            severity={isError ? "error" : "success"}
             sx={{ width: "100%" }}
           >
-            {`${message?.title} ${message?.message} ${subMessage ?? ""}`}
+            {isSuccess && message && `${message?.title}, ${message?.message}`}
+            {isError &&
+              message &&
+              `${message?.title} ${message?.message}. ${message.subMessage}`}
           </Alert>
         </Snackbar>
       </Grid>

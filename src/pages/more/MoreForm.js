@@ -21,7 +21,7 @@ import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
 import { MORE_DATA_ACTIONS, MORE_PAGE_TAG } from "../../APIData";
 
-const MoreForm = ({ moreData, updateData }) => {
+const MoreForm = ({ moreData, updateData, isUpdating }) => {
   const [aboutUsTitle, setAboutUsTitle] = useState("");
   const [aboutUsContent, setAboutUsContent] = useState("");
   const [mailNotificationContent, setMailNotificationContent] = useState("");
@@ -77,6 +77,7 @@ const MoreForm = ({ moreData, updateData }) => {
         value={aboutUsTitle}
         label={ABOUT_US_TITLE}
         onChange={setAboutUsTitle}
+        disabled={isUpdating}
       />
       <TextInput
         id="about-content"
@@ -85,12 +86,12 @@ const MoreForm = ({ moreData, updateData }) => {
         value={aboutUsContent}
         label={ABOUT_US_CONTENT}
         onChange={setAboutUsContent}
+        disabled={isUpdating}
       />
       <Divider variant="fullwidth" />
       <Typography color={"#ea507c"} variant="subtitle2">
         {NEWSLETTERS_PAGE}
       </Typography>
-
       <TextInput
         id="mail-content"
         fullWidth={true}
@@ -98,6 +99,7 @@ const MoreForm = ({ moreData, updateData }) => {
         value={mailNotificationContent}
         label={NEWSLETTERS_CONTENT}
         onChange={setMailNotificationContent}
+        disabled={isUpdating}
       />
       <TextInput
         id="mail-link"
@@ -105,7 +107,9 @@ const MoreForm = ({ moreData, updateData }) => {
         value={mailNotificationLink}
         label={NEWSLETTERS_LINK}
         onChange={setMailNotificationLink}
+        disabled={isUpdating}
       />
+
       <Divider variant="fullWidth" />
       <Typography color={"#ea507c"} variant="subtitle2">
         {PRIVACY_PAGE}
@@ -117,6 +121,7 @@ const MoreForm = ({ moreData, updateData }) => {
         value={privacyStatementContent}
         label={PRIVACY_STATEMENT_CONTENT}
         onChange={setPrivacyStatementContent}
+        disabled={isUpdating}
       />
       <TextInput
         id="privacy-link"
@@ -124,6 +129,7 @@ const MoreForm = ({ moreData, updateData }) => {
         value={privacyStatementLink}
         label={PRIVACY_STATEMENT_LINK}
         onChange={setPrivacyStatementLink}
+        disabled={isUpdating}
       />
       <Divider variant="fullWidth" />
       <Typography color={"#ea507c"} variant="subtitle2">
@@ -136,6 +142,7 @@ const MoreForm = ({ moreData, updateData }) => {
         label={CONTACT_EMAIL}
         type={"email"}
         onChange={setContactEmail}
+        disabled={isUpdating}
       />
       <TextInput
         id="contact-phone"
@@ -144,6 +151,7 @@ const MoreForm = ({ moreData, updateData }) => {
         label={CONTACT_PHONE_NUMBER}
         type={"tel"}
         onChange={setContactPhoneNumber}
+        disabled={isUpdating}
       />
       <TextInput
         id="contact-content"
@@ -152,8 +160,13 @@ const MoreForm = ({ moreData, updateData }) => {
         value={contactContent}
         label={CONTACT_CONTENT}
         onChange={setContactContent}
+        disabled={isUpdating}
       />
-      <CustomButton title={SAVE} onClick={onSubmitHandler} />
+      <CustomButton
+        title={SAVE}
+        onClick={onSubmitHandler}
+        disabled={isUpdating}
+      />
     </Box>
   );
 };

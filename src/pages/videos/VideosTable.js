@@ -14,6 +14,7 @@ const VideosTable = ({
   deleteData,
   setEditedVideo,
   openVideosModal,
+  successDeleting,
 }) => {
   const updatedVideos = useMemo(() => {
     if (videos && videos.length > 0) {
@@ -58,6 +59,7 @@ const VideosTable = ({
       title={VIDEOS_PAGE_TITLE}
       onRemoveItems={handleRemoveVideos}
       onEditItem={handleEditVideo}
+      successDeleting={successDeleting}
     />
   ) : (
     <Typography>{NO_VIDEOS_YET}</Typography>

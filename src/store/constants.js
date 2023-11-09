@@ -12,4 +12,5 @@ export const ERROR_UPDATING = {
   severity: "error",
   title: "Error!",
   message: "Fout bij updaten van informatie!",
+  subMessage: "",
 };
