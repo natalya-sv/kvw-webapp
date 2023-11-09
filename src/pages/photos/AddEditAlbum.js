@@ -3,12 +3,7 @@ import { useEffect, useState } from "react";
 import { SAVE } from "../../helpers/constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
-import {
-  PHOTOS_TAG,
-  PHOTOS_ACTIONS,
-  ALBUM_TYPE,
-  ALBUM_TAG,
-} from "../../APIData";
+import { PHOTOS_ACTIONS, ALBUM_TYPE, ALBUM_TAG } from "../../APIData";
 
 const AddEditAlbum = ({
   selectedAlbum,
@@ -37,12 +32,12 @@ const AddEditAlbum = ({
       folder_id: selectedFolderId,
     };
     if (selectedAlbum) {
-      const updAlbum = {
+      const updatedAlbum = {
         ...album,
         id: selectedAlbum.id,
       };
       updateData({
-        updatedItem: updAlbum,
+        updatedItem: updatedAlbum,
         type: ALBUM_TYPE,
         actions: PHOTOS_ACTIONS,
         tag: ALBUM_TAG,

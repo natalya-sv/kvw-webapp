@@ -25,7 +25,6 @@ const AddEditNewsForm = ({
   const [newsContent, setNewsContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
   const [sentPushMessage, setSentPushMessage] = useState(false);
-  const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   useEffect(() => {
     if (editedNewsItem) {
