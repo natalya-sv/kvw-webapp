@@ -57,6 +57,7 @@ const useCustomDataQuery = ({ fetchData, tag }) => {
   const isLoading = isUpdating || isCreating || isDeleting;
 
   return {
+    fetchingData,
     data,
     isError,
     errorMessage,
@@ -67,7 +68,6 @@ const useCustomDataQuery = ({ fetchData, tag }) => {
     updateData,
     createData,
     deleteData,
-    fetchingData,
   };
 };
 

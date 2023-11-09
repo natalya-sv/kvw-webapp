@@ -15,9 +15,7 @@ const MorePage = () => {
     updateData,
     isError,
     fetchingData,
-    successCreating,
     successUpdating,
-    successDeleting,
     isLoading,
     errorMessage,
   } = useCustomDataQuery({ fetchData: MORE_DATA_GET, tag: MORE_PAGE_TAG });
@@ -33,10 +31,10 @@ const MorePage = () => {
       alignItems={"center"}
       style={{ width: "100%" }}
     >
-      {(isError || successCreating || successUpdating || successDeleting) && (
+      {(isError || successUpdating) && (
         <AlertNotification
           isError={isError}
-          isSuccess={successCreating || successUpdating || successDeleting}
+          isSuccess={successUpdating}
           errorMessage={errorMessage}
         />
       )}

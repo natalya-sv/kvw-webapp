@@ -43,7 +43,7 @@ const PhotosPage = () => {
     isError: albumsError,
     successCreating: albumsSuccessCreating,
     successUpdating: albumsSuccessUpdating,
-    successDeleting: albumsSuccesDeleting,
+    successDeleting: albumsSuccessDeleting,
     isLoading: albumsLoading,
     errorMessage: albumsErrorMessage,
     updateData,
@@ -57,7 +57,7 @@ const PhotosPage = () => {
   const isSuccess =
     albumsSuccessCreating ||
     albumsSuccessUpdating ||
-    albumsSuccesDeleting ||
+    albumsSuccessDeleting ||
     foldersSuccessCreating ||
     foldersSuccessDeleting ||
     foldersSuccessUpdating;

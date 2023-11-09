@@ -1,6 +1,11 @@
+import { Typography } from "@mui/material";
 import { SOCIAL_MEDIA_ACTIONS, SOCIAL_MEDIA_TAG } from "../../APIData";
 import MainTable from "../../components/table/MainTable";
-import { SOCIAL_MEDIA_TITLE, socialMediaDefinition } from "./constants";
+import {
+  NO_ACCOUNTS_YET,
+  SOCIAL_MEDIA_TITLE,
+  socialMediaDefinition,
+} from "./constants";
 import { useMemo } from "react";
 
 const SocialMediaTable = ({
@@ -34,14 +39,14 @@ const SocialMediaTable = ({
   };
 
   const handleEditSocialAccount = (id) => {
-    const accountToEdit = socialMediaAccounts.find((acc) => acc.id === id);
+    const accountToEdit = updatedAccounts.find((acc) => acc.id === id);
     if (accountToEdit) {
       setEditAccount(accountToEdit);
       openMediaModal();
     }
   };
 
-  return (
+  return updatedAccounts && updatedAccounts.length > 0 ? (
     <MainTable
       items={updatedAccounts}
       tableDefinition={socialMediaDefinition}
@@ -50,6 +55,8 @@ const SocialMediaTable = ({
       onEditItem={handleEditSocialAccount}
       successDeleting={successDeleting}
     />
+  ) : (
+    <Typography>{NO_ACCOUNTS_YET}</Typography>
   );
 };
 export default SocialMediaTable;
