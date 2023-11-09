@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { IMAGE_URL_OPT } from "./constants";
+import { IMAGE_URL_OPT, SEND_ALSO_PUSH_MESSAGE } from "./constants";
 import { Box } from "@mui/material";
 import {
   NEWS_CONTENT,
@@ -10,6 +10,8 @@ import {
 import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
 import { NEWS_ACTIONS, NEWS_TAG, PUSH_ACTIONS } from "../../APIData";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 const AddEditNewsForm = ({
   editedNewsItem,
@@ -22,6 +24,8 @@ const AddEditNewsForm = ({
   const [newsTitle, setNewsTitle] = useState("");
   const [newsContent, setNewsContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
+  const [sentPushMessage, setSentPushMessage] = useState(false);
+  const label = { inputProps: { "aria-label": "Checkbox demo" } };
 
   useEffect(() => {
     if (editedNewsItem) {
@@ -35,7 +39,7 @@ const AddEditNewsForm = ({
     const newsItem = {
       title: newsTitle,
       content: newsContent,
-      image_url: imageUrl.trim(),
+      image_url: imageUrl,
     };
     if (editedNewsItem) {
       const newsUpdated = {
@@ -48,10 +52,18 @@ const AddEditNewsForm = ({
         actions: NEWS_ACTIONS,
       });
     } else {
-      createData({ newItem: newsItem, tag: NEWS_TAG, actions: PUSH_ACTIONS });
+      createData({
+        newItem: { newItem: newsItem, sentPushMessage },
+        tag: NEWS_TAG,
+        actions: PUSH_ACTIONS,
+      });
     }
 
     closeNewsModal();
+  };
+
+  const handleSentPushMessage = () => {
+    setSentPushMessage(!sentPushMessage);
   };
 
   useEffect(() => {
@@ -87,6 +99,16 @@ const AddEditNewsForm = ({
         label={IMAGE_URL_OPT}
         type={"url"}
         disabled={isLoading}
+      />
+
+      <FormControlLabel
+        control={
+          <Checkbox
+            checked={sentPushMessage}
+            onChange={handleSentPushMessage}
+          />
+        }
+        label={SEND_ALSO_PUSH_MESSAGE}
       />
       <CustomButton
         disabled={newsTitle === "" || newsContent === "" || isLoading}
