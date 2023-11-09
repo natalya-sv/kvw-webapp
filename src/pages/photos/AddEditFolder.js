@@ -27,7 +27,7 @@ const AddEditFolder = ({
       const updatedFolder = {
         id: selectedFolder.id,
         year: folderYear,
-        folder_cover_photo: folderCoverPhoto,
+        folder_cover_photo: folderCoverPhoto.trim(),
       };
       updateData({
         updatedItem: updatedFolder,

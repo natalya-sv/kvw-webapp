@@ -29,9 +29,9 @@ const AddEditVideoForm = ({
     const embeddedLinkForApp = getEmbeddedUrl(youtubeLink);
     const videoItem = {
       title: title,
-      url: embeddedLinkForApp,
+      url: embeddedLinkForApp.trim(),
       description: description,
-      youtube_link: youtubeLink,
+      youtube_link: youtubeLink.trim(),
       date: new Date().toISOString(),
     };
     if (editedVideo) {

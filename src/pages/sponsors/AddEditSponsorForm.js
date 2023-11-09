@@ -44,9 +44,9 @@ const AddEditSponsorForm = ({
   const submitHandler = () => {
     const newSponsor = {
       sponsor_name: sponsorName,
-      website_url: sponsorWebsiteUrl,
+      website_url: sponsorWebsiteUrl.trim(),
       sponsor_type: sponsorType,
-      image_url: sponsorImageUrl,
+      image_url: sponsorImageUrl.trim(),
       active: editedSponsor ? editedSponsor.active : false,
     };
 

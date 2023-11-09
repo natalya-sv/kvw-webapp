@@ -38,7 +38,7 @@ const AddEditNewslettersItem = ({
 
     const newsletterItem = {
       title: newsLetterTitle,
-      newsletter_link: newsletterLink,
+      newsletter_link: newsletterLink.trim(),
       date: dateValue,
     };
     if (editedNewsletterItem) {

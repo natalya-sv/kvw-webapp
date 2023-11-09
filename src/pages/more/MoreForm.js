@@ -54,7 +54,7 @@ const MoreForm = ({ moreData, updateData, isUpdating }) => {
       mail_notification_content: mailNotificationContent,
       mail_notification_link: mailNotificationLink,
       privacy_statement_content: privacyStatementContent,
-      privacy_statement_link: privacyStatementLink,
+      privacy_statement_link: privacyStatementLink.trim(),
       contact_email: contactEmail,
       contact_phone_number: contactPhoneNumber,
       contact_content: contactContent,
