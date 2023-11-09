@@ -26,9 +26,7 @@ const CountDownPage = () => {
     updateData,
     isError,
     fetchingData,
-    successCreating,
     successUpdating,
-    successDeleting,
     isLoading,
     errorMessage,
   } = useCustomDataQuery({ fetchData: COUNTDOWN_GET, tag: COUNTDOWN_TAG });
@@ -74,10 +72,10 @@ const CountDownPage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      {(isError || successCreating || successUpdating || successDeleting) && (
+      {(isError || successUpdating) && (
         <AlertNotification
           isError={isError}
-          isSuccess={successCreating || successUpdating || successDeleting}
+          isSuccess={successUpdating}
           errorMessage={errorMessage}
         />
       )}

@@ -51,7 +51,7 @@ const NewsletteraTable = ({
     openNewslettersModal();
   };
 
-  return newslettersItems.length > 0 ? (
+  return newslettersItems && newslettersItems.length > 0 ? (
     <MainTable
       items={newslettersItems}
       tableDefinition={newslettersTableDefinition}

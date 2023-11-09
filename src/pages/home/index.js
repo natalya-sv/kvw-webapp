@@ -31,9 +31,7 @@ const HomePage = () => {
     updateData,
     isError,
     fetchingData,
-    successCreating,
     successUpdating,
-    successDeleting,
     isLoading,
     errorMessage,
   } = useCustomDataQuery({
@@ -86,10 +84,10 @@ const HomePage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      {(isError || successCreating || successUpdating || successDeleting) && (
+      {(isError || successUpdating) && (
         <AlertNotification
           isError={isError}
-          isSuccess={successCreating || successUpdating || successDeleting}
+          isSuccess={successUpdating}
           errorMessage={errorMessage}
         />
       )}

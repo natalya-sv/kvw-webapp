@@ -104,7 +104,7 @@ const GroupsTable = ({
     });
   };
 
-  return groups && groups.length > 0 ? (
+  return mergedDaysAndGroups && mergedDaysAndGroups.length > 0 ? (
     <MainTable
       items={mergedDaysAndGroups}
       tableDefinition={groupsTableDefinition}
