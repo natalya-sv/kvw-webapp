@@ -8,16 +8,12 @@ const style = {
   bgcolor: "background.paper",
   boxShadow: 24,
   p: 4,
+  width: "90%",
 };
 const CustomModal = ({ modalComponent, open, handleClose }) => {
   return (
-    <Modal
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={{ ...style, width: "90%" }}>
+    <Modal open={open} onClose={handleClose}>
+      <Box sx={style}>
         <Box
           style={{
             marginBottom: 10,

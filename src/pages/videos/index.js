@@ -12,37 +12,28 @@ import SpinnerView from "../../components/UI/SpinnerView";
 import AlertNotification from "../../components/UI/AlertNotification";
 import AddEditVideoForm from "./AddEditVideoForm";
 import CustomModal from "../../components/CustomModal";
-import {
-  useCreateDataMutation,
-  useDeleteDataMutation,
-  useGetDataQuery,
-  useUpdateDataMutation,
-} from "../../services/api";
+
 import { VIDEOS_GET, VIDEOS_TAG } from "../../APIData";
 import CustomButton from "../../components/CustomButton";
 import AddIcon from "@mui/icons-material/Add";
+import useCustomDataQuery from "../../useCustomDataQuery";
 
 const VideosPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [editedVideo, setEditedVideo] = useState(false);
   const {
     data: videos,
+    fetchingData,
+    isError,
+    successCreating,
+    successUpdating,
+    successDeleting,
     isLoading,
-    isError: errorFetching,
-    error: fetchingErrorRes,
-  } = useGetDataQuery({ fetchData: VIDEOS_GET, tag: VIDEOS_TAG });
-
-  const [
+    errorMessage,
     updateData,
-    {
-      isSuccess: successUpdating,
-      isError: errorUpdating,
-      error: updatingErrorRes,
-    },
-  ] = useUpdateDataMutation();
-
-  const [deleteData, { isError: errorDeleting }] = useDeleteDataMutation();
-  const [createData, { isError: errorCreating }] = useCreateDataMutation();
+    createData,
+    deleteData,
+  } = useCustomDataQuery({ fetchData: VIDEOS_GET, tag: VIDEOS_TAG });
 
   const openVideosModal = () => {
     setOpenModal(true);
@@ -53,7 +44,7 @@ const VideosPage = () => {
     setOpenModal(false);
   };
 
-  if (isLoading) {
+  if (fetchingData) {
     return <SpinnerView />;
   }
 
@@ -64,14 +55,14 @@ const VideosPage = () => {
       alignItems={"center"}
       style={{ width: "100%" }}
     >
-      <AlertNotification
-        errorFetching={errorFetching}
-        errorUpdating={errorUpdating || errorDeleting || errorCreating}
-        successUpdating={successUpdating}
-        subMessage={
-          fetchingErrorRes?.message ?? updatingErrorRes?.message ?? ""
-        }
-      />
+      {isLoading && <SpinnerView />}
+      {(isError || successCreating || successUpdating || successDeleting) && (
+        <AlertNotification
+          isError={isError}
+          isSuccess={successCreating || successUpdating || successDeleting}
+          errorMessage={errorMessage}
+        />
+      )}
       <Title title={VIDEOS_PAGE_TITLE} />
       <PageDescription text={VIDEOS_PAGE_DESCRIPTION} />
       <CustomButton
@@ -91,12 +82,14 @@ const VideosPage = () => {
           />
         }
       />
+
       <VideosTable
         videos={videos}
         openVideosModal={openVideosModal}
         setEditedVideo={setEditedVideo}
         closeVideosModal={closeVideosModal}
         deleteData={deleteData}
+        successDeleting={successDeleting}
       />
     </Box>
   );

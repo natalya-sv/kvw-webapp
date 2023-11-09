@@ -14,13 +14,8 @@ import CustomModal from "../../components/CustomModal";
 import CustomDialog from "../../components/CustomDialog";
 import AddEditAlbum from "./AddEditAlbum";
 import CustomButton from "../../components/CustomButton";
-import {
-  useCreateDataMutation,
-  useDeleteDataMutation,
-  useGetDataQuery,
-  useUpdateDataMutation,
-} from "../../services/api";
-import { ALBUMS_GET, FOLDERS_GET, PHOTOS_TAG } from "../../APIData";
+import { ALBUMS_GET, ALBUM_TAG, FOLDERS_GET, PHOTOS_TAG } from "../../APIData";
+import useCustomDataQuery from "../../useCustomDataQuery";
 
 const PhotosPage = () => {
   const [open, setOpen] = useState(false);
@@ -30,20 +25,43 @@ const PhotosPage = () => {
   const [selectedAlbum, setSelectedAlbum] = useState(null);
   const {
     data: folders,
-    isError: errorFetching,
-    error: fetchingErrorRes,
-    isLoading,
-  } = useGetDataQuery({ fetchData: FOLDERS_GET, tag: PHOTOS_TAG });
-
-  const { data: albums } = useGetDataQuery({
-    fetchData: ALBUMS_GET,
-    tag: ALBUMS_GET,
+    fetchingData: fetchingFolders,
+    isError: foldersError,
+    successCreating: foldersSuccessCreating,
+    successUpdating: foldersSuccessUpdating,
+    successDeleting: foldersSuccessDeleting,
+    isLoading: foldersLoading,
+    errorMessage: foldersErrorMessage,
+  } = useCustomDataQuery({
+    fetchData: FOLDERS_GET,
+    tag: PHOTOS_TAG,
   });
 
-  const [updateData, { isSuccess: successUpdating, isError: errorUpdating }] =
-    useUpdateDataMutation();
-  const [deleteData] = useDeleteDataMutation();
-  const [createData] = useCreateDataMutation();
+  const {
+    data: albums,
+    fetchingData: fetchingAlbums,
+    isError: albumsError,
+    successCreating: albumsSuccessCreating,
+    successUpdating: albumsSuccessUpdating,
+    successDeleting: albumsSuccesDeleting,
+    isLoading: albumsLoading,
+    errorMessage: albumsErrorMessage,
+    updateData,
+    createData,
+    deleteData,
+  } = useCustomDataQuery({
+    fetchData: ALBUMS_GET,
+    tag: ALBUM_TAG,
+  });
+
+  const isSuccess =
+    albumsSuccessCreating ||
+    albumsSuccessUpdating ||
+    albumsSuccesDeleting ||
+    foldersSuccessCreating ||
+    foldersSuccessDeleting ||
+    foldersSuccessUpdating;
+  const errMessage = albumsErrorMessage || foldersErrorMessage;
 
   const handleOpenFolderModal = () => {
     setOpen(true);
@@ -63,9 +81,10 @@ const PhotosPage = () => {
     setOpenAddEditAlbumDialog(false);
   };
 
-  if (isLoading) {
+  if (fetchingAlbums || fetchingFolders) {
     return <SpinnerView />;
   }
+
   return (
     <Box
       display={"flex"}
@@ -73,12 +92,14 @@ const PhotosPage = () => {
       alignItems={"center"}
       style={{ width: "100%" }}
     >
-      <AlertNotification
-        errorFetching={errorFetching}
-        errorUpdating={errorUpdating}
-        successUpdating={successUpdating}
-        subMessage={fetchingErrorRes?.message ?? ""}
-      />
+      {(albumsLoading || foldersLoading) && <SpinnerView />}
+      {(albumsError || isSuccess || foldersError) && (
+        <AlertNotification
+          isError={albumsError || foldersError}
+          isSuccess={isSuccess}
+          errorMessage={errMessage}
+        />
+      )}
       <Title title={PHOTOS_PAGE_TITLE} />
       <PageDescription text={PHOTOS_PAGE_DESCRIPTION} />
 
@@ -123,6 +144,7 @@ const PhotosPage = () => {
         folders={folders}
         albums={albums}
         deleteData={deleteData}
+        successDeleting={foldersSuccessDeleting}
       />
     </Box>
   );

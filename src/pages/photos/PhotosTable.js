@@ -11,6 +11,7 @@ import {
   PHOTOS_ACTIONS,
   PHOTOS_TAG,
   FOLDER_TYPE,
+  ALBUM_TAG,
 } from "../../APIData";
 import { Typography } from "@mui/material";
 import MainTable from "../../components/table/MainTable";
@@ -24,6 +25,7 @@ const PhotosTable = ({
   handleOpenAddEditAlbumDialog,
   setSelectedAlbum,
   deleteData,
+  successDeleting,
 }) => {
   const mergedFoldersAndAlbums = useMemo(() => {
     if (folders && albums) {
@@ -55,7 +57,8 @@ const PhotosTable = ({
 
   const handleRemoveFolders = (idsToRemove) => {
     deleteData({
-      deletedItems: { items: idsToRemove, type: FOLDER_TYPE },
+      deletedItems: idsToRemove,
+      type: FOLDER_TYPE,
       actions: PHOTOS_ACTIONS,
       tag: PHOTOS_TAG,
     });
@@ -86,9 +89,10 @@ const PhotosTable = ({
 
   const handleRemoveAlbum = (albumId) => {
     deleteData({
-      deletedItems: { item: albumId, type: ALBUM_TYPE },
+      deletedItems: [albumId],
+      type: ALBUM_TYPE,
       actions: PHOTOS_ACTIONS,
-      tag: PHOTOS_TAG,
+      tag: ALBUM_TAG,
     });
   };
 
@@ -104,6 +108,7 @@ const PhotosTable = ({
       onAddNewSubRowItem={handleAddNewAlbum}
       onEditSubRowItem={handleEditAlbum}
       onRemoveSubRowItem={handleRemoveAlbum}
+      successDeleting={successDeleting}
     />
   ) : (
     <Typography>{NO_PHOTOS}</Typography>

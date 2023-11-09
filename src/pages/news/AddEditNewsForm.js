@@ -9,13 +9,15 @@ import {
 } from "./constants";
 import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
-import { NEWS_ACTIONS, NEWS_TAG } from "../../APIData";
+import { NEWS_ACTIONS, NEWS_TAG, PUSH_ACTIONS } from "../../APIData";
 
 const AddEditNewsForm = ({
   editedNewsItem,
   closeNewsModal,
   updateData,
   createData,
+  successCreating,
+  isLoading,
 }) => {
   const [newsTitle, setNewsTitle] = useState("");
   const [newsContent, setNewsContent] = useState("");
@@ -33,7 +35,6 @@ const AddEditNewsForm = ({
     const newsItem = {
       title: newsTitle,
       content: newsContent,
-      date: new Date().toISOString(),
       image_url: imageUrl,
     };
     if (editedNewsItem) {
@@ -47,13 +48,19 @@ const AddEditNewsForm = ({
         actions: NEWS_ACTIONS,
       });
     } else {
-      createData({ newItem: newsItem, tag: NEWS_TAG, actions: NEWS_ACTIONS });
+      createData({ newItem: newsItem, tag: NEWS_TAG, actions: PUSH_ACTIONS });
     }
-    // setNewsContent("");
-    // setNewsTitle("");
-    // setImageUrl("");
+
     closeNewsModal();
   };
+
+  useEffect(() => {
+    if (successCreating) {
+      setNewsContent("");
+      setNewsTitle("");
+      setImageUrl("");
+    }
+  }, [successCreating]);
 
   return (
     <Box display={"flex"} flexDirection={"column"} gap={"20px"}>
@@ -62,6 +69,7 @@ const AddEditNewsForm = ({
         value={newsTitle}
         onChange={setNewsTitle}
         label={NEWS_TITLE}
+        disabled={isLoading}
       />
       <TextInput
         id="news-content"
@@ -69,6 +77,7 @@ const AddEditNewsForm = ({
         onChange={setNewsContent}
         value={newsContent}
         label={NEWS_CONTENT}
+        disabled={isLoading}
       />
       <TextInput
         id="news-image-url"
@@ -77,9 +86,10 @@ const AddEditNewsForm = ({
         onChange={setImageUrl}
         label={IMAGE_URL_OPT}
         type={"url"}
+        disabled={isLoading}
       />
       <CustomButton
-        disabled={newsTitle === "" || newsContent === ""}
+        disabled={newsTitle === "" || newsContent === "" || isLoading}
         title={editedNewsItem ? UPDATE_NEWSITEM : SEND_PUSH_MESSAGE}
         onClick={submitHandler}
       />

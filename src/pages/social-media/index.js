@@ -12,39 +12,30 @@ import {
 import SocialMediaTable from "./SocialMediaTable";
 import CustomModal from "../../components/CustomModal";
 import AddEditSocialMediaAccount from "./AddEditSocialMediaAccount";
-import {
-  useCreateDataMutation,
-  useDeleteDataMutation,
-  useGetDataQuery,
-  useUpdateDataMutation,
-} from "../../services/api";
 import { SOCIAL_MEDIA_DATA_GET, SOCIAL_MEDIA_TAG } from "../../APIData";
 import CustomButton from "../../components/CustomButton";
 import AddIcon from "@mui/icons-material/Add";
+import useCustomDataQuery from "../../useCustomDataQuery";
 
 const SocialMediaPage = () => {
   const [openModal, setOpenModal] = useState(false);
   const [accountToEdit, setAccountToEdit] = useState(null);
   const {
     data: socialMediaAccounts,
+    fetchingData,
+    isError,
+    successCreating,
+    successUpdating,
+    successDeleting,
     isLoading,
-    isError: errorFetching,
-    error: fetchingErrorRes,
-  } = useGetDataQuery({
+    errorMessage,
+    updateData,
+    createData,
+    deleteData,
+  } = useCustomDataQuery({
     fetchData: SOCIAL_MEDIA_DATA_GET,
     tag: SOCIAL_MEDIA_TAG,
   });
-
-  const [
-    updateData,
-    {
-      isSuccess: successUpdating,
-      isError: errorUpdating,
-      error: updatingErrorRes,
-    },
-  ] = useUpdateDataMutation();
-  const [createData] = useCreateDataMutation();
-  const [deleteData] = useDeleteDataMutation();
 
   const openMediaModal = () => {
     setOpenModal(true);
@@ -55,7 +46,7 @@ const SocialMediaPage = () => {
     setOpenModal(false);
   };
 
-  if (isLoading) {
+  if (fetchingData) {
     return <SpinnerView />;
   }
 
@@ -66,14 +57,14 @@ const SocialMediaPage = () => {
       alignItems={"center"}
       style={{ width: "100%" }}
     >
-      <AlertNotification
-        errorFetching={errorFetching}
-        errorUpdating={errorUpdating}
-        successUpdating={successUpdating}
-        subMessage={
-          fetchingErrorRes?.message ?? updatingErrorRes?.message ?? ""
-        }
-      />
+      {isLoading && <SpinnerView />}
+      {(isError || successCreating || successUpdating || successDeleting) && (
+        <AlertNotification
+          isError={isError}
+          isSuccess={successCreating || successUpdating || successDeleting}
+          errorMessage={errorMessage}
+        />
+      )}
       <Title title={SOCIAL_MEDIA_TITLE} />
       <PageDescription text={SOCIAL_MEDIA_PAGE_DESCRIPTION} />
       <CustomButton
@@ -99,6 +90,7 @@ const SocialMediaPage = () => {
         setEditAccount={setAccountToEdit}
         socialMediaAccounts={socialMediaAccounts}
         deleteData={deleteData}
+        successDeleting={successDeleting}
       />
     </Box>
   );

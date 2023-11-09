@@ -16,8 +16,8 @@ import {
 } from "./constants.js";
 import CustomButton from "../../components/CustomButton.js";
 import ImageView from "../../components/ImageView.js";
-import { useGetDataQuery, useUpdateDataMutation } from "../../services/api.js";
 import { HOME_ACTIONS, HOME_GET, HOME_TAG } from "../../APIData.js";
+import useCustomDataQuery from "../../useCustomDataQuery.js";
 
 const HomePage = () => {
   const [title, setHomeTitle] = useState("");
@@ -28,12 +28,18 @@ const HomePage = () => {
 
   const {
     data,
+    updateData,
+    isError,
+    fetchingData,
+    successCreating,
+    successUpdating,
+    successDeleting,
     isLoading,
-    isError: errorFetching,
-    error: fetchingErrorRes,
-  } = useGetDataQuery({ fetchData: HOME_GET, tag: HOME_TAG });
-  const [updateData, { isSuccess: successUpdating, isError: errorUpdating }] =
-    useUpdateDataMutation();
+    errorMessage,
+  } = useCustomDataQuery({
+    fetchData: HOME_GET,
+    tag: HOME_TAG,
+  });
 
   useEffect(() => {
     if (data && data[0]) {
@@ -52,7 +58,7 @@ const HomePage = () => {
     }
   }, [data]);
 
-  const onSubmitHandler = (event) => {
+  const onSubmitHandler = () => {
     const updatedHomeData = {
       id: data[0].id,
       home_page_title: title,
@@ -69,7 +75,7 @@ const HomePage = () => {
     });
   };
 
-  if (isLoading) {
+  if (fetchingData) {
     return <SpinnerView />;
   }
 
@@ -80,21 +86,24 @@ const HomePage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      <AlertNotification
-        errorFetching={errorFetching}
-        errorUpdating={errorUpdating}
-        successUpdating={successUpdating}
-        subMessage={fetchingErrorRes?.message ?? ""}
-      />
+      {(isError || successCreating || successUpdating || successDeleting) && (
+        <AlertNotification
+          isError={isError}
+          isSuccess={successCreating || successUpdating || successDeleting}
+          errorMessage={errorMessage}
+        />
+      )}
 
       <Title title={KVW_INFO} />
       <PageDescription text={KVW_DESC} />
+      {isLoading && <SpinnerView />}
       <Box display={"flex"} flexDirection={"column"} gap={"20px"} width={"90%"}>
         <TextInput
           id="home-title"
           value={title}
           label={HOME_PAGE_TITLE}
           onChange={setHomeTitle}
+          disabled={isLoading}
         />
 
         <TextInput
@@ -103,6 +112,7 @@ const HomePage = () => {
           value={content}
           label={HOME_PAGE_CONTENT}
           onChange={setHomeContent}
+          disabled={isLoading}
         />
 
         <TextInput
@@ -110,6 +120,7 @@ const HomePage = () => {
           value={themaYearTitle}
           label={THEMA_TITLE}
           onChange={setThemaYearTitle}
+          disabled={isLoading}
         />
 
         <TextInput
@@ -117,6 +128,7 @@ const HomePage = () => {
           value={image}
           label={THEME_IMAGE}
           onChange={setThemaImage}
+          disabled={isLoading}
         />
 
         <Box>
@@ -136,8 +148,13 @@ const HomePage = () => {
           label={KVW_WEBSITE_URL}
           type="url"
           onChange={setKvwWebsiteUrl}
+          disabled={isLoading}
         />
-        <CustomButton title={SAVE} onClick={onSubmitHandler} />
+        <CustomButton
+          title={SAVE}
+          onClick={onSubmitHandler}
+          disabled={isLoading}
+        />
       </Box>
     </Box>
   );

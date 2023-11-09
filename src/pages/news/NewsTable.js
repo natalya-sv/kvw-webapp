@@ -11,10 +11,10 @@ import MainTable from "../../components/table/MainTable";
 
 const NewsTable = ({
   news,
-  closeNewsModal,
   setEditedNewsItem,
   openNewsModal,
   deleteData,
+  successDeleting,
 }) => {
   const updatedNews = useMemo(() => {
     if (news) {
@@ -22,8 +22,11 @@ const NewsTable = ({
         .sort((a, b) => new Date(b.date) - new Date(a.date))
         .map((newsItem) => {
           return {
-            ...newsItem,
+            id: newsItem.id,
+            title: newsItem.title,
+            content: newsItem.content,
             imageUrl: newsItem.image_url,
+            date: newsItem.date,
             truncatedText: truncateString(newsItem.content, 150),
           };
         });
@@ -38,7 +41,6 @@ const NewsTable = ({
       tag: NEWS_TAG,
       actions: NEWS_ACTIONS,
     });
-    closeNewsModal();
   };
 
   const handleEditNewsItem = (id) => {
@@ -55,8 +57,8 @@ const NewsTable = ({
       tableDefinition={newsTableDefinition}
       title={PREVIOUS_NEWS}
       onRemoveItems={handleRemoveNews}
-      buttons={["delete", "edit"]}
       onEditItem={handleEditNewsItem}
+      successDeleting={successDeleting}
     />
   ) : (
     <Typography>{NO_NEWS_MESSAGE}</Typography>

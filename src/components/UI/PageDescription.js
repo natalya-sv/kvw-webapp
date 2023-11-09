@@ -1,7 +1,7 @@
 import { Typography, Box } from "@mui/material";
 import React from "react";
 
-const PageDescription = (props) => {
+const PageDescription = ({ text }) => {
   return (
     <Box
       style={{
@@ -13,7 +13,7 @@ const PageDescription = (props) => {
       display="flex"
       justifyContent={"center"}
     >
-      <Typography variant="h6">{props.text}</Typography>
+      <Typography variant="h6">{text}</Typography>
     </Box>
   );
 };

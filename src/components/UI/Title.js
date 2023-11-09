@@ -1,6 +1,6 @@
 import React from "react";
 import { Typography, Box } from "@mui/material";
-const Title = (props) => {
+const Title = ({ title }) => {
   return (
     <Box
       style={{
@@ -11,7 +11,7 @@ const Title = (props) => {
       }}
     >
       <Typography color={"#ea507c"} variant="h4">
-        {props.title}
+        {title}
       </Typography>
     </Box>
   );
