@@ -10,6 +10,7 @@ export const SEND_PUSH_MESSAGE = "Bericht Sturen";
 export const PREVIOUS_NEWS = "Vorige berichten";
 export const UPDATE_NEWSITEM = "Bericht bewerken";
 export const IMAGE_URL_OPT = "Afbeelding URL(Optioneel)";
+export const SEND_ALSO_PUSH_MESSAGE = "Stuur ook push bericht";
 const CONTENT = "Content";
 const IMAGE_URL = "Image URL";
 
