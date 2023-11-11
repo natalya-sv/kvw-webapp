@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import AuthContext from "../context/auth-context";
 import { LOGIN, PASSWORD, USERNAME } from "../helpers/constants";
-import { Box, TextField } from "@mui/material";
+import { Box } from "@mui/material";
 import TextInput from "../components/TextInput";
 import CustomButton from "../components/CustomButton";
 const Login = () => {

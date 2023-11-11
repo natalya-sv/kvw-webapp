@@ -40,7 +40,6 @@ const SponsorsPage = () => {
     setOpen(false);
   };
   const isSuccess = successCreating || successUpdating || successDeleting;
-
   if (fetchingData) {
     return <SpinnerView />;
   }
