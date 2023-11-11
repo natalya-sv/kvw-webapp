@@ -54,13 +54,6 @@ const PhotosPage = () => {
     tag: ALBUM_TAG,
   });
 
-  const isSuccess =
-    albumsSuccessCreating ||
-    albumsSuccessUpdating ||
-    albumsSuccessDeleting ||
-    foldersSuccessCreating ||
-    foldersSuccessDeleting ||
-    foldersSuccessUpdating;
   const errMessage = albumsErrorMessage || foldersErrorMessage;
 
   const handleOpenFolderModal = () => {
@@ -94,16 +87,16 @@ const PhotosPage = () => {
       style={{ width: "100%" }}
     >
       {(albumsLoading || foldersLoading) && <SpinnerView />}
-      {(albumsError || isSuccess || foldersError) && (
-        <AlertNotification
-          isError={albumsError || foldersError}
-          isSuccess={isSuccess}
-          errorMessage={errMessage}
-        />
-      )}
+      <AlertNotification
+        isError={albumsError || foldersError}
+        isSuccessCreating={foldersSuccessCreating || albumsSuccessCreating}
+        isSuccessUpdating={foldersSuccessUpdating || albumsSuccessUpdating}
+        isSuccessDeleting={foldersSuccessDeleting || albumsSuccessDeleting}
+        errorMessage={errMessage}
+      />
       <Title title={PHOTOS_PAGE_TITLE} />
       <PageDescription text={PHOTOS_PAGE_DESCRIPTION} />
-      [isLoading && <SpinnerView />]
+      {(albumsLoading || foldersLoading) && <SpinnerView />}
       <CustomButton
         onClick={handleOpenFolderModal}
         startIcon={<AddIcon />}

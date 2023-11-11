@@ -39,7 +39,6 @@ const SponsorsPage = () => {
     setEditedSponsor(null);
     setOpen(false);
   };
-  const isSuccess = successCreating || successUpdating || successDeleting;
   if (fetchingData) {
     return <SpinnerView />;
   }
@@ -52,13 +51,15 @@ const SponsorsPage = () => {
       width={"100%"}
     >
       {isLoading && <SpinnerView />}
-      {(isError || isSuccess) && (
-        <AlertNotification
-          isError={isError}
-          isSuccess={isSuccess}
-          errorMessage={errorMessage}
-        />
-      )}
+
+      <AlertNotification
+        isError={isError}
+        isSuccessCreating={successCreating}
+        isSuccessUpdating={successUpdating}
+        isSuccessDeleting={successDeleting}
+        errorMessage={errorMessage}
+      />
+
       <Title title={SPONSORS} />
       <PageDescription text={ALL_SPONSORS_DESC} />
 

@@ -31,17 +31,15 @@ const MorePage = () => {
       alignItems={"center"}
       style={{ width: "100%" }}
     >
-      {(isError || successUpdating) && (
-        <AlertNotification
-          isError={isError}
-          isSuccess={successUpdating}
-          errorMessage={errorMessage}
-        />
-      )}
+      <AlertNotification
+        isError={isError}
+        isSuccessUpdating={successUpdating}
+        errorMessage={errorMessage}
+      />
 
       <Title title={MORE_PAGE_TITLE} />
       <PageDescription text={MORE_PAGE_DESCRIPTION} />
-      {isLoading && <SpinnerView />}
+      {fetchingData.isLoading && <SpinnerView />}
       <Box width={"90%"}>
         <MoreForm
           moreData={moreData}

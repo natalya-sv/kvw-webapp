@@ -56,13 +56,14 @@ const VideosPage = () => {
       style={{ width: "100%" }}
     >
       {isLoading && <SpinnerView />}
-      {(isError || successCreating || successUpdating || successDeleting) && (
-        <AlertNotification
-          isError={isError}
-          isSuccess={successCreating || successUpdating || successDeleting}
-          errorMessage={errorMessage}
-        />
-      )}
+      <AlertNotification
+        isError={isError}
+        isSuccessCreating={successCreating}
+        isSuccessUpdating={successUpdating}
+        isSuccessDeleting={successDeleting}
+        errorMessage={errorMessage}
+      />
+
       <Title title={VIDEOS_PAGE_TITLE} />
       <PageDescription text={VIDEOS_PAGE_DESCRIPTION} />
       <CustomButton

@@ -1,9 +1,20 @@
 import { Alert, Snackbar, Grid } from "@mui/material";
 import { useEffect, useState } from "react";
 import { Box } from "@mui/material";
-import { ERROR_UPDATING, SUCCESS_UPDATE_API } from "../../store/constants";
+import {
+  ERROR_UPDATING,
+  SUCCESS_CREATING_API,
+  SUCCESS_DELETING_API,
+  SUCCESS_UPDATE_API,
+} from "../../store/constants";
 
-const AlertNotification = ({ isSuccess, errorMessage, isError }) => {
+const AlertNotification = ({
+  isSuccessCreating,
+  isSuccessUpdating,
+  isSuccessDeleting,
+  errorMessage,
+  isError,
+}) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState();
 
@@ -15,8 +26,16 @@ const AlertNotification = ({ isSuccess, errorMessage, isError }) => {
   };
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccessUpdating) {
       setMessage(SUCCESS_UPDATE_API);
+      setOpen(true);
+    }
+    if (isSuccessCreating) {
+      setMessage(SUCCESS_CREATING_API);
+      setOpen(true);
+    }
+    if (isSuccessDeleting) {
+      setMessage(SUCCESS_DELETING_API);
       setOpen(true);
     }
     if (isError && errorMessage) {
@@ -33,7 +52,13 @@ const AlertNotification = ({ isSuccess, errorMessage, isError }) => {
       setMessage("");
       handleCloseSnackBar();
     };
-  }, [errorMessage, isError, isSuccess]);
+  }, [
+    errorMessage,
+    isError,
+    isSuccessCreating,
+    isSuccessDeleting,
+    isSuccessUpdating,
+  ]);
 
   return (
     <Box sx={{ width: "50%" }}>
@@ -49,7 +74,9 @@ const AlertNotification = ({ isSuccess, errorMessage, isError }) => {
             severity={isError ? "error" : "success"}
             sx={{ width: "100%" }}
           >
-            {isSuccess && message && `${message?.title}, ${message?.message}`}
+            {(isSuccessCreating || isSuccessDeleting || isSuccessUpdating) &&
+              message &&
+              `${message?.title}, ${message?.message}`}
             {isError &&
               message &&
               `${message?.title} ${message?.message}. ${message.subMessage}`}
