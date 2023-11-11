@@ -1,4 +1,3 @@
-import { TextField } from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers";
 
 const CustomTimePicker = ({ label, value, onChange }) => {
@@ -8,7 +7,7 @@ const CustomTimePicker = ({ label, value, onChange }) => {
       value={value}
       onChange={onChange}
       ampm={false}
-      renderInput={(params) => <TextField {...params} />}
+      slotProps={{ textField: { variant: "outlined" } }}
     />
   );
 };

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import AuthContext from "../context/auth-context";
 import { LOGIN, PASSWORD, USERNAME } from "../helpers/constants";
 import { Box } from "@mui/material";
@@ -8,9 +8,9 @@ import CustomButton from "../components/CustomButton";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const history = useHistory();
+  // const history = useHistory();
   const auth = useContext(AuthContext);
-
+  const navigate = useNavigate();
   const login = (e) => {
     e.preventDefault();
     if (username && password) {
@@ -20,9 +20,9 @@ const Login = () => {
 
   useEffect(() => {
     if (auth.isLoggedIn) {
-      history.replace("/home");
+      navigate("/home");
     }
-  }, [auth.isLoggedIn, history]);
+  }, [auth.isLoggedIn, navigate]);
 
   return (
     <Box

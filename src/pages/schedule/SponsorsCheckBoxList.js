@@ -5,21 +5,8 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Checkbox from "@mui/material/Checkbox";
-import { makeStyles } from "@mui/styles";
 import { DAY_SPONSORS } from "./constants";
 import { Typography } from "@mui/material";
-
-const useStyles = makeStyles({
-  container: {
-    display: "flex",
-    flexFlow: "column wrap",
-    gap: "0 30px",
-    overflow: "auto",
-  },
-  item: {
-    width: "auto",
-  },
-});
 
 const SponsorsCheckboxList = ({
   sponsors,
@@ -27,7 +14,6 @@ const SponsorsCheckboxList = ({
   setSelectedDaySponsors,
 }) => {
   const [checkedSponsors, setCheckedSponsors] = useState([]);
-  const classes = useStyles();
 
   useEffect(() => {
     if (selectedDaySponsors) {
@@ -47,10 +33,7 @@ const SponsorsCheckboxList = ({
   };
 
   return (
-    <List
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-      className={classes.container}
-    >
+    <List sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}>
       <Typography variant="subtitle1" style={{ fontWeight: "bold" }}>
         {DAY_SPONSORS}
       </Typography>
@@ -58,7 +41,7 @@ const SponsorsCheckboxList = ({
         const labelId = `checkbox-list-label-${sponsor.id}`;
 
         return (
-          <ListItem key={sponsor.id} disablePadding>
+          <ListItem key={sponsor.id}>
             <ListItemButton
               role={undefined}
               onClick={handleToggle(sponsor.id)}
