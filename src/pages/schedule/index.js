@@ -80,15 +80,6 @@ const SchedulePage = () => {
     tag: SCHEDULE_BOOK_TAG,
   });
 
-  const isSuccess =
-    groupsSuccessCreating ||
-    groupsSuccessDeleting ||
-    groupsSuccessUpdating ||
-    daysSuccessCreating ||
-    daysSuccessDeleting ||
-    daysSuccessUpdating ||
-    scheduleBookSuccessUpdating;
-
   const errMessage =
     groupsErrorMessage || daysErrorMessage || scheduleBookErrorMessage;
 
@@ -143,13 +134,19 @@ const SchedulePage = () => {
       width={"100%"}
     >
       {(groupsLoading || daysLoading) && <SpinnerView />}
-      {(isError || isSuccess) && (
-        <AlertNotification
-          isError={isError}
-          isSuccess={isSuccess}
-          errorMessage={errMessage}
-        />
-      )}
+
+      <AlertNotification
+        isError={isError}
+        isSuccessCreating={groupsSuccessCreating || daysSuccessCreating}
+        isSuccessDeleting={groupsSuccessDeleting || daysSuccessDeleting}
+        isSuccessUpdating={
+          groupsSuccessUpdating ||
+          daysSuccessUpdating ||
+          scheduleBookSuccessUpdating
+        }
+        errorMessage={errMessage}
+      />
+
       <Title title={GROUPS} />
       <AddEditScheduleBookLink
         scheduleBook={scheduleBook}

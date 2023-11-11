@@ -46,7 +46,6 @@ const SocialMediaPage = () => {
     setOpenModal(false);
   };
 
-  const isSuccess = successCreating || successUpdating || successDeleting;
   if (fetchingData) {
     return <SpinnerView />;
   }
@@ -59,13 +58,15 @@ const SocialMediaPage = () => {
       style={{ width: "100%" }}
     >
       {isLoading && <SpinnerView />}
-      {(isError || isSuccess) && (
-        <AlertNotification
-          isError={isError}
-          isSuccess={isSuccess}
-          errorMessage={errorMessage}
-        />
-      )}
+
+      <AlertNotification
+        isError={isError}
+        isSuccessCreating={successCreating}
+        isSuccessUpdating={successUpdating}
+        isSuccessDeleting={successDeleting}
+        errorMessage={errorMessage}
+      />
+
       <Title title={SOCIAL_MEDIA_TITLE} />
       <PageDescription text={SOCIAL_MEDIA_PAGE_DESCRIPTION} />
       <CustomButton

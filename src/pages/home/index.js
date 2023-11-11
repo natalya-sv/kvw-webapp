@@ -87,7 +87,7 @@ const HomePage = () => {
       {(isError || successUpdating) && (
         <AlertNotification
           isError={isError}
-          isSuccess={successUpdating}
+          isSuccessUpdating={successUpdating}
           errorMessage={errorMessage}
         />
       )}

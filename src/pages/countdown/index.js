@@ -72,13 +72,12 @@ const CountDownPage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      {(isError || successUpdating) && (
-        <AlertNotification
-          isError={isError}
-          isSuccess={successUpdating}
-          errorMessage={errorMessage}
-        />
-      )}
+      <AlertNotification
+        isError={isError}
+        isSuccessUpdating={successUpdating}
+        errorMessage={errorMessage}
+      />
+
       <Title title={COUNTDOWN} />
       <PageDescription text={COUNTDOWN_DESC} />
       {isLoading && <SpinnerView />}

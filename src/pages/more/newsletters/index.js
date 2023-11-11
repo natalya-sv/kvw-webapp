@@ -39,8 +39,6 @@ const NewslettersPage = () => {
     setOpen(false);
   };
 
-  const isSuccess = successCreating || successUpdating || successDeleting;
-
   if (fetchingData) {
     return <SpinnerView />;
   }
@@ -55,13 +53,14 @@ const NewslettersPage = () => {
       <Title title={NEWSLETTERS} />
       <PageDescription text={NEWSLETTERS_DESC} />
       {isLoading && <SpinnerView />}
-      {(isError || isSuccess) && (
-        <AlertNotification
-          isError={isError}
-          isSuccess={isSuccess}
-          errorMessage={errorMessage}
-        />
-      )}
+      <AlertNotification
+        isError={isError}
+        isSuccessCreating={successCreating}
+        isSuccessUpdating={successUpdating}
+        isSuccessDeleting={successDeleting}
+        errorMessage={errorMessage}
+      />
+
       <CustomButton
         title={ADD_NEWSLETTER}
         onClick={openNewslettersModal}

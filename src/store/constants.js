@@ -8,6 +8,16 @@ export const SUCCESS_UPDATE_API = {
   title: "Success!",
   message: "Informatie is bijgewerkt!",
 };
+export const SUCCESS_CREATING_API = {
+  severity: "success",
+  title: "Success!",
+  message: "Informatie is bijgewerkt!",
+};
+export const SUCCESS_DELETING_API = {
+  severity: "success",
+  title: "Success!",
+  message: "Informatie is verwijderd!",
+};
 export const ERROR_UPDATING = {
   severity: "error",
   title: "Error!",
