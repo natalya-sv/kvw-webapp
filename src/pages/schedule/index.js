@@ -23,15 +23,12 @@ import {
   DAY_GET,
   GROUPS_GET,
   GROUPS_TAG,
-  SCHEDULE_BOOK_ACTIONS,
   SCHEDULE_BOOK_GET,
   SCHEDULE_BOOK_TAG,
   SPONSORS_GET,
   SPONSORS_TAG,
 } from "../../APIData";
 import useCustomDataQuery from "../../useCustomDataQuery";
-import TextInput from "../../components/TextInput";
-import { SAVE } from "../../helpers/constants";
 import AddEditScheduleBookLink from "./AddEditScheduleBook";
 
 const SchedulePage = () => {
@@ -91,9 +88,12 @@ const SchedulePage = () => {
     daysSuccessDeleting ||
     daysSuccessUpdating ||
     scheduleBookSuccessUpdating;
+
   const errMessage =
     groupsErrorMessage || daysErrorMessage || scheduleBookErrorMessage;
+
   const isError = scheduleBookError || daysError || groupsError;
+
   const handleOpenGroupNameModal = () => {
     setOpen(true);
   };

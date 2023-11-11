@@ -39,7 +39,9 @@ const PhotosTable = ({
               albumCoverPhoto: album.album_cover_photo,
               albumLink: album.album_link,
               folderId: album.folder_id,
-              truncatedText: truncateString(album.album_link, 70),
+              truncatedText: album.album_link
+                ? truncateString(album.album_link, 70)
+                : "",
             };
           });
         return {

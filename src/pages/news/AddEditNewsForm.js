@@ -110,7 +110,7 @@ const AddEditNewsForm = ({
         label={SEND_ALSO_PUSH_MESSAGE}
       />
       <CustomButton
-        disabled={newsTitle === "" || newsContent === "" || isLoading}
+        disabled={!newsTitle || !newsContent || !isLoading}
         title={editedNewsItem ? UPDATE_NEWSITEM : SEND_PUSH_MESSAGE}
         onClick={submitHandler}
       />

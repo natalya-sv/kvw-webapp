@@ -39,8 +39,7 @@ const AddEditDayForm = ({
 
   useEffect(() => {
     if (selectedDay) {
-      const d = selectedDay.date;
-      const dateFormatted = dayjs(d).format("YYYY-MM-DD");
+      const dateFormatted = dayjs(selectedDay.date).format("YYYY-MM-DD");
       const stTime = dayjs(selectedDay.startTime, "HH:mm");
       const enTime = dayjs(selectedDay.endTime, "HH:mm");
       setProgramma(selectedDay.programma);

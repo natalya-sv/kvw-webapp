@@ -8,7 +8,6 @@ import AddEditNewslettersItem from "./AddEditNewsletterItem";
 import CustomModal from "../../../components/CustomModal";
 import NewsletteraTable from "./NewslettersTable";
 import { ADD_NEWSLETTER, NEWSLETTERS, NEWSLETTERS_DESC } from "./constants";
-
 import { NEWSLETTERS_GET, NEWSLETTERS_TAG } from "../../../APIData";
 import CustomButton from "../../../components/CustomButton";
 import AddIcon from "@mui/icons-material/Add";
@@ -40,6 +39,8 @@ const NewslettersPage = () => {
     setOpen(false);
   };
 
+  const isSuccess = successCreating || successUpdating || successDeleting;
+
   if (fetchingData) {
     return <SpinnerView />;
   }
@@ -54,10 +55,10 @@ const NewslettersPage = () => {
       <Title title={NEWSLETTERS} />
       <PageDescription text={NEWSLETTERS_DESC} />
       {isLoading && <SpinnerView />}
-      {(isError || successCreating || successUpdating || successDeleting) && (
+      {(isError || isSuccess) && (
         <AlertNotification
           isError={isError}
-          isSuccess={successCreating || successUpdating || successDeleting}
+          isSuccess={isSuccess}
           errorMessage={errorMessage}
         />
       )}
@@ -80,7 +81,6 @@ const NewslettersPage = () => {
       />
       <NewsletteraTable
         setEditedNewsletterItem={setEditedNewsletterItem}
-        closeNewslettersModal={closeNewslettersModal}
         openNewslettersModal={openNewslettersModal}
         updateNewslettersData={updateData}
         newsletters={newsletters}

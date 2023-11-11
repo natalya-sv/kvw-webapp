@@ -46,6 +46,7 @@ const SocialMediaPage = () => {
     setOpenModal(false);
   };
 
+  const isSuccess = successCreating || successUpdating || successDeleting;
   if (fetchingData) {
     return <SpinnerView />;
   }
@@ -58,10 +59,10 @@ const SocialMediaPage = () => {
       style={{ width: "100%" }}
     >
       {isLoading && <SpinnerView />}
-      {(isError || successCreating || successUpdating || successDeleting) && (
+      {(isError || isSuccess) && (
         <AlertNotification
           isError={isError}
-          isSuccess={successCreating || successUpdating || successDeleting}
+          isSuccess={isSuccess}
           errorMessage={errorMessage}
         />
       )}

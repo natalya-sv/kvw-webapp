@@ -8,7 +8,6 @@ import PageDescription from "../../components/UI/PageDescription";
 import { Box } from "@mui/material";
 import SponsorsTable from "./SponsorsTable";
 import CustomModal from "../../components/CustomModal";
-
 import CustomButton from "../../components/CustomButton";
 import { SPONSORS_GET, SPONSORS_TAG } from "../../APIData";
 import AddIcon from "@mui/icons-material/Add";
@@ -40,10 +39,12 @@ const SponsorsPage = () => {
     setEditedSponsor(null);
     setOpen(false);
   };
+  const isSuccess = successCreating || successUpdating || successDeleting;
 
   if (fetchingData) {
     return <SpinnerView />;
   }
+
   return (
     <Box
       display={"flex"}
@@ -52,10 +53,10 @@ const SponsorsPage = () => {
       width={"100%"}
     >
       {isLoading && <SpinnerView />}
-      {(isError || successCreating || successUpdating || successDeleting) && (
+      {(isError || isSuccess) && (
         <AlertNotification
           isError={isError}
-          isSuccess={successCreating || successUpdating || successDeleting}
+          isSuccess={isSuccess}
           errorMessage={errorMessage}
         />
       )}
@@ -86,7 +87,7 @@ const SponsorsPage = () => {
         sponsors={sponsors}
         deleteData={deleteData}
         updateData={updateData}
-        successDeleting={successDeleting || successUpdating}
+        successDeleting={successDeleting}
       />
     </Box>
   );

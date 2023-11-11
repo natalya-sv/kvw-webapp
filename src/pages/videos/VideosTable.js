@@ -28,7 +28,9 @@ const VideosTable = ({
             description: videoItem.description,
             youtubeLink: videoItem.youtube_link,
             date: videoItem.date,
-            truncatedText: truncateString(videoItem.description, 150),
+            truncatedText: videoItem.description
+              ? truncateString(videoItem.description, 150)
+              : "",
           };
         });
     } else {

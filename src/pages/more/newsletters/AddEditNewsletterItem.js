@@ -41,6 +41,7 @@ const AddEditNewslettersItem = ({
       newsletter_link: newsletterLink.trim(),
       date: dateValue,
     };
+
     if (editedNewsletterItem) {
       const updatedItem = {
         ...newsletterItem,
@@ -86,7 +87,7 @@ const AddEditNewslettersItem = ({
         </LocalizationProvider>
       </Box>
       <CustomButton
-        disabled={newsletterLink === "" || newsLetterTitle === ""}
+        disabled={!newsletterLink || !newsLetterTitle}
         onClick={submitHandler}
         title={SAVE}
       />

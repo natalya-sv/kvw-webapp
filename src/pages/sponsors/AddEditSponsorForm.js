@@ -29,7 +29,7 @@ const AddEditSponsorForm = ({
   const [sponsorName, setSponsorName] = useState("");
   const [sponsorWebsiteUrl, setSponsorWebsiteUrl] = useState("");
   const [sponsorImageUrl, setSponsorImageUrl] = useState("");
-  const [sponsorType, setSponsorType] = useState("main");
+  const [sponsorType, setSponsorType] = useState("general");
 
   useEffect(() => {
     if (editedSponsor) {
@@ -47,7 +47,7 @@ const AddEditSponsorForm = ({
       website_url: sponsorWebsiteUrl.trim(),
       sponsor_type: sponsorType,
       image_url: sponsorImageUrl.trim(),
-      active: editedSponsor ? editedSponsor.active : false,
+      active: editedSponsor ? editedSponsor.active : true,
     };
 
     if (editedSponsor) {
@@ -120,11 +120,7 @@ const AddEditSponsorForm = ({
         <CustomButton
           title={SAVE}
           onClick={submitHandler}
-          disabled={
-            sponsorName === "" ||
-            sponsorImageUrl === "" ||
-            setSponsorWebsiteUrl === ""
-          }
+          disabled={!sponsorName || !sponsorImageUrl || !setSponsorWebsiteUrl}
         />
       </FormControl>
     </Box>

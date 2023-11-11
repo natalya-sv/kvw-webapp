@@ -78,7 +78,7 @@ const AddEditVideoForm = ({
       <CustomButton
         title={SAVE}
         onClick={submitHandler}
-        disabled={title === "" || description === "" || youtubeLink === ""}
+        disabled={!title || !description || !youtubeLink}
       />
     </Box>
   );
