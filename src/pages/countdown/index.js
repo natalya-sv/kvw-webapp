@@ -15,6 +15,7 @@ import "dayjs/locale/nl";
 import CustomDatePicker from "../../components/UI/pickers/CustomDatePicker";
 import { COUNTDOWN_ACTIONS, COUNTDOWN_GET, COUNTDOWN_TAG } from "../../APIData";
 import useCustomDataQuery from "../../useCustomDataQuery";
+import dayjs from "dayjs";
 
 const CountDownPage = () => {
   const [startDate, setStartDate] = useState("");
@@ -34,8 +35,8 @@ const CountDownPage = () => {
   useEffect(() => {
     if (countdown && countdown[0]) {
       setTitle(countdown[0].event_title);
-      setStartDate(countdown[0].start_date);
-      setEndDate(countdown[0].end_date);
+      setStartDate(dayjs(countdown[0].start_date));
+      setEndDate(dayjs(countdown[0].end_date));
     }
   }, [countdown]);
 

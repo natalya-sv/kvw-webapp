@@ -44,13 +44,13 @@ const AppNavigation = () => {
             <NavLink
               key={routeItem.id}
               color="black"
-              isActive={(_, location) => location.pathname === routeItem.url}
-              style={{
-                color: "black",
-                textDecoration: "none",
+              style={({ isActive }) => {
+                return {
+                  color: isActive ? "white" : "black",
+                  textDecoration: "none",
+                };
               }}
               onClick={() => setCurrentPage(routeItem.name)}
-              activeStyle={{ color: "white", fontWeight: "bold" }}
               to={routeItem.url}
             >
               <Box display={"flex"} flexDirection={"row"} textAlign={"center"}>

@@ -1,4 +1,3 @@
-import { TextField } from "@mui/material";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 
 const CustomDatePicker = ({ label, value, format, onChange, disabled }) => {
@@ -8,7 +7,7 @@ const CustomDatePicker = ({ label, value, format, onChange, disabled }) => {
       value={value}
       onChange={onChange}
       inputFormat={format}
-      renderInput={(params) => <TextField {...params} />}
+      slotProps={{ textField: { variant: "outlined" } }}
       disabled={disabled}
     />
   );

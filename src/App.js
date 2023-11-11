@@ -1,4 +1,4 @@
-import { Switch, Route, Redirect } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import React, { useContext } from "react";
 import Login from "./pages/Login";
 import Layout from "./components/UI/layout/Layout.js";
@@ -18,69 +18,69 @@ const App = () => {
   const auth = useContext(AuthContext);
   return (
     <Layout>
-      <Switch>
-        <Route path="/" exact>
-          {auth.isLoggedIn && <Redirect to="/home" />}
-          {!auth.isLoggedIn && <Redirect to="/login" />}
-        </Route>
-
-        <Route path="/login" exact>
-          {!auth.isLoggedIn && <Login />}
-          {auth.isLoggedIn && <Redirect to="/home" />}
-        </Route>
-
-        <Route path="/home">
-          {auth.isLoggedIn && <HomePage />}
-          {!auth.isLoggedIn && <Redirect to="/login" />}
-        </Route>
-
-        <Route path="/news">
-          {auth.isLoggedIn && <NewsPage />}
-          {!auth.isLoggedIn && <Redirect to="/login" />}
-        </Route>
-
-        <Route path="/sponsors">
-          {auth.isLoggedIn && <SponsorsPage />}
-          {!auth.isLoggedIn && <Redirect to="/login" />}
-        </Route>
-
-        <Route path="/groups">
-          {auth.isLoggedIn && <SchedulePage />}
-          {!auth.isLoggedIn && <Redirect to="/login" />}
-        </Route>
-
-        <Route path="/countdown">
-          {auth.isLoggedIn && <CountDownPage />}
-          {!auth.isLoggedIn && <Redirect to="/login" />}
-        </Route>
-
-        <Route path={"/videos"}>
-          {auth.isLoggedIn && <VideosPage />}
-          {!auth.isLoggedIn && <Redirect to="/login" />}
-        </Route>
-
-        <Route path={"/more"}>
-          {auth.isLoggedIn && <MorePage />}
-          {!auth.isLoggedIn && <Redirect to="/login" />}
-        </Route>
-
-        <Route path={"/social"}>
-          {auth.isLoggedIn && <SocialMediaPage />}
-          {!auth.isLoggedIn && <Redirect to="/login" />}
-        </Route>
-
-        <Route path={"/photos"}>
-          {auth.isLoggedIn && <PhotosPage />}
-          {!auth.isLoggedIn && <Redirect to="/login" />}
-        </Route>
-        <Route path={"/newsletters"}>
-          {auth.isLoggedIn && <NewslettersPage />}
-          {!auth.isLoggedIn && <Redirect to="/login" />}
-        </Route>
-        <Route path="*">
-          <Redirect to="/" />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route
+          path="/home"
+          exact
+          element={auth.isLoggedIn ? <HomePage /> : <Login />}
+        />
+        <Route
+          path="/login"
+          exact
+          element={!auth.isLoggedIn ? <Login /> : <HomePage />}
+        />
+        <Route
+          path="/"
+          exact
+          element={auth.isLoggedIn ? <HomePage /> : <Login />}
+        />
+        <Route
+          path="/news"
+          exact
+          element={auth.isLoggedIn ? <NewsPage /> : <Login />}
+        />
+        <Route
+          path="/sponsors"
+          exact
+          element={auth.isLoggedIn ? <SponsorsPage /> : <Login />}
+        />
+        <Route
+          path="/groups"
+          exact
+          element={auth.isLoggedIn ? <SchedulePage /> : <Login />}
+        />
+        <Route
+          path="/countdown"
+          exact
+          element={auth.isLoggedIn ? <CountDownPage /> : <Login />}
+        />
+        <Route
+          path="/videos"
+          exact
+          element={auth.isLoggedIn ? <VideosPage /> : <Login />}
+        />
+        <Route
+          path="/more"
+          exact
+          element={auth.isLoggedIn ? <MorePage /> : <Login />}
+        />
+        <Route
+          path="/social"
+          exact
+          element={auth.isLoggedIn ? <SocialMediaPage /> : <Login />}
+        />
+        <Route
+          path="/photos"
+          exact
+          element={auth.isLoggedIn ? <PhotosPage /> : <Login />}
+        />
+        <Route
+          path="/newsletters"
+          exact
+          element={auth.isLoggedIn ? <NewslettersPage /> : <Login />}
+        />
+        <Route path="*" element={auth.isLoggedIn ? <HomePage /> : <Login />} />
+      </Routes>
     </Layout>
   );
 };
