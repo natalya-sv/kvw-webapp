@@ -78,7 +78,7 @@ const AddEditFolder = ({
       <CustomButton
         title={SAVE}
         onClick={submitHandler}
-        disabled={folderYear === "" || folderCoverPhoto === ""}
+        disabled={!folderYear || !folderCoverPhoto}
       />
     </Box>
   );

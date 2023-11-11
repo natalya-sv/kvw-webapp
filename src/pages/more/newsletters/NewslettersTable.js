@@ -11,7 +11,6 @@ import MainTable from "../../../components/table/MainTable";
 
 const NewsletteraTable = ({
   newsletters,
-  closeNewslettersModal,
   setEditedNewsletterItem,
   openNewslettersModal,
   deleteData,
@@ -27,7 +26,9 @@ const NewsletteraTable = ({
             title: nlItem.title,
             newsletterLink: nlItem.newsletter_link,
             date: nlItem.date,
-            truncatedText: truncateString(nlItem.newsletter_link, 70),
+            truncatedText: nlItem.newsletter_link
+              ? truncateString(nlItem.newsletter_link, 70)
+              : "",
           };
         });
     } else {

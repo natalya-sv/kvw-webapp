@@ -41,7 +41,7 @@ const MorePage = () => {
 
       <Title title={MORE_PAGE_TITLE} />
       <PageDescription text={MORE_PAGE_DESCRIPTION} />
-      {fetchingData.isLoading && <SpinnerView />}
+      {isLoading && <SpinnerView />}
       <Box width={"90%"}>
         <MoreForm
           moreData={moreData}

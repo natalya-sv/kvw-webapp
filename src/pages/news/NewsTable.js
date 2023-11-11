@@ -27,7 +27,9 @@ const NewsTable = ({
             content: newsItem.content,
             imageUrl: newsItem.image_url,
             date: newsItem.date,
-            truncatedText: truncateString(newsItem.content, 150),
+            truncatedText: newsItem.content
+              ? truncateString(newsItem.content, 150)
+              : "",
           };
         });
     } else {

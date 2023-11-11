@@ -69,7 +69,7 @@ const AddEditSocialMediaAccount = ({
       <CustomButton
         title={SAVE}
         onClick={submitHandler}
-        disabled={accountWebsiteUrl === "" || accountTitle === ""}
+        disabled={!accountWebsiteUrl || !accountTitle}
       />
     </Box>
   );

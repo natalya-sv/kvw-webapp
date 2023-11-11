@@ -38,7 +38,7 @@ const NewsPage = () => {
     setEditedNewsItem(null);
     setOpen(false);
   };
-
+  const isSuccess = successCreating || successUpdating || successDeleting;
   if (fetchingData) {
     return <SpinnerView />;
   }
@@ -50,10 +50,10 @@ const NewsPage = () => {
       alignItems={"center"}
       width={"100%"}
     >
-      {(isError || successCreating || successUpdating || successDeleting) && (
+      {(isError || isSuccess) && (
         <AlertNotification
           isError={isError}
-          isSuccess={successCreating || successUpdating || successDeleting}
+          isSuccess={isSuccess}
           errorMessage={errorMessage}
         />
       )}

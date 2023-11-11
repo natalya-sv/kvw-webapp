@@ -87,7 +87,7 @@ const AddEditAlbum = ({
       <CustomButton
         title={SAVE}
         onClick={onSubmitHandler}
-        disabled={albumCoverPhoto === "" || albumLink === "" || title === ""}
+        disabled={!albumCoverPhoto || !albumLink || !title}
       />
     </Box>
   );

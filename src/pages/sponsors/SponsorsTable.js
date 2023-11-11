@@ -77,8 +77,8 @@ const SponsorsTable = ({
         updatedItem: {
           sponsors: selectedSponsors,
           status: isActive,
-          type: SET_SPONSORS_STATUS,
         },
+        type: SET_SPONSORS_STATUS,
         tag: SPONSORS_TAG,
         actions: SPONSORS_ACTIONS,
       });

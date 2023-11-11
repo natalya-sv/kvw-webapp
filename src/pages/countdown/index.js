@@ -81,7 +81,7 @@ const CountDownPage = () => {
       )}
       <Title title={COUNTDOWN} />
       <PageDescription text={COUNTDOWN_DESC} />
-      {fetchingData.isLoading && <SpinnerView />}
+      {isLoading && <SpinnerView />}
       <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale={"nl"}>
         <Stack
           style={{

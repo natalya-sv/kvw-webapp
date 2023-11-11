@@ -66,6 +66,7 @@ const PhotosPage = () => {
   const handleOpenFolderModal = () => {
     setOpen(true);
   };
+
   const handleCloseFolderModal = () => {
     if (selectedFolder) {
       setSelectedFolder(null);
@@ -102,13 +103,12 @@ const PhotosPage = () => {
       )}
       <Title title={PHOTOS_PAGE_TITLE} />
       <PageDescription text={PHOTOS_PAGE_DESCRIPTION} />
-
+      [isLoading && <SpinnerView />]
       <CustomButton
         onClick={handleOpenFolderModal}
         startIcon={<AddIcon />}
         title={ADD_NEW_FOLDER}
       />
-
       <CustomModal
         open={open}
         handleClose={handleCloseFolderModal}

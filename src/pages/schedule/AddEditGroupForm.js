@@ -54,11 +54,7 @@ const AddEditGroupForm = ({
         label={GROUP_NAME}
         onChange={setGroupName}
       />
-      <CustomButton
-        title={SAVE}
-        onClick={handleGroup}
-        disabled={groupName === ""}
-      />
+      <CustomButton title={SAVE} onClick={handleGroup} disabled={!groupName} />
     </Box>
   );
 };
