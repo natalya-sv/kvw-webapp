@@ -7,11 +7,12 @@ import {
 } from "./constants";
 import { useMemo } from "react";
 import {
-  SCHEDULE_ACTIONS,
+  GROUPS_ACTIONS,
   DAY_TYPE,
   GROUP_TYPE,
   GROUPS_TAG,
   DAYS_TAG,
+  DAYS_ACTIONS,
 } from "../../APIData";
 import MainTable from "../../components/table/MainTable";
 
@@ -74,9 +75,8 @@ const GroupsTable = ({
   const handleRemoveGroups = (idsToRemove) => {
     deleteData({
       deletedItems: idsToRemove,
-      type: GROUP_TYPE,
       tag: GROUPS_TAG,
-      actions: SCHEDULE_ACTIONS,
+      actions: GROUPS_ACTIONS,
     });
   };
 
@@ -98,9 +98,8 @@ const GroupsTable = ({
   const handleRemoveDay = (dayToDelete) => {
     deleteData({
       deletedItems: [dayToDelete],
-      type: DAY_TYPE,
       tag: DAYS_TAG,
-      actions: SCHEDULE_ACTIONS,
+      actions: DAYS_ACTIONS,
     });
   };
 

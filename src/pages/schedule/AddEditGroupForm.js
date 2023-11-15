@@ -4,7 +4,7 @@ import { SAVE } from "../../helpers/constants";
 import { GROUP_NAME } from "./constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
-import { GROUPS_TAG, GROUP_TYPE, SCHEDULE_ACTIONS } from "../../APIData";
+import { GROUPS_TAG, GROUP_TYPE, GROUPS_ACTIONS } from "../../APIData";
 
 const AddEditGroupForm = ({
   selectedGroupName,
@@ -32,14 +32,14 @@ const AddEditGroupForm = ({
       updateData({
         updatedItem: updatedGroup,
         type: GROUP_TYPE,
-        actions: SCHEDULE_ACTIONS,
+        actions: GROUPS_ACTIONS,
         tag: GROUPS_TAG,
       });
     } else {
       createData({
         newItem: group,
         type: GROUP_TYPE,
-        actions: SCHEDULE_ACTIONS,
+        actions: GROUPS_ACTIONS,
         tag: GROUPS_TAG,
       });
     }
