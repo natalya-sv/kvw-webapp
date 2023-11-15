@@ -8,10 +8,11 @@ import {
 import { truncateString } from "../../helpers/utils";
 import {
   ALBUM_TYPE,
-  PHOTOS_ACTIONS,
+  FOLDERS_ACTIONS,
   PHOTOS_TAG,
   FOLDER_TYPE,
   ALBUM_TAG,
+  ALBUMS_ACTIONS,
 } from "../../APIData";
 import { Typography } from "@mui/material";
 import MainTable from "../../components/table/MainTable";
@@ -60,8 +61,7 @@ const PhotosTable = ({
   const handleRemoveFolders = (idsToRemove) => {
     deleteData({
       deletedItems: idsToRemove,
-      type: FOLDER_TYPE,
-      actions: PHOTOS_ACTIONS,
+      actions: FOLDERS_ACTIONS,
       tag: PHOTOS_TAG,
     });
   };
@@ -92,8 +92,7 @@ const PhotosTable = ({
   const handleRemoveAlbum = (albumId) => {
     deleteData({
       deletedItems: [albumId],
-      type: ALBUM_TYPE,
-      actions: PHOTOS_ACTIONS,
+      actions: ALBUMS_ACTIONS,
       tag: ALBUM_TAG,
     });
   };
