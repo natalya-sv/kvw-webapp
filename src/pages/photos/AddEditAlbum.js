@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { SAVE } from "../../helpers/constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
-import { ALBUM_TYPE, ALBUM_TAG, ALBUMS_ACTIONS } from "../../APIData";
+import { ALBUM_TAG, ALBUMS_ACTIONS } from "../../APIData";
 
 const AddEditAlbum = ({
   selectedAlbum,

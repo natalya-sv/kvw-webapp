@@ -8,8 +8,6 @@ import {
 import { useMemo } from "react";
 import {
   GROUPS_ACTIONS,
-  DAY_TYPE,
-  GROUP_TYPE,
   GROUPS_TAG,
   DAYS_TAG,
   DAYS_ACTIONS,

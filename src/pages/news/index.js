@@ -8,7 +8,6 @@ import PageDescription from "../../components/UI/PageDescription";
 import NewsTable from "./NewsTable";
 import { Box } from "@mui/material";
 import CustomModal from "../../components/CustomModal";
-import {} from "../../services/api";
 import { NEWS_GET, NEWS_TAG } from "../../APIData";
 import useCustomDataQuery from "../../useCustomDataQuery";
 

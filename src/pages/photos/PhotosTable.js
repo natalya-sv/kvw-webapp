@@ -7,10 +7,8 @@ import {
 } from "./constants";
 import { truncateString } from "../../helpers/utils";
 import {
-  ALBUM_TYPE,
   FOLDERS_ACTIONS,
   PHOTOS_TAG,
-  FOLDER_TYPE,
   ALBUM_TAG,
   ALBUMS_ACTIONS,
 } from "../../APIData";

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { FOLDER_COVER_PHOTO_TITLE, FOLDER_TITLE } from "./constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
-import { FOLDERS_ACTIONS, PHOTOS_TAG, FOLDER_TYPE } from "../../APIData";
+import { FOLDERS_ACTIONS, PHOTOS_TAG } from "../../APIData";
 
 const AddEditFolder = ({
   selectedFolder,
