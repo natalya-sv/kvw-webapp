@@ -56,9 +56,8 @@ const AddEditNewsForm = ({
         tag: NEWS_TAG,
         actions: PUSH_ACTIONS,
       });
+      closeNewsModal();
     }
-
-    closeNewsModal();
   };
 
   const handleSentPushMessage = () => {
@@ -70,6 +69,7 @@ const AddEditNewsForm = ({
       setNewsContent("");
       setNewsTitle("");
       setImageUrl("");
+      setSendPushMessage(false);
     }
   }, [successCreating]);
 
