@@ -3,14 +3,12 @@ import { LOGIN, LOGOUT } from "../APIData";
 
 const AuthContext = React.createContext({
   isLoggedIn: false,
-  token: null,
   onLogin: (username, password) => {},
   onLogout: () => {},
 });
 export const AuthContextProvider = (props) => {
   const initToken = localStorage.getItem("userToken");
-  const [token, setToken] = useState(initToken);
-  const isLoggedIn = !!token;
+  const [isLoggedIn, setIsLoggedIn] = useState(initToken);
 
   const loginHandler = async (username, enteredPassword) => {
     let loginToken;
@@ -28,12 +26,13 @@ export const AuthContextProvider = (props) => {
       if (response.status === 200) {
         loginToken = response.headers.get(process.env.REACT_APP_TOKEN_NAME);
         localStorage.setItem("userToken", loginToken);
-        setToken(loginToken);
+        setIsLoggedIn(true);
       } else {
         throw new Error(response);
       }
     } catch (error) {
       alert("Something went wrong..." + error.message);
+      setIsLoggedIn(false);
     }
   };
 
@@ -41,9 +40,9 @@ export const AuthContextProvider = (props) => {
     try {
       await fetch(LOGOUT);
     } catch (error) {
-      console.error(error);
+      console.error("logout:", error);
     } finally {
-      setToken(null);
+      setIsLoggedIn(false);
       localStorage.removeItem("userToken");
     }
   };
@@ -51,7 +50,6 @@ export const AuthContextProvider = (props) => {
   return (
     <AuthContext.Provider
       value={{
-        token: token,
         isLoggedIn: isLoggedIn,
         onLogin: loginHandler,
         onLogout: logoutHandler,

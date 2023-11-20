@@ -38,7 +38,6 @@ const AddEditAlbum = ({
       };
       updateData({
         updatedItem: updatedAlbum,
-
         actions: ALBUMS_ACTIONS,
         tag: ALBUM_TAG,
       });

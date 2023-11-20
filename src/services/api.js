@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const tokenPrefix = process.env.REACT_APP_TOKEN_PREFIX + " ";
-const token = localStorage.getItem("userToken");
 
 export const api = createApi({
   reducerPath: "api",
@@ -12,7 +11,7 @@ export const api = createApi({
         method: "GET",
         headers: {
           "Content-type": "application/json",
-          Authorization: tokenPrefix + token,
+          Authorization: tokenPrefix + localStorage.getItem("userToken"),
         },
       }),
 
@@ -26,7 +25,7 @@ export const api = createApi({
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          Authorization: tokenPrefix + token,
+          Authorization: tokenPrefix + localStorage.getItem("userToken"),
         },
         body: { action: "create", newItem: newItem, type: type },
       }),
@@ -40,7 +39,7 @@ export const api = createApi({
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          Authorization: tokenPrefix + token,
+          Authorization: tokenPrefix + localStorage.getItem("userToken"),
         },
         body: { action: "update", updatedItem: updatedItem, type: type },
       }),
@@ -54,7 +53,7 @@ export const api = createApi({
         method: "POST",
         headers: {
           "Content-type": "application/json",
-          Authorization: tokenPrefix + token,
+          Authorization: tokenPrefix + localStorage.getItem("userToken"),
         },
         body: { action: "delete", deletedItems: deletedItems, type: type },
       }),
