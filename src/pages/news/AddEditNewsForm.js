@@ -24,7 +24,7 @@ const AddEditNewsForm = ({
   const [newsTitle, setNewsTitle] = useState("");
   const [newsContent, setNewsContent] = useState("");
   const [imageUrl, setImageUrl] = useState("");
-  const [sentPushMessage, setSentPushMessage] = useState(false);
+  const [sendPushMessage, setSendPushMessage] = useState(false);
 
   useEffect(() => {
     if (editedNewsItem) {
@@ -52,17 +52,16 @@ const AddEditNewsForm = ({
       });
     } else {
       createData({
-        newItem: { newItem: newsItem, sentPushMessage },
+        newItem: { newItem: newsItem, sendPushMessage: sendPushMessage },
         tag: NEWS_TAG,
         actions: PUSH_ACTIONS,
       });
+      closeNewsModal();
     }
-
-    closeNewsModal();
   };
 
   const handleSentPushMessage = () => {
-    setSentPushMessage(!sentPushMessage);
+    setSendPushMessage(!sendPushMessage);
   };
 
   useEffect(() => {
@@ -70,6 +69,7 @@ const AddEditNewsForm = ({
       setNewsContent("");
       setNewsTitle("");
       setImageUrl("");
+      setSendPushMessage(false);
     }
   }, [successCreating]);
 
@@ -104,7 +104,7 @@ const AddEditNewsForm = ({
         style={{ width: "30%" }}
         control={
           <Checkbox
-            checked={sentPushMessage}
+            checked={sendPushMessage}
             onChange={handleSentPushMessage}
           />
         }

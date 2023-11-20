@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { SAVE } from "../../helpers/constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
-import { PHOTOS_ACTIONS, ALBUM_TYPE, ALBUM_TAG } from "../../APIData";
+import { ALBUM_TYPE, ALBUM_TAG, ALBUMS_ACTIONS } from "../../APIData";
 
 const AddEditAlbum = ({
   selectedAlbum,
@@ -38,15 +38,14 @@ const AddEditAlbum = ({
       };
       updateData({
         updatedItem: updatedAlbum,
-        type: ALBUM_TYPE,
-        actions: PHOTOS_ACTIONS,
+
+        actions: ALBUMS_ACTIONS,
         tag: ALBUM_TAG,
       });
     } else {
       createData({
         newItem: album,
-        type: ALBUM_TYPE,
-        actions: PHOTOS_ACTIONS,
+        actions: ALBUMS_ACTIONS,
         tag: ALBUM_TAG,
       });
     }
