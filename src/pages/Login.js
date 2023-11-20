@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
 import AuthContext from "../context/auth-context";
 import { LOGIN, PASSWORD, USERNAME } from "../helpers/constants";
 import { Box } from "@mui/material";
@@ -8,21 +7,13 @@ import CustomButton from "../components/CustomButton";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  // const history = useHistory();
-  const auth = useContext(AuthContext);
-  const navigate = useNavigate();
-  const login = (e) => {
-    e.preventDefault();
+  const { onLogin } = useContext(AuthContext);
+
+  const login = () => {
     if (username && password) {
-      auth.onLogin(username, password);
+      onLogin(username, password);
     }
   };
-
-  useEffect(() => {
-    if (auth.isLoggedIn) {
-      navigate("/home");
-    }
-  }, [auth.isLoggedIn, navigate]);
 
   return (
     <Box
