@@ -81,7 +81,7 @@ const AddEditNewslettersItem = ({
           <CustomDatePicker
             label={SENT_ON}
             format="DD/MM/YYYY"
-            value={dateSent}
+            value={dayjs(dateSent)}
             onChange={setDateSent}
           />
         </LocalizationProvider>
