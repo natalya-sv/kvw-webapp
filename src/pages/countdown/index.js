@@ -94,14 +94,14 @@ const CountDownPage = () => {
           <CustomDatePicker
             label={START_DATE}
             format={"DD/MM/YYYY"}
-            value={startDate}
+            value={dayjs(startDate)}
             onChange={setStartDate}
             disabled={isLoading}
           />
           <CustomDatePicker
             label={END_DATE}
             format={"DD/MM/YYYY"}
-            value={endDate}
+            value={dayjs(endDate)}
             onChange={setEndDate}
             disabled={isLoading}
           />

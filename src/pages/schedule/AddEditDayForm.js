@@ -18,12 +18,7 @@ import TextInput from "../../components/TextInput";
 import "dayjs/locale/nl";
 import CustomDatePicker from "../../components/UI/pickers/CustomDatePicker";
 import CustomTimePicker from "../../components/UI/pickers/CustomTimePicker";
-import {
-  DAYS_ACTIONS,
-  DAYS_TAG,
-  DAY_TYPE,
-  GROUPS_ACTIONS,
-} from "../../APIData";
+import { DAYS_ACTIONS, DAYS_TAG } from "../../APIData";
 
 const AddEditDayForm = ({
   selectedDay,
@@ -119,17 +114,17 @@ const AddEditDayForm = ({
           <CustomDatePicker
             label={DATE}
             format="DD/MM/YYYY"
-            value={date}
+            value={dayjs(date)}
             onChange={setDate}
           />
           <CustomTimePicker
             label={START_TIME}
-            value={startTime}
+            value={dayjs(startTime)}
             onChange={setStartTime}
           />
           <CustomTimePicker
             label={END_TIME}
-            value={endTime}
+            value={dayjs(endTime)}
             onChange={setEndTime}
           />
         </Stack>
