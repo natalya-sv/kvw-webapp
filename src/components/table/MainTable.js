@@ -21,7 +21,7 @@ const MainTable = ({
   onAddNewSubRowItem,
   onRemoveSubRowItem,
   extraButtons,
-  successDeleting,
+  successUpdating,
 }) => {
   const [selected, setSelected] = useState([]);
   const isSelected = (id) => selected.indexOf(id) !== -1;
@@ -36,10 +36,10 @@ const MainTable = ({
   };
 
   useEffect(() => {
-    if (successDeleting) {
+    if (successUpdating) {
       setSelected([]);
     }
-  }, [successDeleting]);
+  }, [successUpdating]);
 
   const handleRowClick = (_event, id) => {
     const selectedIndex = selected.indexOf(id);

@@ -56,8 +56,8 @@ const AddEditNewsForm = ({
         tag: NEWS_TAG,
         actions: PUSH_ACTIONS,
       });
-      closeNewsModal();
     }
+    closeNewsModal();
   };
 
   const handleSentPushMessage = () => {
@@ -100,16 +100,18 @@ const AddEditNewsForm = ({
         disabled={isLoading}
       />
 
-      <FormControlLabel
-        style={{ width: "30%" }}
-        control={
-          <Checkbox
-            checked={sendPushMessage}
-            onChange={handleSentPushMessage}
-          />
-        }
-        label={SEND_ALSO_PUSH_MESSAGE}
-      />
+      {!editedNewsItem && (
+        <FormControlLabel
+          style={{ width: "30%" }}
+          control={
+            <Checkbox
+              checked={sendPushMessage}
+              onChange={handleSentPushMessage}
+            />
+          }
+          label={SEND_ALSO_PUSH_MESSAGE}
+        />
+      )}
       <CustomButton
         disabled={!newsTitle || !newsContent || isLoading}
         title={editedNewsItem ? UPDATE_NEWSITEM : SEND_PUSH_MESSAGE}

@@ -113,7 +113,7 @@ const SponsorsTable = ({
       onRemoveItems={handleRemoveSponsor}
       onEditItem={handleEditSponsor}
       extraButtons={extraButtons}
-      successDeleting={successDeleting}
+      successUpdating={successDeleting}
     />
   ) : (
     <Typography>{NO_SPONSORS_YET}</Typography>
