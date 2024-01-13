@@ -1,8 +1,10 @@
 
+/build
 # compiled output
 /dist
 /tmp
 /out-tsc
+/build
 
 # Runtime data
 pids
