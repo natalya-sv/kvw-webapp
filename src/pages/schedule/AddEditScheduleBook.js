@@ -10,8 +10,8 @@ const AddEditScheduleBookLink = ({ updateData, scheduleBook }) => {
   const [scheduleBookUrl, setScheduleBookUrl] = useState("");
 
   useEffect(() => {
-    if (scheduleBook) {
-      const url = scheduleBook[0].schedule_book_url;
+    if (scheduleBook && scheduleBook[0]) {
+      const url = scheduleBook[0]?.schedule_book_url;
       setScheduleBookUrl(url);
     }
   }, [scheduleBook]);
