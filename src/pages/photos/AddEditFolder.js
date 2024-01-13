@@ -5,6 +5,7 @@ import { FOLDER_COVER_PHOTO_TITLE, FOLDER_TITLE } from "./constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
 import { FOLDERS_ACTIONS, PHOTOS_TAG } from "../../APIData";
+import { replaceHttpByHttps } from "../../helpers/utils";
 
 const AddEditFolder = ({
   selectedFolder,
@@ -23,11 +24,12 @@ const AddEditFolder = ({
   }, [selectedFolder]);
 
   const submitHandler = () => {
+    const modifiedFolderUrl = replaceHttpByHttps(folderCoverPhoto);
     if (selectedFolder) {
       const updatedFolder = {
         id: selectedFolder.id,
         year: folderYear,
-        folder_cover_photo: folderCoverPhoto.trim(),
+        folder_cover_photo: modifiedFolderUrl,
       };
       updateData({
         updatedItem: updatedFolder,

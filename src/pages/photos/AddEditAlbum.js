@@ -4,6 +4,7 @@ import { SAVE } from "../../helpers/constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
 import { ALBUM_TAG, ALBUMS_ACTIONS } from "../../APIData";
+import { replaceHttpByHttps } from "../../helpers/utils";
 
 const AddEditAlbum = ({
   selectedAlbum,
@@ -25,10 +26,12 @@ const AddEditAlbum = ({
   }, [selectedAlbum]);
 
   const onSubmitHandler = () => {
+    const modifiedAlbumUrl = replaceHttpByHttps(albumLink);
+    const modifiedCoverPhotoUrl = replaceHttpByHttps(albumCoverPhoto);
     const album = {
       title: title,
-      album_link: albumLink.trim(),
-      album_cover_photo: albumCoverPhoto.trim(),
+      album_link: modifiedAlbumUrl,
+      album_cover_photo: modifiedCoverPhotoUrl,
       folder_id: selectedFolderId,
     };
     if (selectedAlbum) {

@@ -18,6 +18,7 @@ import CustomButton from "../../components/CustomButton.js";
 import ImageView from "../../components/ImageView.js";
 import { HOME_ACTIONS, HOME_GET, HOME_TAG } from "../../APIData.js";
 import useCustomDataQuery from "../../useCustomDataQuery.js";
+import { replaceHttpByHttps } from "../../helpers/utils.js";
 
 const HomePage = () => {
   const [title, setHomeTitle] = useState("");
@@ -57,13 +58,15 @@ const HomePage = () => {
   }, [data]);
 
   const onSubmitHandler = () => {
+    const modifiedThemaImageUrl = replaceHttpByHttps(image);
+
     const updatedHomeData = {
       id: data[0].id,
       home_page_title: title,
       home_page_content: content,
       kvw_website: websiteUrl.trim(),
       thema_title: themaYearTitle,
-      thema_image: image,
+      thema_image: modifiedThemaImageUrl,
     };
 
     updateData({

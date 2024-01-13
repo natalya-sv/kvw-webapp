@@ -12,6 +12,7 @@ import CustomButton from "../../components/CustomButton";
 import { NEWS_ACTIONS, NEWS_TAG, PUSH_ACTIONS } from "../../APIData";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
+import { replaceHttpByHttps } from "../../helpers/utils";
 
 const AddEditNewsForm = ({
   editedNewsItem,
@@ -35,10 +36,11 @@ const AddEditNewsForm = ({
   }, [editedNewsItem]);
 
   const submitHandler = () => {
+    const modifiedImageUrl = replaceHttpByHttps(imageUrl);
     const newsItem = {
       title: newsTitle,
       content: newsContent,
-      image_url: imageUrl,
+      image_url: modifiedImageUrl,
     };
     if (editedNewsItem) {
       const newsUpdated = {
