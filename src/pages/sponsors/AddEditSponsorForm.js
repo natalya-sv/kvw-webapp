@@ -19,6 +19,7 @@ import {
 import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
 import { SPONSORS_ACTIONS, SPONSORS_TAG } from "../../APIData";
+import { replaceHttpByHttps } from "../../helpers/utils";
 
 const AddEditSponsorForm = ({
   editedSponsor,
@@ -42,11 +43,13 @@ const AddEditSponsorForm = ({
   }, [editedSponsor]);
 
   const submitHandler = () => {
+    const modifiedSponsorImageUrl = replaceHttpByHttps(sponsorImageUrl);
+
     const newSponsor = {
       sponsor_name: sponsorName,
       website_url: sponsorWebsiteUrl.trim(),
       sponsor_type: sponsorType,
-      image_url: sponsorImageUrl.trim(),
+      image_url: modifiedSponsorImageUrl,
       active: editedSponsor ? editedSponsor.active : true,
     };
 

@@ -5,6 +5,7 @@ import { PLATFORM_TITEL, SOCIAL_MEDIA_URL } from "./constants";
 import CustomButton from "../../components/CustomButton";
 import TextInput from "../../components/TextInput";
 import { SOCIAL_MEDIA_ACTIONS, SOCIAL_MEDIA_TAG } from "../../APIData";
+import { replaceHttpByHttps } from "../../helpers/utils";
 
 const AddEditSocialMediaAccount = ({
   accountToEdit,
@@ -23,9 +24,10 @@ const AddEditSocialMediaAccount = ({
   }, [accountToEdit]);
 
   const submitHandler = () => {
+    const modifiedSocialAccountUrl = replaceHttpByHttps(accountWebsiteUrl);
     const account = {
       title: accountTitle,
-      website_url: accountWebsiteUrl.trim(),
+      website_url: modifiedSocialAccountUrl,
       icon_name: "person-circle-outline",
       color: "#72c6c8",
     };
