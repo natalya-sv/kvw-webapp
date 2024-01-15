@@ -24,6 +24,7 @@ const GroupsTable = ({
   setSelectedDay,
   handleOpenAddEditDayDialog,
   deleteData,
+  successUpdating,
 }) => {
   const mergedDaysAndGroups = useMemo(() => {
     if (groups && sponsors && days) {
@@ -113,6 +114,7 @@ const GroupsTable = ({
       onAddNewSubRowItem={handleAddNewDay}
       onEditSubRowItem={handleEditDay}
       onRemoveSubRowItem={handleRemoveDay}
+      successUpdating={successUpdating}
     />
   ) : (
     <Typography>{NO_GROUPS_YET}</Typography>

@@ -20,7 +20,7 @@ const AddEditScheduleBookLink = ({ updateData, scheduleBook }) => {
     updateData({
       updatedItem: {
         id: scheduleBook[0].id,
-        schedule_book_url: scheduleBookUrl,
+        schedule_book_url: scheduleBookUrl.trim(),
       },
       actions: SCHEDULE_BOOK_ACTIONS,
       tag: SCHEDULE_BOOK_TAG,

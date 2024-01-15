@@ -195,7 +195,7 @@ const SchedulePage = () => {
         days={days}
         sponsors={transformedSponsors}
         deleteData={deleteData}
-        successDeleting={groupsSuccessDeleting}
+        successUpdating={groupsSuccessDeleting || groupsSuccessUpdating}
       />
     </Box>
   );

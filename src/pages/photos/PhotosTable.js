@@ -24,7 +24,7 @@ const PhotosTable = ({
   handleOpenAddEditAlbumDialog,
   setSelectedAlbum,
   deleteData,
-  successDeleting,
+  successUpdating,
 }) => {
   const mergedFoldersAndAlbums = useMemo(() => {
     if (folders && albums) {
@@ -107,7 +107,7 @@ const PhotosTable = ({
       onAddNewSubRowItem={handleAddNewAlbum}
       onEditSubRowItem={handleEditAlbum}
       onRemoveSubRowItem={handleRemoveAlbum}
-      successDeleting={successDeleting}
+      successUpdating={successUpdating}
     />
   ) : (
     <Typography>{NO_PHOTOS}</Typography>
