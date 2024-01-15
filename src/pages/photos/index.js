@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Title from "../../components/UI/Title";
 import { Box } from "@mui/material";
 import PageDescription from "../../components/UI/PageDescription";
@@ -32,6 +32,9 @@ const PhotosPage = () => {
     successDeleting: foldersSuccessDeleting,
     isLoading: foldersLoading,
     errorMessage: foldersErrorMessage,
+    updateData,
+    createData,
+    deleteData,
   } = useCustomDataQuery({
     fetchData: FOLDERS_GET,
     tag: PHOTOS_TAG,
@@ -46,9 +49,6 @@ const PhotosPage = () => {
     successDeleting: albumsSuccessDeleting,
     isLoading: albumsLoading,
     errorMessage: albumsErrorMessage,
-    updateData,
-    createData,
-    deleteData,
   } = useCustomDataQuery({
     fetchData: ALBUMS_GET,
     tag: ALBUM_TAG,
@@ -137,7 +137,7 @@ const PhotosPage = () => {
         folders={folders}
         albums={albums}
         deleteData={deleteData}
-        successDeleting={foldersSuccessDeleting}
+        successUpdating={foldersSuccessDeleting || foldersSuccessUpdating}
       />
     </Box>
   );

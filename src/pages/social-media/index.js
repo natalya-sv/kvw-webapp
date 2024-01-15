@@ -92,7 +92,7 @@ const SocialMediaPage = () => {
         setEditAccount={setAccountToEdit}
         socialMediaAccounts={socialMediaAccounts}
         deleteData={deleteData}
-        successDeleting={successDeleting}
+        successUpdating={successDeleting || successUpdating}
       />
     </Box>
   );

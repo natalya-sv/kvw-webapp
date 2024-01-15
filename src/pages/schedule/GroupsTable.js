@@ -24,6 +24,7 @@ const GroupsTable = ({
   setSelectedDay,
   handleOpenAddEditDayDialog,
   deleteData,
+  successUpdating,
 }) => {
   const mergedDaysAndGroups = useMemo(() => {
     if (groups && sponsors && days) {
@@ -49,7 +50,8 @@ const GroupsTable = ({
               sponsors: day.day_sponsors,
               namedSponsors: sponsorsNames,
             };
-          });
+          })
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
         return {
           id: group.id,
           groupName: group.group_name,
@@ -113,6 +115,7 @@ const GroupsTable = ({
       onAddNewSubRowItem={handleAddNewDay}
       onEditSubRowItem={handleEditDay}
       onRemoveSubRowItem={handleRemoveDay}
+      successUpdating={successUpdating}
     />
   ) : (
     <Typography>{NO_GROUPS_YET}</Typography>

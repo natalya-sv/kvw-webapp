@@ -90,7 +90,7 @@ const VideosPage = () => {
         setEditedVideo={setEditedVideo}
         closeVideosModal={closeVideosModal}
         deleteData={deleteData}
-        successDeleting={successDeleting}
+        successUpdating={successDeleting || successUpdating}
       />
     </Box>
   );
