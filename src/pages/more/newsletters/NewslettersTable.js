@@ -14,7 +14,7 @@ const NewsletteraTable = ({
   setEditedNewsletterItem,
   openNewslettersModal,
   deleteData,
-  successDeleting,
+  successUpdating,
 }) => {
   const newslettersItems = useMemo(() => {
     if (newsletters && newsletters.length > 0) {
@@ -59,7 +59,7 @@ const NewsletteraTable = ({
       title={SENT_NEWSLETTERS}
       onRemoveItems={handleRemoveNewsletterItem}
       onEditItem={handleEditNewsletterItem}
-      successDeleting={successDeleting}
+      successUpdating={successUpdating}
     />
   ) : (
     <Typography>{NO_NEWSLETTERS}</Typography>

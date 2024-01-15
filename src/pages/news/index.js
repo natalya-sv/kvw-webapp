@@ -88,7 +88,7 @@ const NewsPage = () => {
         openNewsModal={openNewsModal}
         deleteData={deleteData}
         news={news}
-        successDeleting={successDeleting}
+        successUpdating={successDeleting || successUpdating}
       />
     </Box>
   );

@@ -14,7 +14,7 @@ const NewsTable = ({
   setEditedNewsItem,
   openNewsModal,
   deleteData,
-  successDeleting,
+  successUpdating,
 }) => {
   const updatedNews = useMemo(() => {
     if (news) {
@@ -60,7 +60,7 @@ const NewsTable = ({
       title={PREVIOUS_NEWS}
       onRemoveItems={handleRemoveNews}
       onEditItem={handleEditNewsItem}
-      successDeleting={successDeleting}
+      successUpdating={successUpdating}
     />
   ) : (
     <Typography>{NO_NEWS_MESSAGE}</Typography>

@@ -87,7 +87,7 @@ const SponsorsPage = () => {
         sponsors={sponsors}
         deleteData={deleteData}
         updateData={updateData}
-        successDeleting={successDeleting || successUpdating}
+        successUpdating={successDeleting || successUpdating}
       />
     </Box>
   );

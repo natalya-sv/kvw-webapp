@@ -84,7 +84,7 @@ const NewslettersPage = () => {
         updateNewslettersData={updateData}
         newsletters={newsletters}
         deleteData={deleteData}
-        successDeleting={successDeleting}
+        successUpdating={successDeleting || successUpdating}
       />
     </Box>
   );

@@ -13,7 +13,7 @@ const SocialMediaTable = ({
   deleteData,
   setEditAccount,
   openMediaModal,
-  successDeleting,
+  successUpdating,
 }) => {
   const updatedAccounts = useMemo(() => {
     if (socialMediaAccounts && socialMediaAccounts.length > 0) {
@@ -53,7 +53,7 @@ const SocialMediaTable = ({
       title={SOCIAL_MEDIA_TITLE}
       onRemoveItems={handleRemoveSocialAccount}
       onEditItem={handleEditSocialAccount}
-      successDeleting={successDeleting}
+      successUpdating={successUpdating}
     />
   ) : (
     <Typography>{NO_ACCOUNTS_YET}</Typography>
