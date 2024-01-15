@@ -50,7 +50,8 @@ const GroupsTable = ({
               sponsors: day.day_sponsors,
               namedSponsors: sponsorsNames,
             };
-          });
+          })
+          .sort((a, b) => new Date(a.date) - new Date(b.date));
         return {
           id: group.id,
           groupName: group.group_name,
