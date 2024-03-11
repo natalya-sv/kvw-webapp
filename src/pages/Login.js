@@ -37,6 +37,7 @@ const Login = () => {
           onChange={setPassword}
         />
         <CustomButton
+          id={"login-button"}
           onClick={login}
           title={LOGIN}
           disabled={username === "" || password === ""}

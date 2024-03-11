@@ -11,7 +11,7 @@ const SpinnerView = () => {
         marginTop: "6rem",
       }}
     >
-      <CircularProgress color="success" />
+      <CircularProgress color="success" id="spinner" />
     </Box>
   );
 };

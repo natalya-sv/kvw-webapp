@@ -26,7 +26,6 @@ const HomePage = () => {
   const [themaYearTitle, setThemaYearTitle] = useState("");
   const [image, setThemaImage] = useState("");
   const [websiteUrl, setKvwWebsiteUrl] = useState("");
-
   const {
     data,
     updateData,
@@ -152,6 +151,7 @@ const HomePage = () => {
           disabled={isLoading}
         />
         <CustomButton
+          id={"home-page-btn"}
           title={SAVE}
           onClick={onSubmitHandler}
           disabled={isLoading}

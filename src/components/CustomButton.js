@@ -1,6 +1,6 @@
 import { Box, Button } from "@mui/material";
 
-const CustomButton = ({ onClick, title, disabled, startIcon, width }) => {
+const CustomButton = ({ onClick, title, disabled, startIcon, width, id }) => {
   return (
     <Box
       sx={{
@@ -12,6 +12,7 @@ const CustomButton = ({ onClick, title, disabled, startIcon, width }) => {
       }}
     >
       <Button
+        id={id ?? "custom-button"}
         size="large"
         onClick={onClick}
         variant="contained"
