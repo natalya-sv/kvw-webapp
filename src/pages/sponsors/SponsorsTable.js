@@ -1,10 +1,8 @@
 import React, { useCallback, useMemo } from "react";
 import {
   ACTIVE,
-  MAIN_SPONSOR,
   NOT_ACTIVE,
   NO_SPONSORS_YET,
-  SPONSOR,
   SPONSORS,
   sponsorsTableDefinitions,
 } from "./constants";
@@ -19,6 +17,7 @@ import {
   SPONSORS_TAG,
 } from "../../APIData";
 import MainTable from "../../components/table/MainTable";
+import { getSponsorType } from "./utils";
 
 const SponsorsTable = ({
   sponsors,
@@ -45,7 +44,7 @@ const SponsorsTable = ({
             ) : (
               <ClearIcon color="default" />
             ),
-            type: sp.sponsor_type === "main" ? MAIN_SPONSOR : SPONSOR,
+            type: getSponsorType(sp.sponsor_type), //=== "main" ? MAIN_SPONSOR : SPONSOR,
             sponsorType: sp.sponsor_type,
           };
         });
