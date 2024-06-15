@@ -13,6 +13,7 @@ import { NEWS_ACTIONS, NEWS_TAG, PUSH_ACTIONS } from "../../APIData";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { replaceHttpByHttps } from "../../helpers/utils";
+import SpinnerView from "../../components/UI/SpinnerView";
 
 const AddEditNewsForm = ({
   editedNewsItem,
@@ -114,6 +115,7 @@ const AddEditNewsForm = ({
           label={SEND_ALSO_PUSH_MESSAGE}
         />
       )}
+      {isLoading && <SpinnerView />}
       <CustomButton
         disabled={!newsTitle || !newsContent || isLoading}
         title={editedNewsItem ? UPDATE_NEWSITEM : SEND_PUSH_MESSAGE}
