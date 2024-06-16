@@ -58,7 +58,7 @@ const NewsPage = () => {
 
       <Title title={NEWS} />
       <PageDescription text={NEWS_DESC} />
-      {isLoading && <SpinnerView />}
+
       <Box
         style={{
           width: "90%",
@@ -68,6 +68,7 @@ const NewsPage = () => {
           createData={createData}
           successCreating={successCreating}
           closeNewsModal={closeNewsModal}
+          isLoading={isLoading}
         />
       </Box>
       <CustomModal
