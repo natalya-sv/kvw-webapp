@@ -9,12 +9,15 @@ import {
 import React, { useEffect, useState } from "react";
 import { SAVE } from "../../helpers/constants";
 import {
+  DAY_SPONSOR,
   MAIN_SPONSOR,
+  MEDIA_SPONSOR,
   SPONSOR,
   SPONSOR_IMAGE,
   SPONSOR_NAME,
   SPONSOR_TYPE,
   SPONSOR_WEB,
+  STAR_SPONSOR,
 } from "./constants";
 import TextInput from "../../components/TextInput";
 import CustomButton from "../../components/CustomButton";
@@ -118,6 +121,23 @@ const AddEditSponsorForm = ({
             value="general"
             control={<Radio />}
             label={SPONSOR}
+          />
+
+          <FormControlLabel
+            value="day-sponsor"
+            control={<Radio />}
+            label={DAY_SPONSOR}
+          />
+
+          <FormControlLabel
+            value="media-sponsor"
+            control={<Radio />}
+            label={MEDIA_SPONSOR}
+          />
+          <FormControlLabel
+            value="star-sponsor"
+            control={<Radio />}
+            label={STAR_SPONSOR}
           />
         </RadioGroup>
         <CustomButton

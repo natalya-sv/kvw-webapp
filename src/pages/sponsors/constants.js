@@ -12,6 +12,10 @@ export const NOT_ACTIVE = "Set Niet Actief";
 export const STATUS = "Actief";
 export const NO_SPONSORS_YET = "Er zijn nog geen sponsoren";
 export const ADD_SPONSOR = "Sponsor toevoegen";
+export const DAY_SPONSOR = "Dagsponsor";
+export const MEDIA_SPONSOR = "Mediasponsor";
+export const STAR_SPONSOR = "Stersponsor";
+
 export const sponsorsTableDefinitions = [
   {
     id: "sponsorName",
